@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
   dup2(fdpipe[0], 0);
 
   // Redirect output to out_file
-  int out_fd = creat(argv[3], 0666);
+  int out_fd = creat(argv[3], 0600);
 
   if (out_fd < 0) {
     perror("ls_grep: creat outfile");
