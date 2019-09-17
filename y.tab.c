@@ -1262,7 +1262,7 @@ yyreduce:
   case 4:
 #line 56 "shell.y" /* yacc.c:1646  */
     {
-    echo entire_command
+      printf("%s\n", (char*) entire_command);
     }
 #line 1268 "y.tab.c" /* yacc.c:1646  */
     break;

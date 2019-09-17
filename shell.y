@@ -54,7 +54,7 @@ entire_command_list:
     entire_command_list entire_command {
     }
   | entire_command {
-      printf("%s\n", (char*) entire_command);
+      printf("%s\n", (char*) $1);
     }
   ;
 
