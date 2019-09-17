@@ -92,7 +92,7 @@ argument:
 
 executable:
      WORD {
-      g_current_single_command = malloc(sizeof(single_command));
+      g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
       printf("rough\n");
     }

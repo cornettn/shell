@@ -55,7 +55,10 @@ extern int yydebug;
     PIPE = 259,
     NOTOKEN = 260,
     NEWLINE = 261,
-    STDOUT = 262
+    STDOUT = 262,
+    INPUT = 263,
+    BACKGROUND = 264,
+    APPEND_STDOUT = 265
   };
 #endif
 /* Tokens.  */
@@ -64,6 +67,9 @@ extern int yydebug;
 #define NOTOKEN 260
 #define NEWLINE 261
 #define STDOUT 262
+#define INPUT 263
+#define BACKGROUND 264
+#define APPEND_STDOUT 265
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -74,7 +80,7 @@ union YYSTYPE
 
   char * string;
 
-#line 78 "y.tab.h" /* yacc.c:1909  */
+#line 84 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
