@@ -8,7 +8,6 @@
  */
 
 void create_single_command(single_command_t *simp) {
-  printf("single_command creation\n");
   simp->arguments = NULL;
   simp->num_args = 0;
 } /* create_single_command() */
