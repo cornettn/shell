@@ -69,10 +69,10 @@ entire_command:
 
 single_command_list:
     single_command_list PIPE single_command {
-      printf("single_command_list\n);
+      printf("single_command_list\n");
     }
   | single_command {
-      printf("single_command_list\n);
+      printf("single_command_list\n");
       /* create_single_command($1); */
     }
   ;
