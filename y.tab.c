@@ -462,7 +462,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    47,    47,    54,    56,    62,    63,    66,    70,    72,
+       0,    47,    47,    54,    56,    61,    62,    65,    69,    71,
       77,    81,    82,    86,    90,    97,    98,    99,   103,   104
 };
 #endif
@@ -1262,29 +1262,29 @@ yyreduce:
   case 4:
 #line 56 "shell.y" /* yacc.c:1646  */
     {
-      printf("%s\n", (char*) entire_command);
     }
-#line 1268 "y.tab.c" /* yacc.c:1646  */
+#line 1267 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 63 "shell.y" /* yacc.c:1646  */
+#line 62 "shell.y" /* yacc.c:1646  */
     {
     g_current_command->background = true;
   }
-#line 1276 "y.tab.c" /* yacc.c:1646  */
+#line 1275 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 70 "shell.y" /* yacc.c:1646  */
+#line 69 "shell.y" /* yacc.c:1646  */
     {
     }
-#line 1283 "y.tab.c" /* yacc.c:1646  */
+#line 1282 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 72 "shell.y" /* yacc.c:1646  */
+#line 71 "shell.y" /* yacc.c:1646  */
     {
+      print_single_command(g_current_single_command);
     }
 #line 1290 "y.tab.c" /* yacc.c:1646  */
     break;

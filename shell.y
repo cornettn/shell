@@ -74,7 +74,8 @@ single_command_list:
   ;
 
 single_command:
-    executable argument_list
+    executable argument_list {
+    }
   ;
 
 argument_list:
@@ -83,13 +84,16 @@ argument_list:
   ;
 
 argument:
-     WORD
+     WORD {
+      insert_argument(g_current_single_command, $1);
+    }
   ;
 
 executable:
      WORD {
       g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
+      insert_argument(g_current_single_command, $1);
     }
   ;
 
