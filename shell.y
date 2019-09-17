@@ -52,10 +52,8 @@ goal:
 
 entire_command_list:
     entire_command_list entire_command {
-      printf("entire\n");
     }
   | entire_command {
-      printf("entire\n");
     }
   ;
 
@@ -69,11 +67,9 @@ entire_command:
 
 single_command_list:
     single_command_list PIPE single_command {
-      printf("single_command_list\n");
     }
   | single_command {
-      printf("single_command_list\n");
-      /* create_single_command($1); */
+      printf("%s\n", $1);
     }
   ;
 
@@ -94,7 +90,6 @@ executable:
      WORD {
       g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
-      printf("rough\n");
     }
   ;
 
