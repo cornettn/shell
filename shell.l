@@ -33,6 +33,14 @@ void myunputc(int c) {
   /* Discard spaces and tabs */
 }
 
+"&" {
+  return BACKGROUND;
+}
+
+"|" {
+  return PIPE;
+}
+
 ">" {
   return STDOUT;
 }
@@ -47,7 +55,6 @@ void myunputc(int c) {
 
 [^ \t\n]+ {
   /* Assume that file names have only alpha chars */
-  printf("%s\n", yytext);
   yylval.string = strdup(yytext);
   return WORD;
 }

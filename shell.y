@@ -43,6 +43,7 @@ int yylex();
 
 goal:
   entire_command_list
+  { printf("%s\n", $1); }
   ;
 
 entire_command_list:
