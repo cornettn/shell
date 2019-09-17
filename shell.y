@@ -44,7 +44,8 @@ int yylex();
 %%
 
 goal:
-  entire_command_list {
+  entire_command_list
+  {
     printf("goal\n");
   }
   ;
@@ -91,6 +92,9 @@ argument:
 
 executable:
      WORD
+  {
+    printf("word\n");
+  }
   ;
 
 io_modifier_list:
