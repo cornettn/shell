@@ -91,10 +91,11 @@ argument:
   ;
 
 executable:
-     WORD
-  {
-    printf("word\n");
-  }
+     WORD {
+      g_current_single_command = malloc(sizeof(single_command));
+      create_single_command(g_current_single_command);
+      printf("rough\n");
+    }
   ;
 
 io_modifier_list:
