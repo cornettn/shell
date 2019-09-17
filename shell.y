@@ -23,6 +23,8 @@
 
 %token <string> WORD PIPE
 %token NOTOKEN NEWLINE STDOUT
+%token INPUT BACKGROUND APPEND_STDOUT
+
 
 %{
 
