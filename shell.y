@@ -54,7 +54,6 @@ entire_command_list:
     entire_command_list entire_command {
     }
   | entire_command {
-      printf("%s\n", (char*) $1);
     }
   ;
 
@@ -70,6 +69,7 @@ single_command_list:
     single_command_list PIPE single_command {
     }
   | single_command {
+      print_single_command(g_current_single_command);
     }
   ;
 
