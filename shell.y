@@ -44,23 +44,36 @@ int yylex();
 %%
 
 goal:
-  entire_command_list
-  { printf("%s\n", $1); }
+  entire_command_list {
+    printf("goal\n");
+  }
   ;
 
 entire_command_list:
-     entire_command_list entire_command
-  |  entire_command
+    entire_command_list entire_command {
+      printf("entire\n");
+    }
+  | entire_command {
+      printf("entire\n");
+    }
   ;
 
 entire_command:
-     single_command_list io_modifier_list NEWLINE
+    single_command_list io_modifier_list NEWLINE
+  | single_command_list io_modifier_list BACKGROUND NEWLINE {
+    g_current_command->background = true;
+  }
   |  NEWLINE
   ;
 
 single_command_list:
-     single_command_list PIPE single_command
-  |  single_command
+    single_command_list PIPE single_command {
+      printf("single_command_list\n);
+    }
+  | single_command {
+      printf("single_command_list\n);
+      /* create_single_command($1); */
+    }
   ;
 
 single_command:
@@ -68,7 +81,7 @@ single_command:
   ;
 
 argument_list:
-     argument_list argument
+    argument_list argument
   |  /* can be empty */
   ;
 
