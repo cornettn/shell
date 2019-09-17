@@ -1,7 +1,7 @@
 
 /*
  *
- * CS-252 
+ * CS-252
  * shell.l: lexical analyzer for shell
  * You have to extend it.
  *
@@ -33,6 +33,14 @@ void myunputc(int c) {
 
 ">" {
   return STDOUT;
+}
+
+">>" {
+  return APPEND_STDOUT;
+}
+
+"<" {
+  return INPUT;
 }
 
 [^ \t\n]+ {

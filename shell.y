@@ -11,7 +11,7 @@
  *
  */
 
-%code requires 
+%code requires
 {
 
 }
@@ -52,7 +52,7 @@ entire_command_list:
 
 entire_command:
      single_command_list io_modifier_list NEWLINE
-  |  NEWLINE    
+  |  NEWLINE
   ;
 
 single_command_list:
@@ -79,11 +79,12 @@ executable:
 
 io_modifier_list:
      io_modifier_list io_modifier
-  |  /* can be empty */   
+  |  /* can be empty */
   ;
 
 io_modifier:
      STDOUT WORD
+  |  INPUT WORD
   ;
 
 
