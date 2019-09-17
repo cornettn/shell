@@ -54,6 +54,7 @@ entire_command_list:
     entire_command_list entire_command {
     }
   | entire_command {
+    echo entire_command
     }
   ;
 
@@ -69,7 +70,6 @@ single_command_list:
     single_command_list PIPE single_command {
     }
   | single_command {
-      printf("%s\n", $1);
     }
   ;
 
