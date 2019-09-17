@@ -462,8 +462,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    47,    47,    54,    57,    63,    64,    67,    71,    74,
-      81,    85,    86,    90,    94,   102,   103,   104,   108,   109
+       0,    47,    47,    54,    56,    62,    63,    66,    70,    72,
+      77,    81,    82,    86,    90,    97,    98,    99,   103,   104
 };
 #endif
 
@@ -1255,56 +1255,51 @@ yyreduce:
   case 3:
 #line 54 "shell.y" /* yacc.c:1646  */
     {
-      printf("entire\n");
     }
-#line 1261 "y.tab.c" /* yacc.c:1646  */
+#line 1260 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 57 "shell.y" /* yacc.c:1646  */
+#line 56 "shell.y" /* yacc.c:1646  */
     {
-      printf("entire\n");
+    echo entire_command
     }
-#line 1269 "y.tab.c" /* yacc.c:1646  */
+#line 1268 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 64 "shell.y" /* yacc.c:1646  */
+#line 63 "shell.y" /* yacc.c:1646  */
     {
     g_current_command->background = true;
   }
-#line 1277 "y.tab.c" /* yacc.c:1646  */
+#line 1276 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 71 "shell.y" /* yacc.c:1646  */
+#line 70 "shell.y" /* yacc.c:1646  */
     {
-      printf("single_command_list\n");
     }
-#line 1285 "y.tab.c" /* yacc.c:1646  */
+#line 1283 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 74 "shell.y" /* yacc.c:1646  */
+#line 72 "shell.y" /* yacc.c:1646  */
     {
-      printf("single_command_list\n");
-      /* create_single_command($1); */
     }
-#line 1294 "y.tab.c" /* yacc.c:1646  */
+#line 1290 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 94 "shell.y" /* yacc.c:1646  */
+#line 90 "shell.y" /* yacc.c:1646  */
     {
       g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
-      printf("rough\n");
     }
-#line 1304 "y.tab.c" /* yacc.c:1646  */
+#line 1299 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1308 "y.tab.c" /* yacc.c:1646  */
+#line 1303 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1532,7 +1527,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 113 "shell.y" /* yacc.c:1906  */
+#line 108 "shell.y" /* yacc.c:1906  */
 
 
 void
