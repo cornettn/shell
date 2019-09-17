@@ -79,6 +79,7 @@ executable:
 
 io_modifier_list:
      io_modifier_list io_modifier
+  |  io_modifier
   |  /* can be empty */
   ;
 

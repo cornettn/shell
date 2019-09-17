@@ -11,6 +11,8 @@
 
 #include "y.tab.h"
 
+#include <stdio.h>
+
 static  void yyunput (int c,char *buf_ptr  );
 
 void myunputc(int c) {
@@ -46,5 +48,6 @@ void myunputc(int c) {
 [^ \t\n]+ {
   /* Assume that file names have only alpha chars */
   yylval.string = strdup(yytext);
+  printf("%s\n", yylval.string);
   return WORD;
 }
