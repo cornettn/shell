@@ -143,7 +143,12 @@ void execute_command(command_t *command) {
     if (ret == 0) {
       /* Child Process */
 
-      printf("\"%s\"", single_command->arguments[single_command->num_args]);
+
+      /* Ensure that the last element in the arguments list is NULL */
+
+      if (single_command->arguments[single_command->num_args - 1] != NULL) {
+        single_command->arguments[single_command->num_args] = NULL;
+      }
 
       execvp(single_command->arguments[0],
           single_command->arguments);
