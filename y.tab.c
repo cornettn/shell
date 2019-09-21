@@ -1362,7 +1362,7 @@ yyreduce:
 #line 124 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->append_out = true;
-      g_cureent_command->err_file = (yyvsp[0].string);
+      g_current_command->err_file = (yyvsp[0].string);
     }
 #line 1368 "y.tab.c" /* yacc.c:1646  */
     break;
