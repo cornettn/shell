@@ -55,7 +55,7 @@ entire_command_list:
     }
   | entire_command {
       execute_command(g_current_command);
-      g_current_command = malloc(sizeof(command));
+      g_current_command = malloc(sizeof(command_t));
       create_command(g_current_command);
     }
   ;
