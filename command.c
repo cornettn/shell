@@ -131,12 +131,12 @@ void execute_command(command_t *command) {
 
   // Add execution here
 
-  int ret = NULL;
+  int ret = -1;
 
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
-    single_command_t * single_command = command[i];
+    single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
       /* Child Process */
