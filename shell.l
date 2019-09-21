@@ -53,6 +53,14 @@ void myunputc(int c) {
   return INPUT;
 }
 
+">&" {
+  return STDERR;
+}
+
+">>&" {
+  return APPEND_STDERR;
+}
+
 [^ \t\n]+ {
   /* Assume that file names have only alpha chars */
   yylval.string = strdup(yytext);

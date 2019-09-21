@@ -116,6 +116,12 @@ io_modifier:
   | APPEND_STDOUT {
       g_current_command->append_out = true;
     }
+  | STDERR WORD {
+      g_current_command->err_file = $2;
+    }
+  | APPEND_STDERR WORD {
+      g_current_command->append_out = true;
+  }
   ;
 
 
