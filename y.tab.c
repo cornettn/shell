@@ -1248,7 +1248,7 @@ yyreduce:
 #line 51 "shell.y" /* yacc.c:1646  */
     {
       execute_command(g_current_command);
-      g_current_command = malloc(sizeof(command));
+      g_current_command = malloc(sizeof(command_t));
       create_command(g_current_command);
     }
 #line 1255 "y.tab.c" /* yacc.c:1646  */
