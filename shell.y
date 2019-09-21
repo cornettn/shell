@@ -123,7 +123,7 @@ io_modifier:
     }
   | APPEND_STDERR WORD {
       g_current_command->append_out = true;
-      g_cureent_command->err_file = $2;
+      g_current_command->err_file = $2;
     }
   ;
 
