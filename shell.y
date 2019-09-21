@@ -114,15 +114,17 @@ io_modifier:
   |  INPUT WORD {
       g_current_command->in_file = $2;
     }
-  | APPEND_STDOUT {
+  | APPEND_STDOUT WORD {
       g_current_command->append_out = true;
+      g_current_command->out_file = $2;
     }
   | STDERR WORD {
       g_current_command->err_file = $2;
     }
   | APPEND_STDERR WORD {
       g_current_command->append_out = true;
-  }
+      g_cureent_command->err_file = $2;
+    }
   ;
 
 
