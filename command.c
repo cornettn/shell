@@ -143,6 +143,8 @@ void execute_command(command_t *command) {
     if (ret == 0) {
       /* Child Process */
 
+      print_single_command(single_command);
+
       execvp(single_command->arguments[0],
           single_command->arguments);
 
