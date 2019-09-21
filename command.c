@@ -130,7 +130,41 @@ void execute_command(command_t *command) {
   print_command(command);
 
   // Add execution here
-  // For every single command fork a new process
+
+  int ret = NULL;
+
+  /* Create a new fork for each single command */
+
+  for (int i = 0; i < command->num_single_commands; i++) {
+    single_command_t * single_command = command[i];
+    ret = fork();
+    if (ret == 0) {
+      /* Child Process */
+
+      execvp(single_command->arguments[0],
+          single_command->arguments);
+
+      /* execvp should never return on success, so if it does, error */
+
+      perror("execvp");
+      exit(1)
+    }
+    else if (ret < 0) {
+
+      /* fork error */
+
+      perror("fork");
+      return;
+    }
+
+    /* Parent Process */
+
+    if (!command->background) {
+      waitpid(ret, NULL);
+    }
+
+  }
+
   // Setup i/o redirection
   // and call exec
 
