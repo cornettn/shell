@@ -72,7 +72,6 @@ single_command_list:
     single_command_list PIPE single_command {
     }
   | single_command {
-      print_single_command(g_current_single_command);
     }
   ;
 
@@ -108,8 +107,15 @@ io_modifier_list:
   ;
 
 io_modifier:
-     STDOUT WORD
-  |  INPUT WORD
+     STDOUT WORD {
+      g_current_command->out_file = $2;
+    }
+  |  INPUT WORD {
+      g_current_command->in_file = $2;
+    }
+  | APPEND_STDOUT {
+      g_current_command->append_out = true;
+    }
   ;
 
 
