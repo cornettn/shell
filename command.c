@@ -143,7 +143,7 @@ void execute_command(command_t *command) {
     if (ret == 0) {
       /* Child Process */
 
-      printf("\"%s\"", single_command->arguments[single_command->num_args];
+      printf("\"%s\"", single_command->arguments[single_command->num_args]);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
