@@ -149,7 +149,7 @@ void execute_command(command_t *command) {
       /* execvp should never return on success, so if it does, error */
 
       perror("execvp");
-      exit(1)
+      exit(1);
     }
     else if (ret < 0) {
 
