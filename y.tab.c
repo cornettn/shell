@@ -462,8 +462,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    47,    47,    54,    56,    61,    62,    65,    69,    71,
-      77,    82,    83,    87,    93,   101,   102,   103,   107,   108
+       0,    47,    47,    51,    56,    64,    65,    68,    72,    74,
+      80,    86,    87,    91,    97,   105,   106,   107,   111,   112
 };
 #endif
 
@@ -1244,78 +1244,77 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
-#line 48 "shell.y" /* yacc.c:1646  */
+        case 3:
+#line 51 "shell.y" /* yacc.c:1646  */
     {
-    printf("goal\n");
-  }
-#line 1253 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 3:
-#line 54 "shell.y" /* yacc.c:1646  */
-    {
+      execute_command(g_current_command);
+      g_current_command = malloc(sizeof(command));
+      create_command(g_current_command);
     }
-#line 1260 "y.tab.c" /* yacc.c:1646  */
+#line 1255 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 56 "shell.y" /* yacc.c:1646  */
     {
+      execute_command(g_current_command);
+      g_current_command = malloc(sizeof(command));
+      create_command(g_current_command);
     }
-#line 1267 "y.tab.c" /* yacc.c:1646  */
+#line 1265 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 62 "shell.y" /* yacc.c:1646  */
+#line 65 "shell.y" /* yacc.c:1646  */
     {
     g_current_command->background = true;
   }
-#line 1275 "y.tab.c" /* yacc.c:1646  */
+#line 1273 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 69 "shell.y" /* yacc.c:1646  */
+#line 72 "shell.y" /* yacc.c:1646  */
     {
     }
-#line 1282 "y.tab.c" /* yacc.c:1646  */
+#line 1280 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 71 "shell.y" /* yacc.c:1646  */
+#line 74 "shell.y" /* yacc.c:1646  */
     {
       print_single_command(g_current_single_command);
     }
-#line 1290 "y.tab.c" /* yacc.c:1646  */
+#line 1288 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 77 "shell.y" /* yacc.c:1646  */
+#line 80 "shell.y" /* yacc.c:1646  */
     {
+      insert_single_command(g_current_command, g_current_single_command);
     }
-#line 1297 "y.tab.c" /* yacc.c:1646  */
+#line 1296 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 87 "shell.y" /* yacc.c:1646  */
+#line 91 "shell.y" /* yacc.c:1646  */
     {
       insert_argument(g_current_single_command, (yyvsp[0].string));
     }
-#line 1305 "y.tab.c" /* yacc.c:1646  */
+#line 1304 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 93 "shell.y" /* yacc.c:1646  */
+#line 97 "shell.y" /* yacc.c:1646  */
     {
       g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
       insert_argument(g_current_single_command, (yyvsp[0].string));
     }
-#line 1315 "y.tab.c" /* yacc.c:1646  */
+#line 1314 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1319 "y.tab.c" /* yacc.c:1646  */
+#line 1318 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1543,7 +1542,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 112 "shell.y" /* yacc.c:1906  */
+#line 116 "shell.y" /* yacc.c:1906  */
 
 
 void
