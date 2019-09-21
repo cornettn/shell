@@ -162,7 +162,7 @@ void execute_command(command_t *command) {
     /* Parent Process */
 
     if (!command->background) {
-      waitpid(ret, NULL);
+      waitpid(ret, NULL, 0);
     }
 
   }
