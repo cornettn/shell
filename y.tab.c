@@ -463,7 +463,7 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    47,    47,    54,    56,    61,    62,    65,    69,    71,
-      77,    81,    82,    86,    90,    97,    98,    99,   103,   104
+      77,    82,    83,    87,    93,   101,   102,   103,   107,   108
 };
 #endif
 
@@ -1289,17 +1289,33 @@ yyreduce:
 #line 1290 "y.tab.c" /* yacc.c:1646  */
     break;
 
+  case 10:
+#line 77 "shell.y" /* yacc.c:1646  */
+    {
+    }
+#line 1297 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 87 "shell.y" /* yacc.c:1646  */
+    {
+      insert_argument(g_current_single_command, (yyvsp[0].string));
+    }
+#line 1305 "y.tab.c" /* yacc.c:1646  */
+    break;
+
   case 14:
-#line 90 "shell.y" /* yacc.c:1646  */
+#line 93 "shell.y" /* yacc.c:1646  */
     {
       g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
+      insert_argument(g_current_single_command, (yyvsp[0].string));
     }
-#line 1299 "y.tab.c" /* yacc.c:1646  */
+#line 1315 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1303 "y.tab.c" /* yacc.c:1646  */
+#line 1319 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1527,7 +1543,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 108 "shell.y" /* yacc.c:1906  */
+#line 112 "shell.y" /* yacc.c:1906  */
 
 
 void

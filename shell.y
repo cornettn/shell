@@ -45,15 +45,18 @@ int yylex();
 
 goal:
   entire_command_list
-  {
-    printf("goal\n");
-  }
   ;
 
 entire_command_list:
     entire_command_list entire_command {
+      execute_command(g_current_command);
+      g_current_command = malloc(sizeof(command));
+      create_command(g_current_command);
     }
   | entire_command {
+      execute_command(g_current_command);
+      g_current_command = malloc(sizeof(command));
+      create_command(g_current_command);
     }
   ;
 
@@ -75,6 +78,7 @@ single_command_list:
 
 single_command:
     executable argument_list {
+      insert_single_command(g_current_command, g_current_single_command);
     }
   ;
 
