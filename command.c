@@ -174,7 +174,7 @@ void execute_command(command_t *command) {
     if (i == command->num_single_commands - 1) {
       /* Last Single Command */
       if (command->out_file) {
-        fd_out = open(command->out_file, O_CREAT|O_RDWR|O_TRUNC);
+        fd_out = open(command->out_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
       }
       else {
         fd_out = dup(temp_out);
