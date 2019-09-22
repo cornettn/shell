@@ -33,6 +33,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <malloc.h>
+#include <string.h>
 
 #include "command.h"
 #include "single_command.h"
@@ -124,12 +125,12 @@ io_modifier:
     }
   | STDOUT_STDERR WORD {
       g_current_command->out_file = $2;
-      g_current_command->err_file = $2;
+      g_current_command->err_file = strdup($2);
     }
   | APPEND_STDOUT_STDERR WORD {
       g_current_command->append_out = true;
       g_current_command->err_file = $2;
-      g_current_command->out_file = $2;
+      g_current_command->out_file = strdup($2);
     }
   ;
 
