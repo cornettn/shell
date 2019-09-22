@@ -238,8 +238,8 @@ void execute_command(command_t *command) {
       /* Ensure that the last element in the arguments list is NULL */
 
       if (single_command->arguments[single_command->num_args - 1] != NULL) {
-        single_command->arguments = (char **) realloc(single_command->arguments,
-            (single_command->num_args + 1) * sizeof(char *));
+//        single_command->arguments = (char **) realloc(single_command->arguments,
+//            (single_command->num_args + 1) * sizeof(char *));
         single_command->arguments[single_command->num_args] = NULL;
       }
 
