@@ -170,9 +170,9 @@ void execute_command(command_t *command) {
 
     /* Setup Output*/
 
+    int fd_out;
     if (i == command->num_single_commands - 1) {
       /* Last Single Command */
-      int fd_out;
       if (command->out_file) {
         fd_out = open(command->out_file, O_CREAT|O_RDWR|O_TRUNC);
       }
