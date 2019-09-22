@@ -159,7 +159,7 @@ void execute_command(command_t *command) {
   int fd_err;
   if (command->err_file) {
     if (command->append_err) {
-      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_TRUNC|O_APPEND, 0600);
+      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_APPEND, 0600);
     }
     else {
       fd_err = open(command->err_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
@@ -195,7 +195,7 @@ void execute_command(command_t *command) {
       if (command->out_file) {
         if (command->append_out) {
           fd_out = open(command->out_file,
-              O_CREAT|O_APPEND|O_RDWR|O_TRUNC, 0600);
+              O_CREAT|O_APPEND|O_RDWR, 0600);
         }
         else {
           fd_out = open(command->out_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
