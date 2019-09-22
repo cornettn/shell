@@ -1376,14 +1376,15 @@ yyreduce:
 #line 130 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->append_out = true;
+      g_current_command->append_err = true;
       g_current_command->err_file = (yyvsp[0].string);
       g_current_command->out_file = strdup((yyvsp[0].string));
     }
-#line 1383 "y.tab.c" /* yacc.c:1646  */
+#line 1384 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1387 "y.tab.c" /* yacc.c:1646  */
+#line 1388 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1611,7 +1612,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 138 "shell.y" /* yacc.c:1906  */
+#line 139 "shell.y" /* yacc.c:1906  */
 
 
 void
