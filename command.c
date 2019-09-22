@@ -134,7 +134,7 @@ void execute_command(command_t *command) {
 
   // Add execution here
 
-  /* Save standard in and out */
+  /* Save standard in, err and out */
 
   int temp_in = dup(0);
   int temp_out = dup(1);
@@ -185,6 +185,10 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
+    /* Redirect Input */
+
+    dup2(fd_in, 0);
+    close(fd_in);
 
     /* Setup Output*/
 
@@ -213,10 +217,6 @@ void execute_command(command_t *command) {
       fd_in = fd_pipe[0];
     }
 
-    /* Redirect Input */
-
-    dup2(fd_in, 0);
-    close(fd_in);
 
     /* Redirect Error */
 
