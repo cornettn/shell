@@ -186,7 +186,7 @@ void execute_command(command_t *command) {
       int fd_pipe[2];
       pipe(fd_pipe);
       fd_out = fd_pipe[1];
-      fd_in - fd_pipe[0];
+      fd_in = fd_pipe[0];
     }
 
     /* Redirect Output */
