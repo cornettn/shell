@@ -133,11 +133,55 @@ void execute_command(command_t *command) {
 
   // Add execution here
 
+  /* Save standard in and out */
+
+  int temp_in = dup(0);
+  int temp_out = dup(1);
+
+  /* Set input */
+
+  int fd_in;
+  if (command->in_file) {
+    fd_in = open(command->in_file, O_RDWR|O_TRUNC);
+    if (fd_in < 0) {
+      perror("open");
+      exit(1);
+    }
+  }
+  else {
+
+    /* Use the default standard in */
+
+    fd_in = dup(temp_in);
+  }
+
+
   int ret = -1;
 
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
+
+    /* Redirect Input */
+
+    dup2(fd_in, 0);
+    close(fd_in);
+
+    /* Setup Output*/
+
+    if (i == command->num_single_commands - 1) {
+      /* Last Single Command */
+      if (command->out_file) {
+        fd_out = open(command->out_file, O_CREAT|O_RDWR|O_TRUNC);
+      }
+      else {
+        fd_out = dup(temp_out);
+      }
+    }
+    else {
+      /* Not the last Command - Use Pipes */
+    }
+
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
