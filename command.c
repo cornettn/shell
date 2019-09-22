@@ -182,14 +182,22 @@ void execute_command(command_t *command) {
     }
     else {
       /* Not the last Command - Use Pipes */
+
+      int fd_pipe[2];
+      pipe(fd_pipe);
+      fd_out = fd_pipe[1];
+      fd_in - fd_pipe[0];
     }
+
+    /* Redirect Output */
+
+    dup2(fd_out, 1);
+    close(fd_out);
 
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
       /* Child Process */
-
-
       /* Ensure that the last element in the arguments list is NULL */
 
       if (single_command->arguments[single_command->num_args - 1] != NULL) {
@@ -213,6 +221,13 @@ void execute_command(command_t *command) {
     }
 
     /* Parent Process */
+
+    /* Restore in/out defaults */
+
+    dup2(temp_in, 0);
+    dup2(temp_out, 1);
+    close(temp_in);
+    close(temp_out);
 
     if (!command->background) {
       waitpid(ret, NULL, 0);
