@@ -174,7 +174,7 @@ void execute_command(command_t *command) {
     }
   }
   else {
-    fd_err = dup(2);
+    fd_err = dup(temp_err);
   }
 
 
@@ -185,16 +185,6 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
-
-    /* Redirect Input */
-
-    dup2(fd_in, 0);
-    close(fd_in);
-
-    /* Redirect Error */
-
-    dup2(fd_err, 2);
-    close(fd_err);
 
     /* Setup Output*/
 
@@ -223,10 +213,23 @@ void execute_command(command_t *command) {
       fd_in = fd_pipe[0];
     }
 
+    /* Redirect Input */
+
+    dup2(fd_in, 0);
+    close(fd_in);
+
+    /* Redirect Error */
+
+    dup2(fd_err, 2);
+    close(fd_err);
+
     /* Redirect Output */
 
     dup2(fd_out, 1);
     close(fd_out);
+
+
+    /* Create a child process */
 
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
@@ -235,6 +238,8 @@ void execute_command(command_t *command) {
       /* Ensure that the last element in the arguments list is NULL */
 
       if (single_command->arguments[single_command->num_args - 1] != NULL) {
+        single_command->arguments = (char **) realloc(single_command->arguments,
+            (single_command->num_args + 1) * sizeof(char **));
         single_command->arguments[single_command->num_args] = NULL;
       }
 
