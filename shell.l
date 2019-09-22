@@ -53,12 +53,16 @@ void myunputc(int c) {
   return INPUT;
 }
 
-">&" {
+"2>" {
   return STDERR;
 }
 
+">&" {
+  return STDOUT_STDERR
+}
+
 ">>&" {
-  return APPEND_STDERR;
+  return APPEND_STDOUT_STDERR;
 }
 
 [^ \t\n]+ {

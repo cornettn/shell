@@ -138,12 +138,13 @@ void execute_command(command_t *command) {
 
   int temp_in = dup(0);
   int temp_out = dup(1);
+  int temp_err = dup(2);
 
   /* Set input */
 
   int fd_in;
   if (command->in_file) {
-    fd_in = open(command->in_file, O_RDWR|O_TRUNC);
+    fd_in = open(command->in_file, O_RDWR|O_TRUNC, 0400);
     if (fd_in < 0) {
       perror("open");
       exit(1);
@@ -157,6 +158,28 @@ void execute_command(command_t *command) {
   }
 
 
+  /* Setup Error output */
+  int fd_err;
+  if (command->err_file) {
+    if (command->append_err) {
+      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_TRUNC|O_APPEND, 0600);
+    }
+    else {
+      fd_err = open(command->err_file, O|CREAT|O_RDWR|O_TRUNC, 0600);
+    }
+
+    if (fd_err < 0) {
+      perror("open");
+      exit(1);
+    }
+  }
+  else {
+    fd_err = dup(2);
+  }
+
+
+
+
   int ret = -1;
 
   /* Create a new fork for each single command */
@@ -168,13 +191,24 @@ void execute_command(command_t *command) {
     dup2(fd_in, 0);
     close(fd_in);
 
+    /* Redirect Error */
+
+    dup2(fd_err, 2);
+    close(fd_err);
+
     /* Setup Output*/
 
     int fd_out;
     if (i == command->num_single_commands - 1) {
       /* Last Single Command */
       if (command->out_file) {
-        fd_out = open(command->out_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
+        if (command->append_out) {
+          fd_out = open(command->out_file,
+              O_CREAT|O_APPEND|O_RDWR|O_TRUNC, 0600);
+        }
+        else {
+          fd_out = open(command->out_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
+        }
       }
       else {
         fd_out = dup(temp_out);
@@ -226,8 +260,10 @@ void execute_command(command_t *command) {
 
     dup2(temp_in, 0);
     dup2(temp_out, 1);
+    dup2(temp_err, 2);
     close(temp_in);
     close(temp_out);
+    close(temp_err);
 
     if (!command->background) {
       waitpid(ret, NULL, 0);

@@ -24,7 +24,8 @@
 %token <string> WORD PIPE
 %token NOTOKEN NEWLINE STDOUT
 %token INPUT BACKGROUND APPEND_STDOUT
-%token STDERR APPEND_STDERR
+%token STDERR APPEND_STDOUT_STDERR
+%token STDOUT_STDERR
 
 
 %{
@@ -121,9 +122,14 @@ io_modifier:
   | STDERR WORD {
       g_current_command->err_file = $2;
     }
-  | APPEND_STDERR WORD {
+  | STDOUT_STDERR WORD {
+      g_current_command->out_file = $2;
+      g_current_command->err_file = $2;
+    }
+  | APPEND_STDOUT_STDERR WORD {
       g_current_command->append_out = true;
       g_current_command->err_file = $2;
+      g_current_command->out_file = $2;
     }
   ;
 
