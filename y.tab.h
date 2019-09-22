@@ -60,7 +60,8 @@ extern int yydebug;
     BACKGROUND = 264,
     APPEND_STDOUT = 265,
     STDERR = 266,
-    APPEND_STDERR = 267
+    APPEND_STDOUT_STDERR = 267,
+    STDOUT_STDERR = 268
   };
 #endif
 /* Tokens.  */
@@ -73,7 +74,8 @@ extern int yydebug;
 #define BACKGROUND 264
 #define APPEND_STDOUT 265
 #define STDERR 266
-#define APPEND_STDERR 267
+#define APPEND_STDOUT_STDERR 267
+#define STDOUT_STDERR 268
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -84,7 +86,7 @@ union YYSTYPE
 
   char * string;
 
-#line 88 "y.tab.h" /* yacc.c:1909  */
+#line 90 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -58,7 +58,7 @@ void myunputc(int c) {
 }
 
 ">&" {
-  return STDOUT_STDERR
+  return STDOUT_STDERR;
 }
 
 ">>&" {
