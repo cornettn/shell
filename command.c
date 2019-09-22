@@ -165,7 +165,7 @@ void execute_command(command_t *command) {
       fd_err = open(command->err_file, O_CREAT|O_RDWR|O_TRUNC|O_APPEND, 0600);
     }
     else {
-      fd_err = open(command->err_file, O|CREAT|O_RDWR|O_TRUNC, 0600);
+      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
     }
 
     if (fd_err < 0) {

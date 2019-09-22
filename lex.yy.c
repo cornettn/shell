@@ -843,7 +843,7 @@ case 9:
 YY_RULE_SETUP
 #line 60 "shell.l"
 {
-  return STDOUT_STDERR
+  return STDOUT_STDERR;
 }
 	YY_BREAK
 case 10:
