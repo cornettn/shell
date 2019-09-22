@@ -129,6 +129,7 @@ io_modifier:
     }
   | APPEND_STDOUT_STDERR WORD {
       g_current_command->append_out = true;
+      g_current_command->append_err = true;
       g_current_command->err_file = $2;
       g_current_command->out_file = strdup($2);
     }
