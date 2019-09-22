@@ -144,16 +144,13 @@ void execute_command(command_t *command) {
 
   int fd_in;
   if (command->in_file) {
-    fd_in = open(command->in_file, O_RDWR|O_TRUNC, 0400);
+    fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
     if (fd_in < 0) {
       perror("open");
       exit(1);
     }
   }
   else {
-
-    /* Use the default standard in */
-
     fd_in = dup(temp_in);
   }
 
