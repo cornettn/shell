@@ -22,7 +22,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcnt1.h>
+#include <sys/fcnt1.h>
 
 #include "shell.h"
 
