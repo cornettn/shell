@@ -327,8 +327,13 @@ void execute_command(command_t *command) {
   // and call exec
 
   // Clear to prepare for next command
+  printf("Free this command\n");
+  print_command(command);
+
   free_command(command);
 
-  // Print new prompt
+  // Print new prompti
+
+  printf("Print Prompt\n");
   print_prompt();
 } /* execute_command() */
