@@ -270,7 +270,6 @@ void execute_command(command_t *command) {
       }
 
 //      printf("Execute Command\n");
-      print_single_command(single_command);
 
       close(fd_pipe[0]);
       close(fd_pipe[1]);
