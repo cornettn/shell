@@ -210,8 +210,10 @@ void execute_command(command_t *command) {
       printf("Settup Up Pipes\n");
       int fd_pipe[2];
       pipe(fd_pipe);
-      fd_out = fd_pipe[1];
-      fd_in = fd_pipe[0];
+      fd_out = dup(fd_pipe[1]);
+      fd_in = dup(fd_pipe[0]);
+      close(fd_pipe[1]);
+      close(fd_pipe[0]);
     }
 
     /* Redirect Input */
@@ -249,10 +251,6 @@ void execute_command(command_t *command) {
 
       printf("Execute Command\n");
 
-      if (fd_pipe) {
-        close(fd_pipe[0]);
-        close(fd_pipe[1]);
-      }
       close(temp_in);
       close(temp_out);
       close(temp_err);
@@ -280,11 +278,6 @@ void execute_command(command_t *command) {
     printf("Parent\n");
 
     /* Restore in/out defaults */
-
-    if (fd_pipe) {
-      close(fd_pipe[0]);
-      close(fd_pipe[1]);
-    }
 
     dup2(temp_in, 0);
     dup2(temp_out, 1);
