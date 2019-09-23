@@ -233,6 +233,8 @@ void execute_command(command_t *command) {
 
     /* Create a child process */
 
+    printf("Fork\n");
+
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
