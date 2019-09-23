@@ -470,8 +470,8 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    50,    50,    54,    59,    67,    68,    71,    75,    77,
-      82,    88,    89,    93,    99,   107,   108,   109,   113,   116,
-     119,   123,   126,   130
+      82,    88,    89,    93,    99,   107,   108,   109,   113,   118,
+     121,   125,   128,   132
 };
 #endif
 
@@ -1334,57 +1334,59 @@ yyreduce:
 #line 113 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->out_file = (yyvsp[0].string);
+      printf("Current Command: \n");
+      print_command(g_current_command);
     }
-#line 1339 "y.tab.c" /* yacc.c:1646  */
+#line 1341 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 116 "shell.y" /* yacc.c:1646  */
+#line 118 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->in_file = (yyvsp[0].string);
     }
-#line 1347 "y.tab.c" /* yacc.c:1646  */
+#line 1349 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 119 "shell.y" /* yacc.c:1646  */
+#line 121 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->append_out = true;
       g_current_command->out_file = (yyvsp[0].string);
     }
-#line 1356 "y.tab.c" /* yacc.c:1646  */
+#line 1358 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 123 "shell.y" /* yacc.c:1646  */
+#line 125 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->err_file = (yyvsp[0].string);
     }
-#line 1364 "y.tab.c" /* yacc.c:1646  */
+#line 1366 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 126 "shell.y" /* yacc.c:1646  */
+#line 128 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->out_file = (yyvsp[0].string);
       g_current_command->err_file = strdup((yyvsp[0].string));
     }
-#line 1373 "y.tab.c" /* yacc.c:1646  */
+#line 1375 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 130 "shell.y" /* yacc.c:1646  */
+#line 132 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->append_out = true;
       g_current_command->append_err = true;
       g_current_command->err_file = (yyvsp[0].string);
       g_current_command->out_file = strdup((yyvsp[0].string));
     }
-#line 1384 "y.tab.c" /* yacc.c:1646  */
+#line 1386 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1388 "y.tab.c" /* yacc.c:1646  */
+#line 1390 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1612,7 +1614,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 139 "shell.y" /* yacc.c:1906  */
+#line 141 "shell.y" /* yacc.c:1906  */
 
 
 void

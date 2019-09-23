@@ -327,7 +327,7 @@ void execute_command(command_t *command) {
 
   // Clear to prepare for next command
 //  printf("Free this command\n");
-  print_command(command);
+//  print_command(command);
 
   free_command(command);
 
