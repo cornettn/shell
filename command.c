@@ -250,6 +250,7 @@ void execute_command(command_t *command) {
       }
 
       printf("Execute Command\n");
+      print_single_command(single_command);
 
       close(fd_in);
       close(fd_out);
