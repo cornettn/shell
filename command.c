@@ -142,7 +142,7 @@ void execute_command(command_t *command) {
 
   /* Set input */
 
-  printf("Set fd_in\n");
+//  printf("Set fd_in\n");
   int fd_in;
   if (command->in_file) {
     fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
@@ -158,7 +158,7 @@ void execute_command(command_t *command) {
 
   /* Setup Error output */
 
-  printf("set fd_err\n");
+//  printf("set fd_err\n");
   int fd_err;
   if (command->err_file) {
     if (command->append_err) {
