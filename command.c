@@ -200,6 +200,7 @@ void execute_command(command_t *command) {
       if (command->num_single_commands > 1) {
         printf("Set fd_in to come from fd_pipe[0]\n");
         fd_in = dup(fd_pipe[0]);
+        close(fd_pipe[0]);
       }
 
       /* Output */
@@ -230,6 +231,7 @@ void execute_command(command_t *command) {
 
         printf("Set fd_in to come from fd_pipe[0]\n");
         fd_in = dup(fd_pipe[0]);
+        close(fd_pipe);
       }
     }
 
