@@ -230,18 +230,18 @@ void execute_command(command_t *command) {
     /* Redirect Input */
 
     dup2(fd_in, 0);
-//    close(fd_in);
+    close(fd_in);
 
 
     /* Redirect Error */
 
     dup2(fd_err, 2);
-//    close(fd_err);
+    close(fd_err);
 
     /* Redirect Output */
 
     dup2(fd_out, 1);
-//    close(fd_out);
+    close(fd_out);
 
 
     /* Create a child process */
