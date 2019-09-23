@@ -182,10 +182,14 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
+
+
+
     /* Setup Output*/
 
     int fd_out;
     if (i == command->num_single_commands - 1) {
+
       /* Last Single Command */
       if (command->out_file) {
         if (command->append_out) {
@@ -203,6 +207,7 @@ void execute_command(command_t *command) {
     else {
       /* Not the last Command - Use Pipes */
 
+      printf("Settup Up Pipes\n");
       int fd_pipe[2];
       pipe(fd_pipe);
       fd_out = fd_pipe[1];
