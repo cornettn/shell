@@ -207,7 +207,7 @@ void execute_command(command_t *command) {
     else {
       /* Not the last Command - Use Pipes */
 
-      printf("Settup Up Pipes\n");
+//      printf("Settup Up Pipes\n");
       int fd_pipe[2];
       pipe(fd_pipe);
       fd_out = dup(fd_pipe[1]);
@@ -219,23 +219,23 @@ void execute_command(command_t *command) {
     /* Redirect Input */
 
     dup2(fd_in, 0);
-    close(fd_in);
+//    close(fd_in);
 
 
     /* Redirect Error */
 
     dup2(fd_err, 2);
-    close(fd_err);
+//    close(fd_err);
 
     /* Redirect Output */
 
     dup2(fd_out, 1);
-    close(fd_out);
+//    close(fd_out);
 
 
     /* Create a child process */
 
-    printf("Fork\n");
+//    printf("Fork\n");
 
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
@@ -249,7 +249,7 @@ void execute_command(command_t *command) {
         single_command->arguments[single_command->num_args] = NULL;
       }
 
-      printf("Execute Command\n");
+//      printf("Execute Command\n");
       print_single_command(single_command);
 
       close(fd_in);
@@ -279,7 +279,7 @@ void execute_command(command_t *command) {
 
     /* Parent Process */
 
-    printf("Parent\n");
+//    printf("Parent\n");
 
     /* Restore in/out defaults */
 
@@ -289,11 +289,14 @@ void execute_command(command_t *command) {
     close(temp_in);
     close(temp_out);
     close(temp_err);
+    close(fd_in);
+    close(fd_out);
+    close(fd_err);
 
     if (!command->background) {
-      printf("Waiting for child\n");
+//      printf("Waiting for child\n");
       waitpid(ret, NULL, 0);
-      printf("Done waiting\n");
+//      printf("Done waiting\n");
     }
 
   }
