@@ -178,7 +178,8 @@ void execute_command(command_t *command) {
 
 
   int ret = -1;
-
+  int fd_pipe[2];
+  bool use_pipes=false;
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
@@ -191,6 +192,14 @@ void execute_command(command_t *command) {
     if (i == command->num_single_commands - 1) {
 
       /* Last Single Command */
+
+      /* Input */
+
+      if (use_pipes) {
+        fd_in = dup(fd_pipe[0]);
+      }
+
+      /* Output */
       if (command->out_file) {
         if (command->append_out) {
           fd_out = open(command->out_file,
@@ -206,14 +215,16 @@ void execute_command(command_t *command) {
     }
     else {
       /* Not the last Command - Use Pipes */
+      use_pipes = true;
+      if (pipe(fd_pipe) == -1) {
+        perror("pipe");
+      }
 
-//      printf("Settup Up Pipes\n");
-      int fd_pipe[2];
-      pipe(fd_pipe);
       fd_out = dup(fd_pipe[1]);
-      fd_in = dup(fd_pipe[0]);
-      close(fd_pipe[1]);
-      close(fd_pipe[0]);
+      if (i != 0) {
+        /* Not Very First Command */
+        fd_in = dup(fd_pipe[0]);
+      }
     }
 
     /* Redirect Input */
@@ -255,6 +266,8 @@ void execute_command(command_t *command) {
       close(fd_in);
       close(fd_out);
       close(fd_err);
+      close(fd_pipe[0]);
+      close(fd_pipe[1]);
       close(temp_in);
       close(temp_out);
       close(temp_err);
