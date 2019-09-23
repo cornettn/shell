@@ -225,6 +225,7 @@ void execute_command(command_t *command) {
 
       printf("Set fd_out to fd_pipe[1]\n");
       fd_out = dup(fd_pipe[1]);
+      close(fd_pipe[1]);
       if (i != 0) {
         /* Not Very First Command */
         /* Redirect input to come from pipe */
