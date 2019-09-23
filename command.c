@@ -247,6 +247,8 @@ void execute_command(command_t *command) {
         single_command->arguments[single_command->num_args] = NULL;
       }
 
+      printf("Execute Command\n");
+
       execvp(single_command->arguments[0],
           single_command->arguments);
 
@@ -259,11 +261,15 @@ void execute_command(command_t *command) {
 
       /* fork error */
 
+      printf("Fork Error\n")l
+
       perror("fork");
       return;
     }
 
     /* Parent Process */
+
+    printf("Parent\n");
 
     /* Restore in/out defaults */
 
