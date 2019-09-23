@@ -179,7 +179,6 @@ void execute_command(command_t *command) {
 
   int ret = -1;
   int fd_pipe[2];
-  bool use_pipes=false;
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
@@ -215,7 +214,6 @@ void execute_command(command_t *command) {
     }
     else {
       /* Not the last Command - Use Pipes */
-      use_pipes = true;
       if (pipe(fd_pipe) == -1) {
         perror("pipe");
       }
