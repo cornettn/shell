@@ -182,11 +182,6 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
-    /* Redirect Input */
-
-    dup2(fd_in, 0);
-    close(fd_in);
-
     /* Setup Output*/
 
     int fd_out;
@@ -213,6 +208,11 @@ void execute_command(command_t *command) {
       fd_out = fd_pipe[1];
       fd_in = fd_pipe[0];
     }
+
+    /* Redirect Input */
+
+    dup2(fd_in, 0);
+    close(fd_in);
 
 
     /* Redirect Error */
