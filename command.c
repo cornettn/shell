@@ -142,6 +142,7 @@ void execute_command(command_t *command) {
 
   /* Set input */
 
+  printf("Set fd_in\n");
   int fd_in;
   if (command->in_file) {
     fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
@@ -156,6 +157,8 @@ void execute_command(command_t *command) {
 
 
   /* Setup Error output */
+
+  printf("set fd_err\n");
   int fd_err;
   if (command->err_file) {
     if (command->append_err) {
@@ -195,6 +198,7 @@ void execute_command(command_t *command) {
       /* Input */
 
       if (command->num_single_commands > 1) {
+        printf("Set fd_in to come from fd_pipe[0]\n");
         fd_in = dup(fd_pipe[0]);
       }
 
@@ -218,15 +222,18 @@ void execute_command(command_t *command) {
         perror("pipe");
       }
 
+      printf("Set fd_out to fd_pipe[1]\n");
       fd_out = dup(fd_pipe[1]);
       if (i != 0) {
         /* Not Very First Command */
         /* Redirect input to come from pipe */
 
+        printf("Set fd_in to come from fd_pipe[0]\n");
         fd_in = dup(fd_pipe[0]);
       }
     }
 
+    printf("Redirect input out and err\n");
     /* Redirect Input */
 
     dup2(fd_in, 0);
