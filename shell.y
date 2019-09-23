@@ -112,6 +112,8 @@ io_modifier_list:
 io_modifier:
      STDOUT WORD {
       g_current_command->out_file = $2;
+      printf("Current Command: \n");
+      print_command(g_current_command);
     }
   |  INPUT WORD {
       g_current_command->in_file = $2;

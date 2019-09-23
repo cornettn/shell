@@ -185,7 +185,7 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
-    printf("Command %d\n", i);
+//    printf("Command %d\n", i);
 
 
     /* Setup Output*/
@@ -198,7 +198,7 @@ void execute_command(command_t *command) {
       /* Input */
 
       if (command->num_single_commands > 1) {
-        printf("Set fd_in to come from fd_pipe[0]\n");
+//        printf("Set fd_in to come from fd_pipe[0]\n");
         fd_in = dup(fd_pipe[0]);
         close(fd_pipe[0]);
       }
@@ -223,20 +223,20 @@ void execute_command(command_t *command) {
         perror("pipe");
       }
 
-      printf("Set fd_out to fd_pipe[1]\n");
+//      printf("Set fd_out to fd_pipe[1]\n");
       fd_out = dup(fd_pipe[1]);
       close(fd_pipe[1]);
       if (i != 0) {
         /* Not Very First Command */
         /* Redirect input to come from pipe */
 
-        printf("Set fd_in to come from fd_pipe[0]\n");
+//        printf("Set fd_in to come from fd_pipe[0]\n");
         fd_in = dup(fd_pipe[0]);
         close(fd_pipe[0]);
       }
     }
 
-    printf("Redirect input out and err\n");
+//    printf("Redirect input out and err\n");
     /* Redirect Input */
 
     dup2(fd_in, 0);
@@ -292,8 +292,7 @@ void execute_command(command_t *command) {
     else if (ret < 0) {
 
       /* fork error */
-
-      printf("Fork Error\n");
+//    printf("Fork Error\n");
 
       perror("fork");
       return;
@@ -316,9 +315,9 @@ void execute_command(command_t *command) {
     close(fd_err);
 
     if (!command->background) {
-      printf("Waiting for child\n");
+//      printf("Waiting for child\n");
       waitpid(ret, 0, 0);
-      printf("Done waiting\n");
+//      printf("Done waiting\n");
     }
 
   }
@@ -327,13 +326,13 @@ void execute_command(command_t *command) {
   // and call exec
 
   // Clear to prepare for next command
-  printf("Free this command\n");
+//  printf("Free this command\n");
   print_command(command);
 
   free_command(command);
 
   // Print new prompti
 
-  printf("Print Prompt\n");
+//  printf("Print Prompt\n");
   print_prompt();
 } /* execute_command() */
