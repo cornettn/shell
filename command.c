@@ -185,7 +185,7 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
-
+    printf("Command %d\n", i);
 
 
     /* Setup Output*/
