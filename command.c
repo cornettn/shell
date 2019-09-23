@@ -281,6 +281,7 @@ void execute_command(command_t *command) {
     close(temp_err);
 
     if (!command->background) {
+      printf("Waiting for child\n");
       waitpid(ret, NULL, 0);
     }
 
