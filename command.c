@@ -283,6 +283,7 @@ void execute_command(command_t *command) {
     if (!command->background) {
       printf("Waiting for child\n");
       waitpid(ret, NULL, 0);
+      printf("Done waiting\n");
     }
 
   }
