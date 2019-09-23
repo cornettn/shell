@@ -195,7 +195,7 @@ void execute_command(command_t *command) {
 
       /* Input */
 
-      if (use_pipes) {
+      if (command->num_single_commands > 1) {
         fd_in = dup(fd_pipe[0]);
       }
 
@@ -223,6 +223,8 @@ void execute_command(command_t *command) {
       fd_out = dup(fd_pipe[1]);
       if (i != 0) {
         /* Not Very First Command */
+        /* Redirect input to come from pipe */
+
         fd_in = dup(fd_pipe[0]);
       }
     }
@@ -263,9 +265,6 @@ void execute_command(command_t *command) {
 //      printf("Execute Command\n");
       print_single_command(single_command);
 
-      close(fd_in);
-      close(fd_out);
-      close(fd_err);
       close(fd_pipe[0]);
       close(fd_pipe[1]);
       close(temp_in);
@@ -308,7 +307,7 @@ void execute_command(command_t *command) {
 
     if (!command->background) {
 //      printf("Waiting for child\n");
-      waitpid(ret, NULL, 0);
+      waitpid(ret, 0, 0);
 //      printf("Done waiting\n");
     }
 
