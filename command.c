@@ -261,7 +261,7 @@ void execute_command(command_t *command) {
 
       /* fork error */
 
-      printf("Fork Error\n")l
+      printf("Fork Error\n");
 
       perror("fork");
       return;
