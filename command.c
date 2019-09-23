@@ -249,6 +249,14 @@ void execute_command(command_t *command) {
 
       printf("Execute Command\n");
 
+      if (fd_pipe) {
+        close(fd_pipe[0]);
+        close(fd_pipe[1]);
+      }
+      close(temp_in);
+      close(temp_out);
+      close(temp_err);
+
       execvp(single_command->arguments[0],
           single_command->arguments);
 
@@ -272,6 +280,11 @@ void execute_command(command_t *command) {
     printf("Parent\n");
 
     /* Restore in/out defaults */
+
+    if (fd_pipe) {
+      close(fd_pipe[0]);
+      close(fd_pipe[1]);
+    }
 
     dup2(temp_in, 0);
     dup2(temp_out, 1);
