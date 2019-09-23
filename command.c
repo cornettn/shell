@@ -130,7 +130,7 @@ void execute_command(command_t *command) {
   }
 
   // Print contents of Command data structure
-//  print_command(command);
+  print_command(command);
 
   // Add execution here
 
