@@ -231,7 +231,7 @@ void execute_command(command_t *command) {
 
         printf("Set fd_in to come from fd_pipe[0]\n");
         fd_in = dup(fd_pipe[0]);
-        close(fd_pipe);
+        close(fd_pipe[0]);
       }
     }
 
