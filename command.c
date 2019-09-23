@@ -251,6 +251,9 @@ void execute_command(command_t *command) {
 
       printf("Execute Command\n");
 
+      close(fd_in);
+      close(fd_out);
+      close(fd_err);
       close(temp_in);
       close(temp_out);
       close(temp_err);
