@@ -304,9 +304,9 @@ void execute_command(command_t *command) {
     close(fd_err);
 
     if (!command->background) {
-//      printf("Waiting for child\n");
+      printf("Waiting for child\n");
       waitpid(ret, 0, 0);
-//      printf("Done waiting\n");
+      printf("Done waiting\n");
     }
 
   }
