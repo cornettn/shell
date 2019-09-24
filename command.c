@@ -133,9 +133,9 @@ void execute_command(command_t *command) {
 
   /* Save standard in, err and out */
 
-  int temp_in = dup(0);
-  int temp_out = dup(1);
-  int temp_err = dup(2);
+  int default_in = dup(0);
+  int default_out = dup(1);
+  int deafult_err = dup(2);
 
   /* Set input */
 
@@ -150,7 +150,7 @@ void execute_command(command_t *command) {
   }
   else {
     printf("fd_in is default\n");
-    fd_in = dup(temp_in);
+    fd_in = dup(default_in);
   }
 
 
@@ -171,7 +171,7 @@ void execute_command(command_t *command) {
     }
   }
   else {
-    fd_err = dup(temp_err);
+    fd_err = dup(default_err);
   }
 
 
@@ -222,7 +222,7 @@ void execute_command(command_t *command) {
       }
       else {
         printf("fd_out to default\n");
-        fd_out = dup(temp_out);
+        fd_out = dup(default_out);
       }
     }
     else {
@@ -288,9 +288,9 @@ void execute_command(command_t *command) {
       close(fd_in);
       close(fd_out);
       close(fd_err);
-//      close(temp_in);
-//      close(temp_out);
-//      close(temp_err);
+//      close(default_in);
+//      close(default_out);
+//      close(default_err);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
@@ -315,12 +315,17 @@ void execute_command(command_t *command) {
 
     /* Restore in/out defaults */
 
-    dup2(temp_in, 0);
-    dup2(temp_out, 1);
-    dup2(temp_err, 2);
-    close(temp_in);
-    close(temp_err);
-    close(temp_out);
+    printf("Redirect input to default\n");
+    dup2(deafult_in, 0);
+    printf("Redirect output to default\n");
+    dup2(default_out, 1);
+    printf("Redirect err to default\n");
+    dup2(default_err, 2);
+    printf("Close defaults\n");
+    close(default_in);
+    close(default_err);
+    close(default_out);
+    printf("Close fd_in, fd_out, and fd_err\n");
     close(fd_in);
     close(fd_out);
     close(fd_err);
@@ -332,7 +337,7 @@ void execute_command(command_t *command) {
     }
 
 
-  }
+  } // End for loop
 
   // Setup i/o redirection
   // and call exec
