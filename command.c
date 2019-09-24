@@ -272,8 +272,8 @@ void execute_command(command_t *command) {
 
 //      printf("Execute Command\n");
 
-      close(fd_pipe[0]);
-      close(fd_pipe[1]);
+//      close(fd_pipe[0]);
+//      close(fd_pipe[1]);
       close(fd_in);
       close(fd_out);
       close(fd_err);
