@@ -330,6 +330,8 @@ void execute_command(command_t *command) {
 //      printf("Done waiting\n");
     }
 
+    printf("next single command\n");
+
   }
 
   // Setup i/o redirection
