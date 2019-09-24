@@ -150,7 +150,6 @@ void execute_command(command_t *command) {
     }
   }
   else {
-    printf("fd_in is default\n");
     fd_in = dup(default_in);
   }
 
@@ -182,7 +181,6 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
-    printf("next single command\n");
 
     /* Redirect Input */
 
@@ -196,7 +194,6 @@ void execute_command(command_t *command) {
       /* Last Single Command */
 
       if (command->out_file) {
-        printf("fd_out is out file\n");
         if (command->append_out) {
           fd_out = open(command->out_file,
               O_CREAT|O_APPEND|O_RDWR, 0600);
