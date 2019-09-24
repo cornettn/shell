@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
+#include <fcntl.h>
 
 #include "command.h"
 #include "single_command.h"
