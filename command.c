@@ -224,6 +224,7 @@ void execute_command(command_t *command) {
       }
 
 //      printf("Set fd_out to fd_pipe[1]\n");
+      close(fd_out);
       fd_out = dup(fd_pipe[1]);
       close(fd_pipe[1]);
       if (i != 0) {
@@ -231,6 +232,7 @@ void execute_command(command_t *command) {
         /* Redirect input to come from pipe */
 
 //        printf("Set fd_in to come from fd_pipe[0]\n");
+        close(fd_in);
         fd_in = dup(fd_pipe[0]);
         close(fd_pipe[0]);
       }
