@@ -194,7 +194,6 @@ void execute_command(command_t *command) {
 
       /* Last Single Command */
 
-      printf("Last Command\n");
       print_single_command(command->single_commands[i]);
 
       if (command->out_file) {
