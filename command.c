@@ -200,7 +200,8 @@ void execute_command(command_t *command) {
       close(fd_in);
     }
     else {
-      printf("Redirect input to pipe");
+      printf("Redirect input to pipe\n");
+      close(fd_in);  // Not using fd_in anymore
       dup2(fd_pipe[0], 0);
       close(fd_pipe[0]);
       read_pipe = false;
@@ -256,6 +257,7 @@ void execute_command(command_t *command) {
 
     if (write_pipe) {
       printf("Write to Pipe\n");
+      close(fd_out); // Not using it
       write_pipe = false;
       dup2(fd_pipe[1], 1);
       close(fd_pipe[1]);
