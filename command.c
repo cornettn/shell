@@ -315,17 +315,17 @@ void execute_command(command_t *command) {
 
     /* Restore in/out defaults */
 
-    printf("Redirect input to default\n");
+//    printf("Redirect input to default\n");
     dup2(default_in, 0);
-    printf("Redirect output to default\n");
+//    printf("Redirect output to default\n");
     dup2(default_out, 1);
-    printf("Redirect err to default\n");
+//    printf("Redirect err to default\n");
     dup2(default_err, 2);
-    printf("Close defaults\n");
+//    printf("Close defaults\n");
     close(default_in);
     close(default_err);
     close(default_out);
-    printf("Close fd_in, fd_out, and fd_err\n");
+//    printf("Close fd_in, fd_out, and fd_err\n");
     close(fd_in);
     close(fd_out);
     close(fd_err);
