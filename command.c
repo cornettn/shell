@@ -197,7 +197,6 @@ void execute_command(command_t *command) {
       print_single_command(command->single_commands[i]);
 
       if (command->out_file) {
-        printf("Set fd_out to out file\n");
         if (command->append_out) {
           fd_out = open(command->out_file,
               O_CREAT|O_APPEND|O_RDWR, 0600);
@@ -207,7 +206,6 @@ void execute_command(command_t *command) {
         }
       }
       else {
-        printf("Set fd_out to default\n");
         fd_out = dup(default_out);
       }
     }
@@ -227,7 +225,6 @@ void execute_command(command_t *command) {
 
       /* Make the current function output to pipe */
 
-      printf("fd_out to pipe\n");
       fd_out = fd_pipe[1];
     }
 
