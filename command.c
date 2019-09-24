@@ -234,8 +234,6 @@ void execute_command(command_t *command) {
 
       write_pipe = true;
       read_pipe = true;
-
-      }
     }
 
 //    printf("Redirect input out and err\n");
