@@ -251,6 +251,7 @@ void execute_command(command_t *command) {
     /* Redirect Output */
 
     if (write_pipe) {
+      close(fd_out);
       write_pipe = false;
       printf("Redirect output to fd_pipe[1]\n");
       dup2(fd_pipe[1], 1);
@@ -284,6 +285,7 @@ void execute_command(command_t *command) {
       close(fd_pipe[0]);
       close(fd_pipe[1]);
       close(fd_in);
+      close(fd_out);
       close(fd_err);
 //      close(default_in);
 //      close(default_out);
@@ -324,6 +326,7 @@ void execute_command(command_t *command) {
     close(default_out);
 //    printf("Close fd_in and fd_err\n");
     close(fd_in);
+    close(fd_out);
     close(fd_err);
 
     if (!command->background) {
