@@ -1336,7 +1336,7 @@ yyreduce:
 #line 115 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->out_file = (yyvsp[0].string);
-      close(open(g_current_command->out_file, O_CREAT));
+      close(open(g_current_command->out_file, O_CREAT, 0600));
     }
 #line 1342 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1354,7 +1354,7 @@ yyreduce:
     {
       g_current_command->append_out = true;
       g_current_command->out_file = (yyvsp[0].string);
-      close(open(g_current_command->out_file, O_CREAT));
+      close(open(g_current_command->out_file, O_CREAT, 0600));
     }
 #line 1360 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1363,7 +1363,7 @@ yyreduce:
 #line 127 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->err_file = (yyvsp[0].string);
-      close(open(g_current_command->err_file, O_CREAT));
+      close(open(g_current_command->err_file, O_CREAT, 0600));
     }
 #line 1369 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1372,9 +1372,9 @@ yyreduce:
 #line 131 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->out_file = (yyvsp[0].string);
-      close(open(g_current_command->out_file, O_CREAT));
+      close(open(g_current_command->out_file, O_CREAT, 0600));
       g_current_command->err_file = strdup((yyvsp[0].string));
-      close(open(g_current_command->err_file, O_CREAT));
+      close(open(g_current_command->err_file, O_CREAT, 0600));
     }
 #line 1380 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1385,9 +1385,9 @@ yyreduce:
       g_current_command->append_out = true;
       g_current_command->append_err = true;
       g_current_command->err_file = (yyvsp[0].string);
-      close(open(g_current_command->out_file, O_CREAT));
+      close(open(g_current_command->out_file, O_CREAT, 0600));
       g_current_command->out_file = strdup((yyvsp[0].string));
-      close(open(g_current_command->err_file, O_CREAT));
+      close(open(g_current_command->err_file, O_CREAT, 0600));
     }
 #line 1393 "y.tab.c" /* yacc.c:1646  */
     break;
