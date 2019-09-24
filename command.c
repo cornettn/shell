@@ -182,26 +182,32 @@ void execute_command(command_t *command) {
 
   int ret = -1;
   int fd_pipe[2];
+  bool read_pipe = false;
+  bool write_pipe = true;
+
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
 //    printf("Command %d\n", i);
 
+    /* Redirect Input to fd_in if input is not coming from pipes */
+
+    if (!read_pipe) {
+      dup2(fd_in, 0);
+      close(fd_in);
+    }
+    else {
+      dup2(fd_pipe[0], 0);
+      close(fd_pipe[0]);
+      read_pipe = false;
+    }
 
     /* Setup Output*/
 
     int fd_out;
     if (i == command->num_single_commands - 1) {
-      printf("Last Command\n");
+
       /* Last Single Command */
-
-      /* Input */
-
-      if (command->num_single_commands > 1) {
-//        printf("Set fd_in to come from fd_pipe[0]\n");
-//        fd_in = fd_pipe[0];
-        close(fd_pipe[0]);
-      }
 
       /* Output */
       if (command->out_file) {
@@ -219,30 +225,20 @@ void execute_command(command_t *command) {
     }
     else {
       /* Not the last Command - Use Pipes */
+
       if (pipe(fd_pipe) == -1) {
         perror("pipe");
       }
 
-//      printf("Set fd_out to fd_pipe[1]\n");
-//      close(fd_out);
-      fd_out = fd_pipe[1];
-//      close(fd_pipe[1]);
-      if (i != 0) {
-        /* Not Very First Command */
-        /* Redirect input to come from pipe */
+      /* Set Flags */
 
-//        printf("Set fd_in to come from fd_pipe[0]\n");
-//        close(fd_in);
-        fd_in = fd_pipe[0];
-//        close(fd_pipe[0]);
+      write_pipe = true;
+      read_pipe = true;
+
       }
     }
 
 //    printf("Redirect input out and err\n");
-    /* Redirect Input */
-
-    dup2(fd_in, 0);
-    close(fd_in);
 
 
     /* Redirect Error */
@@ -252,9 +248,16 @@ void execute_command(command_t *command) {
 
     /* Redirect Output */
 
-    dup2(fd_out, 1);
-    close(fd_out);
-
+    if (write_pipe) {
+      close(fd_out);
+      write_pipe = false;
+      dup2(fd_pipe[1], 1);
+      close(fd_pipe[1]);
+    }
+    else {
+      dup2(fd_out, 1);
+      close(f_out);
+    }
 
     /* Create a child process */
 
