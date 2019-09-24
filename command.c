@@ -183,7 +183,7 @@ void execute_command(command_t *command) {
   int ret = -1;
   int fd_pipe[2];
   bool read_pipe = false;
-  bool write_pipe = true;
+  bool write_pipe = false;
 
   /* Create a new fork for each single command */
 
