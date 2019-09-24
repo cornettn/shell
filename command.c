@@ -194,6 +194,9 @@ void execute_command(command_t *command) {
 
       /* Last Single Command */
 
+      print("Last Command\n");
+      print_single_command(command->single_commands[i]);
+
       if (command->out_file) {
         if (command->append_out) {
           fd_out = open(command->out_file,
