@@ -221,7 +221,7 @@ void execute_command(command_t *command) {
         }
       }
       else {
-        printf("fd_out to default\n"):
+        printf("fd_out to default\n");
         fd_out = dup(temp_out);
       }
     }
