@@ -296,7 +296,9 @@ void execute_command(command_t *command) {
   close(default_out);
 
   if (!command->background) {
+    printf("Waiting\n");
     waitpid(ret, NULL, 0);
+    printf("Done Waiting\n");
   }
 
   free_command(command);
