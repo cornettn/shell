@@ -123,13 +123,15 @@ void print_command(command_t *command) {
  */
 
 void execute_command(command_t *command) {
-  // Don't do anything if there are no single commands
+
+  /* Don't do anything if there are no single commands */
+
   if (command->single_commands == NULL) {
     print_prompt();
     return;
   }
 
-  print_command(command);
+//  print_command(command);
 
   /* Save standard in, err and out */
 
@@ -142,7 +144,7 @@ void execute_command(command_t *command) {
   int fd_in;
   if (command->in_file) {
     fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
-    printf("fd_in is in file\n");
+//    printf("fd_in is in file\n");
     if (fd_in < 0) {
       perror("open");
       exit(1);
@@ -174,42 +176,27 @@ void execute_command(command_t *command) {
     fd_err = dup(default_err);
   }
 
+  /* Initialize variables to use inside the loop */
 
   int ret = -1;
-  int fd_pipe[2];
-  bool read_pipe = false;
-  bool write_pipe = false;
+  int fd_out;
 
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
     printf("next single command\n");
 
-    /* Redirect Input to fd_in if input is not coming from pipes */
+    /* Redirect Input */
 
-    if (!read_pipe) {
-      printf("Redirect input to fd_in\n");
-      dup2(fd_in, 0);
-      close(fd_in);
-    }
-    else {
-      printf("Close fd_in\n");
-      close(fd_in);  // Not using fd_in anymore
-      printf("Redirect input to fd_pipe[0]\n");
-      dup2(fd_pipe[0], 0);
-      printf("Close fd_pipe[0]\n");
-      close(fd_pipe[0]);
-      read_pipe = false;
-    }
+    dup2(fd_in, 0);
+    close(fd_in);
 
     /* Setup Output*/
 
-    int fd_out;
     if (i == command->num_single_commands - 1) {
 
       /* Last Single Command */
 
-      /* Output */
       if (command->out_file) {
         printf("fd_out is out file\n");
         if (command->append_out) {
@@ -229,19 +216,19 @@ void execute_command(command_t *command) {
       /* Not the last Command - Use Pipes */
 
       printf("Use pipes\n");
-
+      int fd_pipe[2];
       if (pipe(fd_pipe) == -1) {
         perror("pipe");
       }
 
-      /* Set Flags */
+      /* Make the next funtion read from pipe */
 
-      write_pipe = true;
-      read_pipe = true;
+      fd_in = fd_pipe[0];
+
+      /* Make the current function output to pipe */
+
+      fd_out = fd_pipe[1];
     }
-
-//    printf("Redirect input out and err\n");
-
 
     /* Redirect Error */
 
@@ -250,23 +237,10 @@ void execute_command(command_t *command) {
 
     /* Redirect Output */
 
-    if (write_pipe) {
-      close(fd_out);
-      write_pipe = false;
-      printf("Redirect output to fd_pipe[1]\n");
-      dup2(fd_pipe[1], 1);
-      printf("Close fd_pipe[1]\n");
-      close(fd_pipe[1]);
-    }
-    else {
-      printf("Write to fd_out\n");
-      dup2(fd_out, 1);
-      close(fd_out);
-    }
+    dup2(fd_out, 1);
+    close(fd_out);
 
     /* Create a child process */
-
-//    printf("Fork\n");
 
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
@@ -280,16 +254,11 @@ void execute_command(command_t *command) {
         single_command->arguments[single_command->num_args] = NULL;
       }
 
-//      printf("Execute Command\n");
+      /* Close defaults - child does not need them */
 
-      close(fd_pipe[0]);
-      close(fd_pipe[1]);
-      close(fd_in);
-      close(fd_out);
-      close(fd_err);
-//      close(default_in);
-//      close(default_out);
-//      close(default_err);
+      close(default_in);
+      close(default_out);
+      close(default_err);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
@@ -302,7 +271,6 @@ void execute_command(command_t *command) {
     else if (ret < 0) {
 
       /* fork error */
-//    printf("Fork Error\n");
 
       perror("fork");
       return;
@@ -314,41 +282,23 @@ void execute_command(command_t *command) {
 
     /* Restore in/out defaults */
 
-//    printf("Redirect input to default\n");
     dup2(default_in, 0);
-//    printf("Redirect output to default\n");
     dup2(default_out, 1);
-//    printf("Redirect err to default\n");
     dup2(default_err, 2);
-//    printf("Close defaults\n");
     close(default_in);
     close(default_err);
     close(default_out);
-//    printf("Close fd_in and fd_err\n");
-    close(fd_in);
-    close(fd_out);
-    close(fd_err);
 
     if (!command->background) {
-//      printf("Waiting for child\n");
       waitpid(ret, 0, 0);
-//      printf("Done waiting\n");
     }
 
 
   } // End for loop
 
-  // Setup i/o redirection
-  // and call exec
-
-  // Clear to prepare for next command
-//  printf("Free this command\n");
-//  print_command(command);
-
   free_command(command);
 
   // Print new prompti
 
-//  printf("Print Prompt\n");
   print_prompt();
 } /* execute_command() */
