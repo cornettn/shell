@@ -193,9 +193,9 @@ void execute_command(command_t *command) {
       close(fd_in);
     }
     else {
-      printf("Redirect input to pipe\n");
       printf("Close fd_in\n");
       close(fd_in);  // Not using fd_in anymore
+      printf("Redirect input to fd_pipe[0]\n");
       dup2(fd_pipe[0], 0);
       printf("Close fd_pipe[0]\n");
       close(fd_pipe[0]);
@@ -283,11 +283,11 @@ void execute_command(command_t *command) {
 
 //      printf("Execute Command\n");
 
-//      close(fd_pipe[0]);
-//      close(fd_pipe[1]);
-//      close(fd_in);
-//      close(fd_out);
-//      close(fd_err);
+      close(fd_pipe[0]);
+      close(fd_pipe[1]);
+      close(fd_in);
+      close(fd_out);
+      close(fd_err);
 //      close(temp_in);
 //      close(temp_out);
 //      close(temp_err);
