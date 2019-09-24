@@ -256,7 +256,7 @@ void execute_command(command_t *command) {
     }
     else {
       dup2(fd_out, 1);
-      close(f_out);
+      close(fd_out);
     }
 
     /* Create a child process */
