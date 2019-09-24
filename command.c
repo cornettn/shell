@@ -277,9 +277,9 @@ void execute_command(command_t *command) {
       close(fd_in);
       close(fd_out);
       close(fd_err);
-      close(temp_in);
-      close(temp_out);
-      close(temp_err);
+//      close(temp_in);
+//      close(temp_out);
+//      close(temp_err);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
@@ -308,11 +308,11 @@ void execute_command(command_t *command) {
     dup2(temp_out, 1);
     dup2(temp_err, 2);
     close(temp_in);
-    close(temp_out);
     close(temp_err);
-    close(fd_in);
-    close(fd_out);
-    close(fd_err);
+    close(temp_out);
+//    close(fd_in);
+//    close(fd_out);
+//    close(fd_err);
 
     if (!command->background) {
 //      printf("Waiting for child\n");
