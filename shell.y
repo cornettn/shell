@@ -114,7 +114,7 @@ io_modifier_list:
 io_modifier:
      STDOUT WORD {
       g_current_command->out_file = $2;
-      close(open(g_current_command->out_file, O_CREAT));
+      close(open(g_current_command->out_file, O_CREAT, 0600));
     }
   |  INPUT WORD {
       g_current_command->in_file = $2;
@@ -122,25 +122,25 @@ io_modifier:
   | APPEND_STDOUT WORD {
       g_current_command->append_out = true;
       g_current_command->out_file = $2;
-      close(open(g_current_command->out_file, O_CREAT));
+      close(open(g_current_command->out_file, O_CREAT, 0600));
     }
   | STDERR WORD {
       g_current_command->err_file = $2;
-      close(open(g_current_command->err_file, O_CREAT));
+      close(open(g_current_command->err_file, O_CREAT, 0600));
     }
   | STDOUT_STDERR WORD {
       g_current_command->out_file = $2;
-      close(open(g_current_command->out_file, O_CREAT));
+      close(open(g_current_command->out_file, O_CREAT, 0600));
       g_current_command->err_file = strdup($2);
-      close(open(g_current_command->err_file, O_CREAT));
+      close(open(g_current_command->err_file, O_CREAT, 0600));
     }
   | APPEND_STDOUT_STDERR WORD {
       g_current_command->append_out = true;
       g_current_command->append_err = true;
       g_current_command->err_file = $2;
-      close(open(g_current_command->out_file, O_CREAT));
+      close(open(g_current_command->out_file, O_CREAT, 0600));
       g_current_command->out_file = strdup($2);
-      close(open(g_current_command->err_file, O_CREAT));
+      close(open(g_current_command->err_file, O_CREAT, 0600));
     }
   ;
 
