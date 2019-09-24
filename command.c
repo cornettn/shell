@@ -186,6 +186,7 @@ void execute_command(command_t *command) {
 
     dup2(fd_in, 0);
     close(fd_in);
+    fd_in = -1;
 
     /* Setup Output*/
 
@@ -233,6 +234,7 @@ void execute_command(command_t *command) {
 
     dup2(fd_out, 1);
     close(fd_out);
+    fd_out = -1;
 
     /* Create a child process */
 
