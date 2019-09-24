@@ -250,6 +250,11 @@ void execute_command(command_t *command) {
         single_command->arguments[single_command->num_args] = NULL;
       }
 
+      /* Close everthing again */
+      close(fd_out);
+      close(fd_in);
+      close(fd_err);
+
       /* Close defaults - child does not need them */
 
       close(default_in);
