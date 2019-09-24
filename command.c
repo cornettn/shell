@@ -211,6 +211,7 @@ void execute_command(command_t *command) {
 
       /* Output */
       if (command->out_file) {
+        printf("fd_out is out file\n");
         if (command->append_out) {
           fd_out = open(command->out_file,
               O_CREAT|O_APPEND|O_RDWR, 0600);
@@ -220,6 +221,7 @@ void execute_command(command_t *command) {
         }
       }
       else {
+        printf("fd_out to default\n"):
         fd_out = dup(temp_out);
       }
     }
@@ -247,12 +249,13 @@ void execute_command(command_t *command) {
     /* Redirect Output */
 
     if (write_pipe) {
-      close(fd_out);
+      printf("Write to Pipe\n");
       write_pipe = false;
       dup2(fd_pipe[1], 1);
       close(fd_pipe[1]);
     }
     else {
+      printf("Write to fd_out\n");
       dup2(fd_out, 1);
       close(fd_out);
     }
