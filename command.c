@@ -146,12 +146,14 @@ void execute_command(command_t *command) {
   int fd_in;
   if (command->in_file) {
     fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
+    printf("fd_in is in file\n");
     if (fd_in < 0) {
       perror("open");
       exit(1);
     }
   }
   else {
+    printf("fd_in is default\n");
     fd_in = dup(temp_in);
   }
 
@@ -193,10 +195,12 @@ void execute_command(command_t *command) {
     /* Redirect Input to fd_in if input is not coming from pipes */
 
     if (!read_pipe) {
+      printf("Redirect input to fd_in\n");
       dup2(fd_in, 0);
       close(fd_in);
     }
     else {
+      printf("Redirect input to pipe");
       dup2(fd_pipe[0], 0);
       close(fd_pipe[0]);
       read_pipe = false;
