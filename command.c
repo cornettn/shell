@@ -284,7 +284,7 @@ void execute_command(command_t *command) {
   close(default_out);
 
   if (!command->background) {
-    waitpid(ret, 0, 0);
+    waitpid(ret, NULL, 0);
   }
 
   free_command(command);
