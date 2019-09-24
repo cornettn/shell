@@ -274,14 +274,14 @@ void execute_command(command_t *command) {
 
 //      printf("Execute Command\n");
 
-      close(fd_pipe[0]);
-      close(fd_pipe[1]);
+//      close(fd_pipe[0]);
+//      close(fd_pipe[1]);
 //      close(fd_in);
 //      close(fd_out);
 //      close(fd_err);
-      close(temp_in);
-      close(temp_out);
-      close(temp_err);
+//      close(temp_in);
+//      close(temp_out);
+//      close(temp_err);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
