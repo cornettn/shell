@@ -228,6 +228,8 @@ void execute_command(command_t *command) {
     else {
       /* Not the last Command - Use Pipes */
 
+      printf("Use pipes\n");
+
       if (pipe(fd_pipe) == -1) {
         perror("pipe");
       }
