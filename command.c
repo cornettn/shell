@@ -183,6 +183,7 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
+    printf("next single command\n");
 
     /* Redirect Input to fd_in if input is not coming from pipes */
 
@@ -330,7 +331,6 @@ void execute_command(command_t *command) {
 //      printf("Done waiting\n");
     }
 
-    printf("next single command\n");
 
   }
 
