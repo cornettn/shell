@@ -316,7 +316,7 @@ void execute_command(command_t *command) {
     /* Restore in/out defaults */
 
     printf("Redirect input to default\n");
-    dup2(deafult_in, 0);
+    dup2(default_in, 0);
     printf("Redirect output to default\n");
     dup2(default_out, 1);
     printf("Redirect err to default\n");
