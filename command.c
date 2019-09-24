@@ -199,7 +199,7 @@ void execute_command(command_t *command) {
 
       if (command->num_single_commands > 1) {
 //        printf("Set fd_in to come from fd_pipe[0]\n");
-        fd_in = dup(fd_pipe[0]);
+//        fd_in = fd_pipe[0];
         close(fd_pipe[0]);
       }
 
@@ -225,16 +225,16 @@ void execute_command(command_t *command) {
 
 //      printf("Set fd_out to fd_pipe[1]\n");
 //      close(fd_out);
-      fd_out = dup(fd_pipe[1]);
-      close(fd_pipe[1]);
+      fd_out = fd_pipe[1];
+//      close(fd_pipe[1]);
       if (i != 0) {
         /* Not Very First Command */
         /* Redirect input to come from pipe */
 
 //        printf("Set fd_in to come from fd_pipe[0]\n");
 //        close(fd_in);
-        fd_in = dup(fd_pipe[0]);
-        close(fd_pipe[0]);
+        fd_in = fd_pipe[0];
+//        close(fd_pipe[0]);
       }
     }
 
@@ -242,18 +242,18 @@ void execute_command(command_t *command) {
     /* Redirect Input */
 
     dup2(fd_in, 0);
-    close(fd_in);
+//    close(fd_in);
 
 
     /* Redirect Error */
 
     dup2(fd_err, 2);
-    close(fd_err);
+//    close(fd_err);
 
     /* Redirect Output */
 
     dup2(fd_out, 1);
-    close(fd_out);
+//    close(fd_out);
 
 
     /* Create a child process */
@@ -274,8 +274,8 @@ void execute_command(command_t *command) {
 
 //      printf("Execute Command\n");
 
-//      close(fd_pipe[0]);
-//      close(fd_pipe[1]);
+      close(fd_pipe[0]);
+      close(fd_pipe[1]);
       close(fd_in);
       close(fd_out);
       close(fd_err);
@@ -312,9 +312,9 @@ void execute_command(command_t *command) {
     close(temp_in);
     close(temp_err);
     close(temp_out);
-//    close(fd_in);
-//    close(fd_out);
-//    close(fd_err);
+    close(fd_in);
+    close(fd_out);
+    close(fd_err);
 
     if (!command->background) {
 //      printf("Waiting for child\n");
