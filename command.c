@@ -192,7 +192,7 @@ void execute_command(command_t *command) {
 
     int fd_out;
     if (i == command->num_single_commands - 1) {
-
+      printf("Last Command\n");
       /* Last Single Command */
 
       /* Input */
