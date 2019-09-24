@@ -129,10 +129,7 @@ void execute_command(command_t *command) {
     return;
   }
 
-  // Print contents of Command data structure
   print_command(command);
-
-  // Add execution here
 
   /* Save standard in, err and out */
 
@@ -142,7 +139,6 @@ void execute_command(command_t *command) {
 
   /* Set input */
 
-//  printf("Set fd_in\n");
   int fd_in;
   if (command->in_file) {
     fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
@@ -160,7 +156,6 @@ void execute_command(command_t *command) {
 
   /* Setup Error output */
 
-//  printf("set fd_err\n");
   int fd_err;
   if (command->err_file) {
     if (command->append_err) {
@@ -180,8 +175,6 @@ void execute_command(command_t *command) {
   }
 
 
-
-
   int ret = -1;
   int fd_pipe[2];
   bool read_pipe = false;
@@ -190,7 +183,6 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
-//    printf("Command %d\n", i);
 
     /* Redirect Input to fd_in if input is not coming from pipes */
 
@@ -201,8 +193,10 @@ void execute_command(command_t *command) {
     }
     else {
       printf("Redirect input to pipe\n");
+      printf("Close fd_in\n");
       close(fd_in);  // Not using fd_in anymore
       dup2(fd_pipe[0], 0);
+      printf("Close fd_pipe[0]\n");
       close(fd_pipe[0]);
       read_pipe = false;
     }
@@ -256,10 +250,12 @@ void execute_command(command_t *command) {
     /* Redirect Output */
 
     if (write_pipe) {
-      printf("Write to Pipe\n");
+      printf("Close fd_out\n");
       close(fd_out); // Not using it
       write_pipe = false;
+      printf("Redirect output to fd_pipe[1]\n");
       dup2(fd_pipe[1], 1);
+      printf("Close fd_pipe[1]\n");
       close(fd_pipe[1]);
     }
     else {
