@@ -144,7 +144,6 @@ void execute_command(command_t *command) {
   int fd_in;
   if (command->in_file) {
     fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
-//    printf("fd_in is in file\n");
     if (fd_in < 0) {
       perror("open");
       exit(1);
@@ -154,7 +153,6 @@ void execute_command(command_t *command) {
     printf("fd_in is default\n");
     fd_in = dup(default_in);
   }
-
 
   /* Setup Error output */
 
@@ -208,14 +206,13 @@ void execute_command(command_t *command) {
         }
       }
       else {
-        printf("fd_out to default\n");
         fd_out = dup(default_out);
       }
     }
     else {
+
       /* Not the last Command - Use Pipes */
 
-      printf("Use pipes\n");
       int fd_pipe[2];
       if (pipe(fd_pipe) == -1) {
         perror("pipe");
@@ -245,7 +242,7 @@ void execute_command(command_t *command) {
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
-      /* Child Process */
+
       /* Ensure that the last element in the arguments list is NULL */
 
       if (single_command->arguments[single_command->num_args - 1] != NULL) {
@@ -276,29 +273,25 @@ void execute_command(command_t *command) {
       return;
     }
 
-    /* Parent Process */
-
-//    printf("Parent\n");
-
-    /* Restore in/out defaults */
-
-    dup2(default_in, 0);
-    dup2(default_out, 1);
-    dup2(default_err, 2);
-    close(default_in);
-    close(default_err);
-    close(default_out);
-
-    if (!command->background) {
-      waitpid(ret, 0, 0);
-    }
-
-
   } // End for loop
+
+  /* Parent Process */
+
+  /* Restore in/out defaults */
+
+  dup2(default_in, 0);
+  dup2(default_out, 1);
+  dup2(default_err, 2);
+  close(default_in);
+  close(default_err);
+  close(default_out);
+
+  if (!command->background) {
+    waitpid(ret, 0, 0);
+  }
 
   free_command(command);
 
-  // Print new prompti
 
   print_prompt();
 } /* execute_command() */
