@@ -142,7 +142,7 @@ void execute_command(command_t *command) {
 
   int default_in = dup(0);
   int default_out = dup(1);
-  int default_err = dupe(2);
+  int default_err = dup(2);
 
   /* Set input */
 
