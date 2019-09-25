@@ -25,7 +25,7 @@ void myunputc(int c) {
 
 %%
 
-\n {
+"\n" {
   return NEWLINE;
 }
 
@@ -65,16 +65,8 @@ void myunputc(int c) {
   return APPEND_STDOUT_STDERR;
 }
 
-"exit" {
-  return EXIT;
-}
-
-[^ \t\n]+ {
+[^ \t\n<>&|2]+ {
   /* Assume that file names have only alpha chars */
   yylval.string = strdup(yytext);
-  if (!strcmp(yylval.string, "exit\n")) {
-    printf("\n");
-    exit(1);
-  }
   return WORD;
 }
