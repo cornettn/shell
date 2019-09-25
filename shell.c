@@ -21,6 +21,11 @@ void print_prompt() {
   fflush(stdout);
 } /* print_prompt() */
 
+
+void sig_int_handler() {
+  printf("yo\n");
+}
+
 /*
  *  This main is simply an entry point for the program which sets up
  *  memory for the rest of the program and the turns control over to
@@ -45,7 +50,8 @@ int main() {
    int error = sigaction(SIGINT, &signal_action, NULL);
 
    if (error) {
-    printf("yo\n");
+    perror("sigaction");
+    exit(2);
    }
 
   yyparse();
