@@ -279,6 +279,7 @@ void execute_command(command_t *command) {
       return;
     }
    else {
+     printf("par1\n");
     waitpid(ret, NULL, 0);
    }
   } // End for loop
