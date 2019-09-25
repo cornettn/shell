@@ -35,5 +35,17 @@ int main() {
   create_single_command(g_current_single_command);
 
   print_prompt();
+
+  /* Signal Handling */
+   struct sigaction signal_action;
+   signal_action.sa_handler = sig_int_handler;
+   sigemptyset(&signal_action.sa_mask);
+   signal_action.sa_flags = SA_RESTART;
+   int error = sigaction(SIGINT, &signal_action, NULL);
+
+   if (error) {
+    printf("yo\n");
+   }
+
   yyparse();
 } /* main() */

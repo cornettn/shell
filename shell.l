@@ -13,7 +13,7 @@
 
 #include <stdio.h>
 
-static  void yyunput (int c,char *buf_ptr  );
+static void yyunput (int c,char *buf_ptr  );
 
 void myunputc(int c) {
   unput(c);

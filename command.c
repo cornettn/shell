@@ -127,17 +127,16 @@ void execute_command(command_t *command) {
   /* Don't do anything if there are no single commands */
 
   if (command->single_commands == NULL) {
-    print_prompt();
+    int input = dup(0);
+    if (!isatty(input)) {
+      print_prompt();
+    }
+    close(input);
     return;
   }
 
   print_command(command);
 
-  /* Save standard in, err and out */
-
-  int default_in = dup(0);
-  int default_out = dup(1);
-  int default_err = dup(2);
 
   /* Set input */
 
