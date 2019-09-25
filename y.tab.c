@@ -473,7 +473,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    52,    52,    56,    61,    69,    70,    73,    77,    79,
       84,    90,    91,    95,   101,   109,   110,   111,   115,   121,
-     124,   128,   131,   135
+     124,   131,   137,   144
 };
 #endif
 
@@ -1356,40 +1356,52 @@ yyreduce:
     {
       g_current_command->append_out = true;
       g_current_command->out_file = (yyvsp[0].string);
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_APPEND|O_RDWR, 0600);
+      close(fd);
     }
-#line 1361 "y.tab.c" /* yacc.c:1646  */
+#line 1364 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 128 "shell.y" /* yacc.c:1646  */
+#line 131 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->err_file = (yyvsp[0].string);
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_TRUNC|O_RDWR, 0600);
+      close(fd);
     }
-#line 1369 "y.tab.c" /* yacc.c:1646  */
+#line 1375 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 131 "shell.y" /* yacc.c:1646  */
+#line 137 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->out_file = (yyvsp[0].string);
       g_current_command->err_file = strdup((yyvsp[0].string));
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_TRUNC|O_RDWR, 0600);
+      close(fd);
     }
-#line 1378 "y.tab.c" /* yacc.c:1646  */
+#line 1387 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 135 "shell.y" /* yacc.c:1646  */
+#line 144 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->append_out = true;
       g_current_command->append_err = true;
       g_current_command->err_file = (yyvsp[0].string);
       g_current_command->out_file = strdup((yyvsp[0].string));
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_APPEND|O_RDWR, 0600);
+      close(fd);
     }
-#line 1389 "y.tab.c" /* yacc.c:1646  */
+#line 1401 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1393 "y.tab.c" /* yacc.c:1646  */
+#line 1405 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1617,7 +1629,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 144 "shell.y" /* yacc.c:1906  */
+#line 156 "shell.y" /* yacc.c:1906  */
 
 
 void
