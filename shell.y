@@ -112,6 +112,9 @@ io_modifier_list:
 io_modifier:
      STDOUT WORD {
       g_current_command->out_file = $2;
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_TRUNC|O_RDWR, 0600);
+      close(fd);
     }
   |  INPUT WORD {
       g_current_command->in_file = $2;
