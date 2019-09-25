@@ -124,6 +124,7 @@ void print_command(command_t *command) {
 
 void execute_command(command_t *command) {
 
+
   /* Don't do anything if there are no single commands */
 
   if (command->single_commands == NULL) {
@@ -137,6 +138,11 @@ void execute_command(command_t *command) {
 
   print_command(command);
 
+  /* Save default file descriptors */
+
+  int default_in = dup(0);
+  int default_out = dup(1);
+  int default_err = dupe(2);
 
   /* Set input */
 
