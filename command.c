@@ -123,7 +123,6 @@ void print_command(command_t *command) {
  */
 
 void execute_command(command_t *command) {
-printf("sahea \n");
 
   /* Don't do anything if there are no single commands */
 
@@ -244,7 +243,7 @@ printf("sahea \n");
 //    fd_out = -1;
 
     /* Create a child process */
-
+printf("fork\n");
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
