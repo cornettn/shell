@@ -124,19 +124,31 @@ io_modifier:
   | APPEND_STDOUT WORD {
       g_current_command->append_out = true;
       g_current_command->out_file = $2;
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_APPEND|O_RDWR, 0600);
+      close(fd);
     }
   | STDERR WORD {
       g_current_command->err_file = $2;
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_TRUNC|O_RDWR, 0600);
+      close(fd);
     }
   | STDOUT_STDERR WORD {
       g_current_command->out_file = $2;
       g_current_command->err_file = strdup($2);
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_TRUNC|O_RDWR, 0600);
+      close(fd);
     }
   | APPEND_STDOUT_STDERR WORD {
       g_current_command->append_out = true;
       g_current_command->append_err = true;
       g_current_command->err_file = $2;
       g_current_command->out_file = strdup($2);
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_APPEND|O_RDWR, 0600);
+      close(fd);
     }
   ;
 
