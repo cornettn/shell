@@ -72,7 +72,7 @@ void myunputc(int c) {
 [^ \t\n]+ {
   /* Assume that file names have only alpha chars */
   yylval.string = strdup(yytext);
-  if (!strcmp(yylval.string, "exit")) {
+  if (!strcmp(yylval.string, "exit\n")) {
     printf("\n");
     exit(1);
   }

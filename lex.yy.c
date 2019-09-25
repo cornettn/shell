@@ -872,15 +872,19 @@ YY_RULE_SETUP
 {
   /* Assume that file names have only alpha chars */
   yylval.string = strdup(yytext);
+  if (!strcmp(yylval.string, "exit")) {
+    printf("\n");
+    exit(1);
+  }
   return WORD;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 77 "shell.l"
+#line 81 "shell.l"
 ECHO;
 	YY_BREAK
-#line 884 "lex.yy.c"
+#line 888 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1897,4 +1901,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 77 "shell.l"
+#line 81 "shell.l"
