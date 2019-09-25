@@ -235,7 +235,7 @@ printf("fkfmklm\n");
 printf("twoif wea w 1\n");
     dup2(fd_err, 2);
     close(fd_err);
-printf("fuofwenwe 2\n");
+printf("fuofwenwe 2 %d %d\n", fd_err, df_out);
     /* Redirect Output */
 
     dup2(fd_out, 1);
