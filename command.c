@@ -191,7 +191,7 @@ printf("wfeawef wefa wfae %d\n", command->num_single_commands);
     dup2(fd_in, 0);
     close(fd_in);
 //    fd_in = -1;
-
+printf("fkfmklm\n");
     /* Setup Output*/
 
     if (i == command->num_single_commands - 1) {
