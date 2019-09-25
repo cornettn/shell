@@ -23,7 +23,8 @@ void print_prompt() {
 
 
 void sig_int_handler() {
-  printf("yo\n");
+  printf("\n");
+  print_prompt();
 }
 
 /*

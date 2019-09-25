@@ -65,6 +65,10 @@ void myunputc(int c) {
   return APPEND_STDOUT_STDERR;
 }
 
+"exit" {
+  return EXIT;
+}
+
 [^ \t\n]+ {
   /* Assume that file names have only alpha chars */
   yylval.string = strdup(yytext);

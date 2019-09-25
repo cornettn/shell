@@ -26,7 +26,7 @@
 %token INPUT BACKGROUND APPEND_STDOUT
 %token STDERR APPEND_STDOUT_STDERR
 %token STDOUT_STDERR
-
+%token EXIT
 
 %{
 
@@ -99,6 +99,9 @@ argument:
 
 executable:
      WORD {
+      if (!strcmp($1, "exit")) {
+        exit(1);
+      }
       g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
       insert_argument(g_current_single_command, $1);
