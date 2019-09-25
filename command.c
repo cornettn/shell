@@ -232,10 +232,10 @@ printf("fkfmklm\n");
     }
 
     /* Redirect Error */
-
+printf("twoif wea w 1\n");
     dup2(fd_err, 2);
     close(fd_err);
-
+printf("fuofwenwe 2\n");
     /* Redirect Output */
 
     dup2(fd_out, 1);
