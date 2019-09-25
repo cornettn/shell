@@ -66,7 +66,7 @@ void myunputc(int c) {
 }
 
 [^ \t\n\>\<\&\|]+ {
-  /* Assume that file names have only alpha chars */
+  /* Assume that file names have only alpha characters */
   yylval.string = strdup(yytext);
   return WORD;
 }
