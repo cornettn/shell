@@ -857,7 +857,7 @@ case 11:
 YY_RULE_SETUP
 #line 68 "shell.l"
 {
-  /* Assume that file names have only alpha chars */
+  /* Assume that file names have only alpha characters */
   yylval.string = strdup(yytext);
   return WORD;
 }

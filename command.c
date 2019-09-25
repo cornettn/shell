@@ -229,7 +229,7 @@ void execute_command(command_t *command) {
       fd_in = fd_pipe[0];
 
       /* Make the current function output to pipe */
-
+close(fd_out);
       fd_out = fd_pipe[1];
     }
 
