@@ -183,7 +183,7 @@ void execute_command(command_t *command) {
   int fd_out;
 
   /* Create a new fork for each single command */
-
+printf("wfeawef wefa wfae %d\n", command->num_single_commands);
   for (int i = 0; i < command->num_single_commands; i++) {
 
     /* Redirect Input */
