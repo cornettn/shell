@@ -123,7 +123,7 @@ void print_command(command_t *command) {
  */
 
 void execute_command(command_t *command) {
-
+printf("sahea \n");
 
   /* Don't do anything if there are no single commands */
 
