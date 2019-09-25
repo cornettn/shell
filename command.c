@@ -299,7 +299,7 @@ void execute_command(command_t *command) {
   free_command(command);
 
 
-  if (isatty(default_in)) {
+  if (!isatty(default_in)) {
     print_prompt();
   }
 } /* execute_command() */
