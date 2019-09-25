@@ -136,7 +136,7 @@ void execute_command(command_t *command) {
     return;
   }
 
-  print_command(command);
+//  print_command(command);
 
   /* Save default file descriptors */
 
@@ -199,7 +199,7 @@ void execute_command(command_t *command) {
 
       /* Last Single Command */
 
-      print_single_command(command->single_commands[i]);
+      //print_single_command(command->single_commands[i]);
 
       if (command->out_file) {
         if (command->append_out) {
@@ -296,9 +296,9 @@ void execute_command(command_t *command) {
   close(default_out);
 
   if (!command->background) {
-    printf("Waiting\n");
+    //printf("Waiting\n");
     waitpid(ret, NULL, 0);
-    printf("Done Waiting\n");
+    //printf("Done Waiting\n");
   }
 
   free_command(command);
