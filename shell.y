@@ -36,6 +36,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "command.h"
 #include "single_command.h"
