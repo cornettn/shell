@@ -36,6 +36,7 @@ void sig_int_handler() {
 void sig_child_handler(int sig) {
   waitpid(sig, NULL, 0);
   printf("[%d] exited.\n", sig);
+  print_prompt();
 }
 
 /*
@@ -72,7 +73,7 @@ int main() {
   struct sigaction sa_zombies;
   sa_zombies.sa_handler = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
-  sa_zombies.sa_flags = SA_RESTART;
+  sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP;
   int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
 
   if (zombie) {
