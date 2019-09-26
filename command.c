@@ -147,20 +147,6 @@ void execute_command(command_t *command) {
   int default_err = dup(2);
 
   dprintf(debug, "Default in out err: %d %d %d\n", default_in, default_out, default_err);
-  /* Set input */
-
-  int fd_in;
-  if (command->in_file) {
-    fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
-    if (fd_in < 0) {
-      perror("open");
-      exit(1);
-    }
-  }
-  else {
-    fd_in = dup(default_in);
-  }
-
   /* Setup Error output */
 
   int fd_err;
@@ -180,8 +166,26 @@ void execute_command(command_t *command) {
   else {
     fd_err = dup(default_err);
   }
-dup2(fd_err, 2);
-close(fd_err);
+
+  /* Redirect Error */
+
+  dup2(fd_err, 2);
+  close(fd_err);
+
+  /* Set intial input */
+
+  int fd_in;
+  if (command->in_file) {
+    fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
+    if (fd_in < 0) {
+      perror("open");
+      exit(1);
+    }
+  }
+  else {
+    fd_in = dup(default_in);
+  }
+
   /* Initialize variables to use inside the loop */
 
   int ret = -1;
@@ -244,17 +248,11 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       dprintf(debug, "Pipes: fd_out is %d, fd_in is %d\n\n", fd_out, fd_in);
     }
 
-    /* Redirect Error */
-    /*dprintf(debug, "Redirect Err: fd_err is %d\n", fd_err);
-    dup2(fd_err, 2);
-    close(fd_err);
-*/
     /* Redirect Output */
 
     dprintf(debug, "Redirect out: fd_out is %d\n", fd_out);
     dup2(fd_out, 1);
     close(fd_out);
-//    fd_out = -1;
 
     /* Create a child process */
     single_command_t * single_command = command->single_commands[i];
@@ -294,7 +292,7 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
     }
     else {
       dprintf(debug, "Wait for %d\n", ret);
-      waitpid(ret, NULL, 0);
+//      waitpid(ret, NULL, 0);
     }
   } // End for loop
 
@@ -313,7 +311,7 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
 
   if (!command->background) {
     //printf("Waiting\n");
-    //waitpid(ret, NULL, 0);
+    waitpid(ret, NULL, 0);
     //printf("Done Waiting\n");
   }
 
