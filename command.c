@@ -323,6 +323,7 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
     sigemptyset(&sa_zombies.sa_mask);
     sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP;
     int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
+    print_prompt();
 
     if (zombie) {
       perror("sigaction");
@@ -330,10 +331,7 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
      }
   }
 
-  printf("good\n");
-
   free_command(command);
-
 
   if (isatty(0)) {
     print_prompt();
