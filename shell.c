@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #include "command.h"
 #include "single_command.h"
@@ -30,7 +32,7 @@ void sig_int_handler() {
   }
 }
 
-void sig_child_handler() {
+void sig_child_handler(int sig) {
   waitpid(sig);
   printf("[%d] exited.\n", sig);
 }
