@@ -26,9 +26,6 @@
 
 void sig_child_handler(int sig) {
   waitpid(sig, NULL, 0);
-  if (g_current_command->background) {
-    printf("[%d] exited.\n", sig);
-  }
 }
 
 /*
