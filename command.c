@@ -191,7 +191,7 @@ printf("wfeawef wefa wfae %d\n", command->num_single_commands);
     dup2(fd_in, 0);
     close(fd_in);
 //    fd_in = -1;
-printf("fkfmklm\n");
+printf("Redirect in\n");
     /* Setup Output*/
 
     if (i == command->num_single_commands - 1) {
@@ -213,6 +213,7 @@ printf("fkfmklm\n");
         fd_out = dup(default_out);
       }
     }
+    printf("Last command: fd_out is %d\n", fd_out);
     else {
 
       /* Not the last Command - Use Pipes */
@@ -229,15 +230,18 @@ printf("fkfmklm\n");
 
       /* Make the current function output to pipe */
       fd_out = fd_pipe[1];
+
+      printf("Pipes: fd_out is %d\n", fd_out);
     }
 
     /* Redirect Error */
-printf("twoif wea w 1\n");
+    printf("Redirect Err: fd_err is %d\n", fd_err);
     dup2(fd_err, 2);
     close(fd_err);
-printf("fuofwenwe 2 %d %d\n", fd_err, fd_out);
+
     /* Redirect Output */
 
+    printf("Redirect out: fd_out is %d\n", fd_out);
     dup2(fd_out, 1);
     close(fd_out);
 //    fd_out = -1;
@@ -247,7 +251,7 @@ printf("fork\n");
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
-
+      printf("child\n");
       /* Ensure that the last element in the arguments list is NULL */
 
       if (single_command->arguments[single_command->num_args - 1] != NULL) {
@@ -261,6 +265,8 @@ printf("fork\n");
       close(default_in);
       close(default_out);
       close(default_err);
+
+      printf("Within Child:\n\tfd_out: %d\n\tfd_in: %d\n", fd_out. fd_err);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
@@ -277,10 +283,10 @@ printf("fork\n");
       perror("fork");
       return;
     }
-   else {
-     printf("par1\n");
-    waitpid(ret, NULL, 0);
-   }
+    else {
+      printf("Wait for %d\n", ret);
+      waitpid(ret, NULL, 0);
+    }
   } // End for loop
 
   /* Parent Process */
