@@ -189,11 +189,15 @@ printf("Num single commands: %d\n", command->num_single_commands);
 
     /* Redirect Input */
 
-printf("Redirect in\n");
-printf("fd_in: %d\n", fd_in);
+    printf("Redirect in\n");
+    printf("fd_in: %d\n", fd_in);
     dup2(fd_in, 0);
     close(fd_in);
-//    fd_in = -1;
+    printf("After close\n");
+    printf("fd_in: %d\n", fd_in);
+
+
+    //    fd_in = -1;
     /* Setup Output*/
 
     if (i == command->num_single_commands - 1) {
