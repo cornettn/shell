@@ -26,7 +26,9 @@
 
 void sig_child_handler(int sig) {
   waitpid(sig, NULL, 0);
-  printf("[%d] exited.\n", sig);
+  if (g_current_command->background) {
+    printf("[%d] exited.\n", sig);
+  }
 }
 
 /*
@@ -323,7 +325,6 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
     sigemptyset(&sa_zombies.sa_mask);
     sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP|SA_NOCLDWAIT;
     int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
-    print_prompt();
 
     if (zombie) {
       perror("sigaction");
