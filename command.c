@@ -266,7 +266,7 @@ printf("fork\n");
       close(default_out);
       close(default_err);
 
-      printf("Within Child:\n\tfd_out: %d\n\tfd_in: %d\n", fd_out. fd_err);
+      printf("Within Child:\n\tfd_out: %d\n\tfd_in: %d\n", fd_out, fd_err);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
