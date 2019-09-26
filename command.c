@@ -26,7 +26,7 @@
 
 
 void sig_child_handler(int sid) {
-  printf("Current back: %b\n", g_current_command->background);
+  printf("Current back: %d\n", g_current_command->background);
   if (g_current_command->background) {
     printf("[%d] exited.\n", sid);
     print_prompt();
