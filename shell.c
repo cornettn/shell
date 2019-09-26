@@ -32,6 +32,13 @@ void sig_int_handler() {
   }
 }
 
+void sig_child_handler(int sid) {
+  if (g_current_command->background) {
+    printf("[%d] exited.\n");
+  }
+  print_prompt();
+}
+
 /*
  *  This main is simply an entry point for the program which sets up
  *  memory for the rest of the program and the turns control over to
@@ -51,16 +58,29 @@ int main() {
   }
 
   /* Signal Handling */
-   struct sigaction signal_action;
-   signal_action.sa_handler = sig_int_handler;
-   sigemptyset(&signal_action.sa_mask);
-   signal_action.sa_flags = SA_RESTART;
-   int error = sigaction(SIGINT, &signal_action, NULL);
+  struct sigaction signal_action;
+  signal_action.sa_handler = sig_int_handler;
+  sigemptyset(&signal_action.sa_mask);
+  signal_action.sa_flags = SA_RESTART;
+  int error = sigaction(SIGINT, &signal_action, NULL);
 
-   if (error) {
+  if (error) {
     perror("sigaction");
     exit(2);
-   }
+  }
+
+  struct sigaction sa_zombies;
+  sa_zombies.sa_handler = sig_child_handler;
+  sigemptyset(&sa_zombies.sa_mask);
+  sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP|SA_NOCLDWAIT;
+  int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
+
+  if (zombie) {
+    perror("sigaction");
+    exit(2);
+  }
+}
+
 
   yyparse();
 } /* main() */
