@@ -212,8 +212,8 @@ printf("Redirect in\n");
       else {
         fd_out = dup(default_out);
       }
-    }
     printf("Last command: fd_out is %d\n", fd_out);
+    }
     else {
 
       /* Not the last Command - Use Pipes */
