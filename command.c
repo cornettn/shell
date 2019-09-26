@@ -24,6 +24,14 @@
 
 #include "shell.h"
 
+
+void sig_child_handler(int sid) {
+  if (g_current_command->background) {
+    printf("[%d] exited.\n", sid);
+    print_prompt();
+  }
+}
+
 /*
  *  Initialize a command_t
  */
@@ -306,6 +314,18 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
   close(default_in);
   close(default_err);
   close(default_out);
+
+  struct sigaction sa_zombies;
+  sa_zombies.sa_handler = sig_child_handler;
+  sigemptyset(&sa_zombies.sa_mask);
+  sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP|SA_NOCLDWAIT;
+  int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
+
+  if (zombie) {
+    perror("sigaction");
+    exit(2);
+  }
+
 
   if (!command->background) {
     //printf("Waiting\n");
