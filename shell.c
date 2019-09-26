@@ -34,7 +34,7 @@ void sig_int_handler() {
 
 void sig_child_handler(int sid) {
   if (g_current_command->background) {
-    printf("[%d] exited.\n");
+    printf("[%d] exited.\n", sid);
   }
   print_prompt();
 }
@@ -79,7 +79,7 @@ int main() {
     perror("sigaction");
     exit(2);
   }
-}
+
 
 
   yyparse();
