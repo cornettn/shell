@@ -330,6 +330,8 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
      }
   }
 
+  printf("good\n");
+
   free_command(command);
 
 
