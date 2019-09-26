@@ -69,6 +69,8 @@ int main() {
     exit(2);
   }
 
+  yyparse();
+
   struct sigaction sa_zombies;
   sa_zombies.sa_handler = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
@@ -79,8 +81,4 @@ int main() {
     perror("sigaction");
     exit(2);
   }
-
-
-
-  yyparse();
 } /* main() */
