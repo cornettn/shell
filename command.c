@@ -180,7 +180,8 @@ void execute_command(command_t *command) {
   else {
     fd_err = dup(default_err);
   }
-
+dup2(fd_err, 2);
+close(fd_err);
   /* Initialize variables to use inside the loop */
 
   int ret = -1;
@@ -244,10 +245,10 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
     }
 
     /* Redirect Error */
-    dprintf(debug, "Redirect Err: fd_err is %d\n", fd_err);
+    /*dprintf(debug, "Redirect Err: fd_err is %d\n", fd_err);
     dup2(fd_err, 2);
     close(fd_err);
-
+*/
     /* Redirect Output */
 
     dprintf(debug, "Redirect out: fd_out is %d\n", fd_out);
