@@ -36,7 +36,6 @@ void sig_int_handler() {
 void sig_child_handler(int sig) {
   waitpid(sig, NULL, 0);
   printf("[%d] exited.\n", sig);
-  print_prompt();
 }
 
 /*
