@@ -132,7 +132,6 @@ void execute_command(command_t *command) {
   if (command->single_commands == NULL) {
     int input = dup(0);
     if (isatty(input)) {
-      printf("3\n");
       print_prompt();
     }
     close(input);
@@ -320,7 +319,6 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
 
 
   if (isatty(0)) {
-    printf("4\n");
     print_prompt();
   }
 } /* execute_command() */
