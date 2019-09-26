@@ -73,7 +73,7 @@ int main() {
   sa_zombies.sa_handler = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
   sa_zombies.sa_flags = SA_RESTART;
-  int zombie = sigaction(SIGCHLD, &signal_action, NULL);
+  int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
 
   if (zombie) {
     perror("sigaction");
