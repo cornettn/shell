@@ -23,8 +23,10 @@ void print_prompt() {
 
 
 void sig_int_handler() {
-  printf("\n");
-  print_prompt();
+  if (!isatty(0)) {
+    printf("\n");
+    print_prompt();
+  }
 }
 
 /*
@@ -41,7 +43,9 @@ int main() {
   create_command(g_current_command);
   create_single_command(g_current_single_command);
 
-  print_prompt();
+  if (!isatty(0)) {
+    print_prompt();
+  }
 
   /* Signal Handling */
    struct sigaction signal_action;
