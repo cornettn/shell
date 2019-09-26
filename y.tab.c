@@ -1340,7 +1340,7 @@ yyreduce:
 #line 118 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
-        printf("Ambiguous Output Redirect\n");
+        printf("Ambiguous output redirect.\n");
       }
 
       g_current_command->out_file = (yyvsp[0].string);
@@ -1363,7 +1363,7 @@ yyreduce:
 #line 131 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
-        printf("Ambiguous Output Redirect\n");
+        printf("Ambiguous output redirect.\n");
       }
 
       g_current_command->append_out = true;
@@ -1390,7 +1390,7 @@ yyreduce:
 #line 148 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
-        printf("Ambiguous Output Redirect\n");
+        printf("Ambiguous output redirect.\n");
       }
 
       g_current_command->out_file = (yyvsp[0].string);
@@ -1406,7 +1406,7 @@ yyreduce:
 #line 159 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
-        printf("Ambiguous Output Redirect\n");
+        printf("Ambiguous output redirect.\n");
       }
 
       g_current_command->append_out = true;
