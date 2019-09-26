@@ -143,6 +143,7 @@ void execute_command(command_t *command) {
   int default_out = dup(1);
   int default_err = dup(2);
 
+  printf("Default in out err: %d %d %d\n", default_in, default_out, default_err);
   /* Set input */
 
   int fd_in;
@@ -188,10 +189,11 @@ printf("Num single commands: %d\n", command->num_single_commands);
 
     /* Redirect Input */
 
+printf("Redirect in\n");
+printf("fd_in: %d\n", fd_in);
     dup2(fd_in, 0);
     close(fd_in);
 //    fd_in = -1;
-printf("Redirect in\n");
     /* Setup Output*/
 
     if (i == command->num_single_commands - 1) {
@@ -212,7 +214,7 @@ printf("Redirect in\n");
       else {
         fd_out = dup(default_out);
       }
-    printf("Last command: fd_out is %d\n", fd_out);
+    printf("In Last command: fd_out is %d\n", fd_out);
     }
     else {
 
