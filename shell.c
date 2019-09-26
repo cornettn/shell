@@ -28,9 +28,11 @@ void sig_int_handler() {
     printf("\n");
     print_prompt();
   }
-  else {
-    printf("not a terminal\n");
-  }
+}
+
+void sig_child_handler() {
+  waitpid(sig);
+  printf("[%d] exited.\n", sig);
 }
 
 /*
@@ -62,6 +64,17 @@ int main() {
     perror("sigaction");
     exit(2);
    }
+
+  struct sigaction sa_zombies;
+  sa_zombies.sa_hander = sig_child_handler;
+  sig_emptyset(&sa_zombies.sa_mask);
+  sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP;
+  int zombie = sigaction(SIGCHLD, &signal_action, NULL);
+
+  if (zombie) {
+    perror("sigaction");
+    exit(2);
+  }
 
   yyparse();
 } /* main() */
