@@ -274,7 +274,7 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       close(default_out);
       close(default_err);
 
-      dprintf(debug, "Within Child:\n\tfd_out: %d\n\tfd_in: %d\n", fd_out, fd_err);
+      dprintf(debug, "Within Child:\n\tfd_out: %d\n\tfd_in: %d\n", fd_out, fd_in);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
