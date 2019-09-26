@@ -28,6 +28,7 @@ void print_prompt() {
 void sig_int_handler() {
   if (isatty(0)) {
     printf("\n");
+    printf("2\n");
     print_prompt();
   }
 }
@@ -52,6 +53,7 @@ int main() {
   create_single_command(g_current_single_command);
 
   if (isatty(0)) {
+    printf("1\n");
     print_prompt();
   }
 
