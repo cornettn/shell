@@ -321,7 +321,7 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
     struct sigaction sa_zombies;
     sa_zombies.sa_handler = sig_child_handler;
     sigemptyset(&sa_zombies.sa_mask);
-    sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP;
+    sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP|SA_NOCLDWAIT;
     int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
     print_prompt();
 
