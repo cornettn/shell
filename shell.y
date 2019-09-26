@@ -116,6 +116,10 @@ io_modifier_list:
 
 io_modifier:
      STDOUT WORD {
+      if (g_current_command->out_file) {
+        printf("Ambiguous Output Redirect\n");
+      }
+
       g_current_command->out_file = $2;
       int fd = open(g_current_command->out_file,
                     O_CREAT|O_TRUNC|O_RDWR, 0600);
@@ -125,6 +129,10 @@ io_modifier:
       g_current_command->in_file = $2;
     }
   | APPEND_STDOUT WORD {
+      if (g_current_command->out_file) {
+        printf("Ambiguous Output Redirect\n");
+      }
+
       g_current_command->append_out = true;
       g_current_command->out_file = $2;
       int fd = open(g_current_command->out_file,
@@ -138,6 +146,10 @@ io_modifier:
       close(fd);
     }
   | STDOUT_STDERR WORD {
+      if (g_current_command->out_file) {
+        printf("Ambiguous Output Redirect\n");
+      }
+
       g_current_command->out_file = $2;
       g_current_command->err_file = strdup($2);
       int fd = open(g_current_command->out_file,
@@ -145,6 +157,10 @@ io_modifier:
       close(fd);
     }
   | APPEND_STDOUT_STDERR WORD {
+      if (g_current_command->out_file) {
+        printf("Ambiguous Output Redirect\n");
+      }
+
       g_current_command->append_out = true;
       g_current_command->append_err = true;
       g_current_command->err_file = $2;
