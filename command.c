@@ -125,7 +125,7 @@ void print_command(command_t *command) {
  */
 
 void execute_command(command_t *command) {
-  int debug = open("Debug", O_CREAT|O_APPEND|O_RDWR, 0666);
+  int debug = open("debug", O_CREAT|O_APPEND|O_RDWR, 0666);
 
   /* Don't do anything if there are no single commands */
 
