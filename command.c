@@ -240,7 +240,7 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       /* Make the current function output to pipe */
       fd_out = fd_pipe[1];
 
-      dprintf(debug, "Pipes: fd_out is %d\n\n", fd_out);
+      dprintf(debug, "Pipes: fd_out is %d, fd_in is %d\n\n", fd_out, fd_in);
     }
 
     /* Redirect Error */
