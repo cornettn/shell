@@ -146,7 +146,7 @@ void execute_command(command_t *command) {
   int default_out = dup(1);
   int default_err = dup(2);
 
-  fprintf(debug, "Default in out err: %d %d %d\n", default_in, default_out, default_err);
+  dprintf(debug, "Default in out err: %d %d %d\n", default_in, default_out, default_err);
   /* Set input */
 
   int fd_in;
@@ -187,17 +187,17 @@ void execute_command(command_t *command) {
   int fd_out;
 
   /* Create a new fork for each single command */
-fprintf(debug, "Num single commands: %d\n", command->num_single_commands);
+dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
   for (int i = 0; i < command->num_single_commands; i++) {
 
     /* Redirect Input */
 
-    fprintf(debug, "Redirect in\n");
-    fprintf(debug, "fd_in: %d\n\n", fd_in);
+    dprintf(debug, "Redirect in\n");
+    dprintf(debug, "fd_in: %d\n\n", fd_in);
     dup2(fd_in, 0);
     close(fd_in);
-    fprintf(debug, "After close\n");
-    fprintf(debug, "fd_in: %d\n\n", fd_in);
+    dprintf(debug, "After close\n");
+    dprintf(debug, "fd_in: %d\n\n", fd_in);
 
 
     //    fd_in = -1;
@@ -221,7 +221,7 @@ fprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       else {
         fd_out = dup(default_out);
       }
-    fprintf(debug, "In Last command: fd_out is %d\n\n", fd_out);
+    dprintf(debug, "In Last command: fd_out is %d\n\n", fd_out);
     }
     else {
 
@@ -240,17 +240,17 @@ fprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       /* Make the current function output to pipe */
       fd_out = fd_pipe[1];
 
-      fprintf(debug, "Pipes: fd_out is %d\n\n", fd_out);
+      dprintf(debug, "Pipes: fd_out is %d\n\n", fd_out);
     }
 
     /* Redirect Error */
-    fprintf(debug, "Redirect Err: fd_err is %d\n", fd_err);
+    dprintf(debug, "Redirect Err: fd_err is %d\n", fd_err);
     dup2(fd_err, 2);
     close(fd_err);
 
     /* Redirect Output */
 
-    fprintf(debug, "Redirect out: fd_out is %d\n", fd_out);
+    dprintf(debug, "Redirect out: fd_out is %d\n", fd_out);
     dup2(fd_out, 1);
     close(fd_out);
 //    fd_out = -1;
@@ -259,7 +259,7 @@ fprintf(debug, "Num single commands: %d\n", command->num_single_commands);
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
-      fprintf(debug, "child\n");
+      dprintf(debug, "child\n");
       /* Ensure that the last element in the arguments list is NULL */
 
       if (single_command->arguments[single_command->num_args - 1] != NULL) {
@@ -274,7 +274,7 @@ fprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       close(default_out);
       close(default_err);
 
-      fprintf(debug, "Within Child:\n\tfd_out: %d\n\tfd_in: %d\n", fd_out, fd_err);
+      dprintf(debug, "Within Child:\n\tfd_out: %d\n\tfd_in: %d\n", fd_out, fd_err);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
@@ -292,7 +292,7 @@ fprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       return;
     }
     else {
-      fprintf(debug, "Wait for %d\n", ret);
+      dprintf(debug, "Wait for %d\n", ret);
       waitpid(ret, NULL, 0);
     }
   } // End for loop
