@@ -131,7 +131,7 @@ void execute_command(command_t *command) {
 
   if (command->single_commands == NULL) {
     int input = dup(0);
-    if (!isatty(input)) {
+    if (isatty(input) == 1) {
       print_prompt();
     }
     close(input);
@@ -318,7 +318,7 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
   free_command(command);
 
 
-  if (!isatty(default_in)) {
+  if (isatty(default_in == 1)) {
     print_prompt();
   }
 } /* execute_command() */

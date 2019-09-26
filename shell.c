@@ -24,9 +24,12 @@ void print_prompt() {
 
 
 void sig_int_handler() {
-  if (!isatty(0)) {
+  if (isatty(0)) {
     printf("\n");
     print_prompt();
+  }
+  else {
+    printf("not a terminal\n");
   }
 }
 
@@ -44,7 +47,7 @@ int main() {
   create_command(g_current_command);
   create_single_command(g_current_single_command);
 
-  if (!isatty(0)) {
+  if (isatty(0)) {
     print_prompt();
   }
 
