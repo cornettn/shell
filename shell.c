@@ -32,12 +32,14 @@ void sig_int_handler() {
   }
 }
 
+/*
 void sig_child_handler(int sid) {
   if (g_current_command->background) {
     printf("[%d] exited.\n", sid);
     print_prompt();
   }
 }
+*/
 
 /*
  *  This main is simply an entry point for the program which sets up
@@ -71,6 +73,7 @@ int main() {
 
   yyparse();
 
+/*
   struct sigaction sa_zombies;
   sa_zombies.sa_handler = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
@@ -81,4 +84,5 @@ int main() {
     perror("sigaction");
     exit(2);
   }
+  */
 } /* main() */
