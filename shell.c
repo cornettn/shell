@@ -68,8 +68,8 @@ int main() {
    }
 
   struct sigaction sa_zombies;
-  sa_zombies.sa_hander = sig_child_handler;
-  sig_emptyset(&sa_zombies.sa_mask);
+  sa_zombies.sa_handler = sig_child_handler;
+  sigemptyset(&sa_zombies.sa_mask);
   sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP;
   int zombie = sigaction(SIGCHLD, &signal_action, NULL);
 
