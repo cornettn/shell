@@ -65,7 +65,7 @@ void myunputc(int c) {
   return APPEND_STDOUT_STDERR;
 }
 
-(([^ \t\n\>\<\&\|]+)|(["][^ \t\n\>\<\&\|]+["]))+ {
+(["]{0,1}[^ \t\n\>\<\&\|]+["]{0,1})) {
   /* Assume that file names have only alpha characters */
   yylval.string = strdup(yytext);
   return WORD;
