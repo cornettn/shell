@@ -67,6 +67,7 @@ void expand_argument(char * str) {
   str_len = strlen(passed_str);
   int num_of_escapes = 0;
   for (int i = 0; i < str_len; i++) {
+    printf("Current char: \'%c\'\n", *(passed_str + i));
     if (*(passed_str + i) == '\\') {
       i++;
       num_of_escapes++;
