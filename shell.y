@@ -68,10 +68,10 @@ void expand_argument(char * str) {
   for (int i = 0; i < str_len; i++) {
     if (*(passed_str + i) == '\\') {
       *(passed_str + i) = *(passed_str + i + 1);
-      for (int j = i + 1; j < str_len - 1; j++) {
+      for (int j = i + 1; j <= str_len; j++) {
         *(passed_str + j) = *(passed_str + j + 1);
       }
-      *(passed_str + str_len) = '\0';
+      //*(passed_str + str_len) = '\0';
       str_len = strlen(passed_str);
       printf("Str now: \"%s\"\n", passed_str);
     }
