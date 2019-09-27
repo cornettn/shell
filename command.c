@@ -28,7 +28,6 @@
 void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
   //printf("Current back: %d\n", g_current_command->background);
   printf("[%d] exited.\n", sid);
-  print_prompt();
 }
 
 /*
@@ -74,6 +73,8 @@ void free_command(command_t *command) {
   for (int i = 0; i < command->num_single_commands; i++) {
     free_single_command(command->single_commands[i]);
   }
+
+  free(command->single_commands);
 
   if (command->out_file) {
     free(command->out_file);
@@ -314,10 +315,10 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
   close(default_err);
   close(default_out);
 
-  struct sigaction sa_zombies;
-  sa_zombies.sa_handler = sig_child_handler;
-  sigemptyset(&sa_zombies.sa_mask);
-  sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP|SA_NOCLDWAIT;
+//  struct sigaction sa_zombies;
+//  sa_zombies.sa_handler = sig_child_handler;
+//  sigemptyset(&sa_zombies.sa_mask);
+//  sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP|SA_NOCLDWAIT;
 //  int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
 
 //  if (zombie) {
@@ -332,6 +333,10 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
     //printf("Done Waiting\n");
   }
   else {
+    struct sigaction sa_zombies;
+    sa_zombies.sa_handler = sig_child_handler;
+    sigemptyset(&sa_zombies.sa_mask);
+    sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP|SA_NOCLDWAIT;
     int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
     if (zombie) {
       perror("sigaction");

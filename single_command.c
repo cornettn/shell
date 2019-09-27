@@ -22,6 +22,8 @@ void free_single_command(single_command_t *simp) {
     simp->arguments[i] = NULL;
   }
 
+  free(simp->arguments);
+
   free(simp);
 } /* free_single_command() */
 
