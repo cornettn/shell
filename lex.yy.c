@@ -372,8 +372,8 @@ static void yynoreturn yy_fatal_error ( const char* msg  );
 		YY_FATAL_ERROR( "token too large, exceeds YYLMAX" ); \
 	yy_flex_strncpy( yytext, (yytext_ptr), yyleng + 1 ); \
 	(yy_c_buf_p) = yy_cp;
-#define YY_NUM_RULES 13
-#define YY_END_OF_BUFFER 14
+#define YY_NUM_RULES 14
+#define YY_END_OF_BUFFER 15
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -383,7 +383,7 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[30] =
     {   0,
-        0,    0,   14,   12,    2,    1,    3,   12,    7,    5,
+        0,    0,   15,   12,    2,    1,    3,   12,    7,    5,
        12,    4,   12,    8,    9,    6,   12,   10,    0,    0,
         0,    0,    0,    0,    0,    0,    0,   11,    0
     } ;
@@ -459,9 +459,9 @@ static const flex_int16_t yy_chk[47] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[14] =
+static const flex_int32_t yy_rule_can_match_eol[15] =
     {   0,
-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,     };
+1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -879,11 +879,19 @@ YY_RULE_SETUP
 }
 	YY_BREAK
 case 13:
+/* rule 13 can match eol */
 YY_RULE_SETUP
-#line 77 "shell.l"
+#line 78 "shell.l"
+{
+  printf("Quotes?\n");
+}
+	YY_BREAK
+case 14:
+YY_RULE_SETUP
+#line 81 "shell.l"
 ECHO;
 	YY_BREAK
-#line 887 "lex.yy.c"
+#line 895 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1900,4 +1908,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 77 "shell.l"
+#line 81 "shell.l"
