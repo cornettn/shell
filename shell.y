@@ -49,6 +49,9 @@ void expand_argument(char * str) {
   if (str == "\"") {
     printf("Quotes\n");
   }
+  else {
+    printf("Not quotes\n");
+  }
   insert_argument(g_current_single_command, str);
 }
 
