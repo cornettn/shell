@@ -49,9 +49,26 @@ void expand_argument(char * str) {
   printf("String passed: \"%s\"\n", str);
   int str_len = strlen(str);
   if ((*str) == '\"') {
-    printf("sadasd\n");
+    str++;
+    char * passed_str = (char *)malloc(str_len * (sizeof(char *)));
+    for (int i = 0; i < str_len; i++) {
+      if ((*str) != '\"') {
+        *(passed_str + i) = *str;
+      }
+      else {
+        *(passed_str + i) = '\0';
+        break;
+      }
+      str++;
+    }
+    printf("haha: %s\n", passed_str);
   }
-  insert_argument(g_current_single_command, str);
+  else {
+
+    /* No Quotes */
+
+    insert_argument(g_current_single_command, str);
+  }
 }
 
 
