@@ -346,8 +346,8 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       perror("sigaction");
       exit(2);
     }
-*/
   }
+*/
   free_command(command);
 
   if (isatty(0)) {
