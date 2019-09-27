@@ -24,10 +24,12 @@
 
 #include "shell.h"
 
+bool background = false;
 
 void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
-  //printf("Current back: %d\n", g_current_command->background);
+  if (background) {
   printf("[%d] exited.\n", sid);
+  }
 }
 
 /*
@@ -327,6 +329,7 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
 //  }
 
 
+  background = command->background;
   if (!command->background) {
     //printf("Waiting\n");
     waitpid(ret, NULL, 0);
