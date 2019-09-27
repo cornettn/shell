@@ -318,12 +318,12 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
   sa_zombies.sa_handler = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
   sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP|SA_NOCLDWAIT;
-  int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
+//  int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
 
-  if (zombie) {
-    perror("sigaction");
-    exit(2);
-  }
+//  if (zombie) {
+//    perror("sigaction");
+//    exit(2);
+//  }
 
 
   if (!command->background) {
