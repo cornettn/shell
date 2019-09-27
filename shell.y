@@ -61,7 +61,7 @@ void expand_argument(char * str) {
       }
       str++;
     }
-    printf("haha: %s\n", passed_str);
+    insert_argument(g_current_single_command, passed_str);
   }
   else {
 
