@@ -47,12 +47,8 @@ int yylex();
 
 void expand_argument(char * str) {
   printf("String passed: \"%s\"\n", str);
-  if (str == "\"") {
-    printf("Quotes\n");
-  }
-  else {
-    printf("Not quotes\n");
-  }
+  int str_len = strlen(str);
+  printf("%c\n", (*str));
   insert_argument(g_current_single_command, str);
 }
 
