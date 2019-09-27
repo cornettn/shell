@@ -46,6 +46,7 @@ int yylex();
 
 
 void expand_argument(char * str) {
+  printf("String passed: \"%s\"\n", str);
   if (str == "\"") {
     printf("Quotes\n");
   }
