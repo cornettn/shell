@@ -44,6 +44,12 @@
 void yyerror(const char * s);
 int yylex();
 
+
+void expand_argument(char * str) {
+  insert_argument(g_current_single_command, str);
+}
+
+
 %}
 
 %%
@@ -93,7 +99,8 @@ argument_list:
 
 argument:
      WORD {
-      insert_argument(g_current_single_command, $1);
+      expand_argument($1);
+/*      insert_argument(g_current_single_command, $1); */
     }
   ;
 
@@ -102,9 +109,12 @@ executable:
       if (!strcmp($1, "exit")) {
         exit(1);
       }
+
       g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
-      insert_argument(g_current_single_command, $1);
+
+      expand_argument($1);
+/*      insert_argument(g_current_single_command, $1); */
     }
   ;
 
