@@ -65,7 +65,7 @@ void myunputc(int c) {
   return APPEND_STDOUT_STDERR;
 }
 
-(\"[^.]+\"\n) {
+(\"[^\n\t]+\") {
   yylval.string = strdup(yytext);
   return WORD;
 }
