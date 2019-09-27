@@ -74,3 +74,7 @@ void myunputc(int c) {
   yylval.string = strdup(yytext);
   return WORD;
 }
+
+("[^ \t\n\>\<\&\/|]+") {
+  printf("Quotes?\n");
+}
