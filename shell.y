@@ -46,7 +46,6 @@ int yylex();
 
 
 void expand_argument(char * str) {
-  printf("String passed: \"%s\"\n", str);
   int str_len = strlen(str);
   if ((*str) == '\"') {
     str++;
