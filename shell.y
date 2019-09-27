@@ -48,7 +48,9 @@ int yylex();
 void expand_argument(char * str) {
   printf("String passed: \"%s\"\n", str);
   int str_len = strlen(str);
-  printf("%c\n", (*str));
+  if ((*str) == '\"') {
+    printf("sadasd\n");
+  }
   insert_argument(g_current_single_command, str);
 }
 
