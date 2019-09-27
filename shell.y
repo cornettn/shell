@@ -46,7 +46,7 @@ int yylex();
 
 
 void expand_argument(char * str) {
-  if ((*str) == "\"") {
+  if (str[0] == "\"") {
     printf("Quotes\n");
   }
   insert_argument(g_current_single_command, str);
