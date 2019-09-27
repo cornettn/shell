@@ -73,7 +73,6 @@ void expand_argument(char * str) {
       }
       //*(passed_str + str_len) = '\0';
       str_len = strlen(passed_str);
-      printf("Str now: \"%s\"\n", passed_str);
     }
   }
 
