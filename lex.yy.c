@@ -383,8 +383,8 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[21] =
     {   0,
-        0,    0,   14,   11,    2,    1,   11,    3,   11,    7,
-        5,    4,   11,   11,    8,    9,    6,   11,   10,    0
+        0,    0,   14,   12,    2,    1,   12,    3,   12,    7,
+        5,    4,   12,   12,    8,    9,    6,   11,   10,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -861,21 +861,21 @@ case 11:
 YY_RULE_SETUP
 #line 68 "shell.l"
 {
+  printf("Quotes?\n");
+}
+	YY_BREAK
+case 12:
+YY_RULE_SETUP
+#line 72 "shell.l"
+{
   /* Assume that file names have only alpha characters */
   yylval.string = strdup(yytext);
   return WORD;
 }
 	YY_BREAK
-case 12:
-YY_RULE_SETUP
-#line 74 "shell.l"
-{
-  printf("Quotes?\n");
-}
-	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 77 "shell.l"
+#line 78 "shell.l"
 ECHO;
 	YY_BREAK
 #line 882 "lex.yy.c"
@@ -1895,4 +1895,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 77 "shell.l"
+#line 78 "shell.l"

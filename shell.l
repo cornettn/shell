@@ -65,7 +65,7 @@ void myunputc(int c) {
   return APPEND_STDOUT_STDERR;
 }
 
-(\"[^ \t\n\>\<\&\/|]+\") {
+(\"[^\t\n\>\<\&\/|]+\") {
   printf("Quotes?\n");
 }
 
