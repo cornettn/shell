@@ -44,12 +44,14 @@
 void yyerror(const char * s);
 int yylex();
 
-
 void expand_argument(char * str) {
   int str_len = strlen(str);
+  char *passed_str = str;
+
+  /* If an argument starts with quotes */
   if ((*str) == '\"') {
     str++;
-    char * passed_str = (char *)malloc(str_len * (sizeof(char *)));
+    passed_str = (char *)malloc(str_len * (sizeof(char *)));
     for (int i = 0; i < str_len; i++) {
       if ((*str) != '\"') {
         *(passed_str + i) = *str;
@@ -60,14 +62,20 @@ void expand_argument(char * str) {
       }
       str++;
     }
-    insert_argument(g_current_single_command, passed_str);
   }
-  else {
 
-    /* No Quotes */
-
-    insert_argument(g_current_single_command, str);
+  str_len = strlen(passed_str);
+  int num_of_escapes = 0;
+  for (int i = 0; i < str_len; i++) {
+    if (*(passed_str + i) == '\\') {
+      i++;
+      num_of_escapes++;
+      *(passed_str + i - num_of_escapes) = *(passed_str + i);
+      printf("Str now: \"%s\"\n", passed_str);
+    }
   }
+
+  insert_argument(g_current_single_command, passed_str);
 }
 
 
