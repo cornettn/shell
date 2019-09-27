@@ -65,7 +65,11 @@ void myunputc(int c) {
   return APPEND_STDOUT_STDERR;
 }
 
-(([^ \t\n\>\<\&\|]+)|("[^ \t\n\>\<\&\|]+")) {
+("[^ \t\n\>\<\&\/|]+") {
+  printf("Quotes?\n");
+}
+
+[^ \t\n\>\<\&\|]+ {
   /* Assume that file names have only alpha characters */
   yylval.string = strdup(yytext);
   return WORD;
