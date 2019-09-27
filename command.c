@@ -25,7 +25,7 @@
 #include "shell.h"
 
 
-void sig_child_handler(int sid) {
+void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
   printf("Current back: %d\n", g_current_command->background);
   if (g_current_command->background) {
     printf("[%d] exited.\n", sid);
@@ -333,7 +333,14 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
     waitpid(ret, NULL, 0);
     //printf("Done Waiting\n");
   }
+  else {
+    int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
+    if (zombie) {
+      perror("sigaction");
+      exit(2);
+    }
 
+  }
   free_command(command);
 
   if (isatty(0)) {
