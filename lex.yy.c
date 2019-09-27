@@ -864,14 +864,13 @@ case 11:
 YY_RULE_SETUP
 #line 68 "shell.l"
 {
-  printf("Quotes?\n");
   yylval.string = strdup(yytext);
   return WORD;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 74 "shell.l"
+#line 73 "shell.l"
 {
   /* Assume that file names have only alpha characters */
   yylval.string = strdup(yytext);
@@ -880,10 +879,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 80 "shell.l"
+#line 79 "shell.l"
 ECHO;
 	YY_BREAK
-#line 887 "lex.yy.c"
+#line 886 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1900,4 +1899,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 80 "shell.l"
+#line 79 "shell.l"
