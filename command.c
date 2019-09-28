@@ -160,12 +160,13 @@ void print_command(command_t *command) {
  */
 
 int set_fd_err(command_t *command) {
+  int fd_err = -1;
   if (command->err_file) {
     if (command->append_err) {
-      return open(command->err_file, O_CREAT|O_RDWR|O_APPEND, 0600);
+      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_APPEND, 0600);
     }
     else {
-      return open(command->err_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
+      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
     }
 
     if (fd_err < 0) {
@@ -174,9 +175,9 @@ int set_fd_err(command_t *command) {
     }
   }
   else {
-    return dup(default_err);
+    fd_err = dup(default_err);
   }
-
+  return fd_err;
 } /* set_fd_err() */
 
 
