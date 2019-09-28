@@ -185,7 +185,6 @@ int set_fd_err(command_t *command, int default_err) {
  */
 
 void execute_command(command_t *command) {
-  int debug = open("debug", O_CREAT|O_TRUNC|O_RDWR, 0666);
 
   /* Don't do anything if there are no single commands */
 
