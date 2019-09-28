@@ -45,6 +45,7 @@ int execute_builtin(command_t *command) {
       printf("%s\n", (*var));
       var++;
     }
+    return 1;
   }
 
   return 0;
