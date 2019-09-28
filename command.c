@@ -36,9 +36,7 @@ void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
 
 void execute_builtin(command_t *command) {
   single_command_t *single = command->single_commands[0];
-  print_single_command(single);
-  printf("Exe: \"%s\"\n", single->arguments[0]);
-  if (!strcmp(single->executable, "exit")) {
+  if (!strcmp(single->arguments[0], "exit")) {
     exit(1);
   }
 }
