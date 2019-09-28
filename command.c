@@ -47,6 +47,10 @@ int execute_builtin(command_t *command) {
     }
     return 1;
   }
+  else if (!strcmp(single->arguments[0], "setenv")) {
+    setenv(single->arguments[1], single->arguments[2], 1);
+    return 1;
+  }
 
   return 0;
 }
@@ -168,7 +172,9 @@ void execute_command(command_t *command) {
 //  print_command(command);
 
   if (execute_builtin(command)) {
-    //print_prompt();
+    if (isatty(0)) {
+      print_prompt();
+    }
     free_command(command);
     return;
   }
