@@ -45,7 +45,7 @@ void yyerror(const char * s);
 int yylex();
 
 void printenv() {
-  char **var = environ;
+  char **var = __environ;
   while (*var != NULL) {
     printf("%s\n", (*var));
     var++;
