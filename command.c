@@ -51,6 +51,10 @@ int execute_builtin(command_t *command) {
     setenv(single->arguments[1], single->arguments[2], 1);
     return 1;
   }
+  else if (!strcmp(single->arguments[0], "unsetenv")) {
+    unsetenv(single->arguments[1]);
+    return 1;
+  }
 
   return 0;
 }
