@@ -34,7 +34,7 @@ void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
   }
 }
 
-void execute_builtin(command_t *command) {
+int execute_builtin(command_t *command) {
   single_command_t *single = command->single_commands[0];
   if (!strcmp(single->arguments[0], "exit")) {
     exit(1);
@@ -46,6 +46,8 @@ void execute_builtin(command_t *command) {
       var++;
     }
   }
+
+  return 0;
 }
 
 /*
@@ -164,7 +166,11 @@ void execute_command(command_t *command) {
 
 //  print_command(command);
 
-  execute_builtin(command);
+  if (execute_builtin(command)) {
+    //print_prompt();
+    free_command(command);
+    return;
+  }
 
   /* Save default file descriptors */
 
@@ -349,22 +355,8 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
 
   background = command->background;
   if (!command->background) {
-    //printf("Waiting\n");
     waitpid(ret, NULL, 0);
-    //printf("Done Waiting\n");
   }
-/*  else {
-    struct sigaction sa_zombies;
-    sa_zombies.sa_handler = sig_child_handler;
-    sigemptyset(&sa_zombies.sa_mask);
-    sa_zombies.sa_flags = SA_RESTART|SA_NOCLDSTOP|SA_NOCLDWAIT;
-    int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
-    if (zombie) {
-      perror("sigaction");
-      exit(2);
-    }
-  }
-*/
   free_command(command);
 
   if (isatty(0)) {
