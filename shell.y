@@ -44,6 +44,14 @@
 void yyerror(const char * s);
 int yylex();
 
+void printenv() {
+  char **var = environ;
+  while (*var != NULL) {
+    printf("%s\n", (*var));
+    var++;
+  }
+}
+
 void expand_argument(char * str) {
   int str_len = strlen(str);
   char *passed_str = str;
@@ -138,6 +146,9 @@ executable:
      WORD {
       if (!strcmp($1, "exit")) {
         exit(1);
+      }
+      else if (!strcmp($1, "printenv")) {
+        printenv();
       }
 
       g_current_single_command = malloc(sizeof(single_command_t));
