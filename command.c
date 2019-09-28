@@ -159,7 +159,7 @@ void print_command(command_t *command) {
  * This function will set standard error according to the specifications.
  */
 
-int set_fd_err(command_t *command) {
+int set_fd_err(command_t *command, int default_err) {
   int fd_err = -1;
   if (command->err_file) {
     if (command->append_err) {
@@ -179,11 +179,6 @@ int set_fd_err(command_t *command) {
   }
   return fd_err;
 } /* set_fd_err() */
-
-
-int set_fd_out(command_t *command) {
-}
-
 
 /*
  *  Execute a command
@@ -219,11 +214,9 @@ void execute_command(command_t *command) {
   int default_out = dup(1);
   int default_err = dup(2);
 
-  dprintf(debug, "Default in out err: %d %d %d\n", default_in, default_out, default_err);
-
   /* Setup Error output */
 
-  int fd_err = set_fd_err(command);
+  int fd_err = set_fd_err(command, default_err);
 
   /* Redirect Error */
 
