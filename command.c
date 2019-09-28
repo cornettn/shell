@@ -39,6 +39,13 @@ void execute_builtin(command_t *command) {
   if (!strcmp(single->arguments[0], "exit")) {
     exit(1);
   }
+  else if (!strcmp(single->arguments[0], "printenv")) {
+    char **var = __environ;
+    while (*var != NULL) {
+      printf("%s\n", (*var));
+      var++;
+    }
+  }
 }
 
 /*
@@ -155,7 +162,7 @@ void execute_command(command_t *command) {
     return;
   }
 
-  print_command(command);
+//  print_command(command);
 
   execute_builtin(command);
 
