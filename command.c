@@ -33,6 +33,13 @@ void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
   }
 }
 
+void exexute_builtin(command_t *command) {
+  char *executable = command->single_commands[0]->executable
+  if (!strcmp(executable, "exit")) {
+    exit(1);
+  }
+}
+
 /*
  *  Initialize a command_t
  */
@@ -148,6 +155,8 @@ void execute_command(command_t *command) {
   }
 
   print_command(command);
+
+  execute_builtin(command);
 
   /* Save default file descriptors */
 

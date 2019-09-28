@@ -144,10 +144,7 @@ argument:
 
 executable:
      WORD {
-      if (!strcmp($1, "exit")) {
-        exit(1);
-      }
-      else if (!strcmp($1, "printenv")) {
+      if (!strcmp($1, "printenv")) {
         printenv();
       }
 
