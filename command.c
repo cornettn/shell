@@ -156,6 +156,35 @@ void print_command(command_t *command) {
 } /* print_command() */
 
 /*
+ * This function will set standard error according to the specifications.
+ */
+
+int set_fd_err(command_t *command) {
+  if (command->err_file) {
+    if (command->append_err) {
+      return open(command->err_file, O_CREAT|O_RDWR|O_APPEND, 0600);
+    }
+    else {
+      return open(command->err_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
+    }
+
+    if (fd_err < 0) {
+      perror("open");
+      exit(1);
+    }
+  }
+  else {
+    return dup(default_err);
+  }
+
+} /* set_fd_err() */
+
+
+int set_fd_out(command_t *command) {
+}
+
+
+/*
  *  Execute a command
  */
 
@@ -190,25 +219,10 @@ void execute_command(command_t *command) {
   int default_err = dup(2);
 
   dprintf(debug, "Default in out err: %d %d %d\n", default_in, default_out, default_err);
+
   /* Setup Error output */
 
-  int fd_err;
-  if (command->err_file) {
-    if (command->append_err) {
-      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_APPEND, 0600);
-    }
-    else {
-      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
-    }
-
-    if (fd_err < 0) {
-      perror("open");
-      exit(1);
-    }
-  }
-  else {
-    fd_err = dup(default_err);
-  }
+  int fd_err = set_fd_err(command);
 
   /* Redirect Error */
 
@@ -235,27 +249,19 @@ void execute_command(command_t *command) {
   int fd_out;
 
   /* Create a new fork for each single command */
-dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
+
   for (int i = 0; i < command->num_single_commands; i++) {
 
     /* Redirect Input */
 
-    dprintf(debug, "Redirect in\n");
-    dprintf(debug, "fd_in: %d\n\n", fd_in);
     dup2(fd_in, 0);
     close(fd_in);
-    dprintf(debug, "After close\n");
-    dprintf(debug, "fd_in: %d\n\n", fd_in);
 
-
-    //    fd_in = -1;
     /* Setup Output*/
 
     if (i == command->num_single_commands - 1) {
 
       /* Last Single Command */
-
-      //print_single_command(command->single_commands[i]);
 
       if (command->out_file) {
         if (command->append_out) {
@@ -269,7 +275,6 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       else {
         fd_out = dup(default_out);
       }
-    dprintf(debug, "In Last command: fd_out is %d\n\n", fd_out);
     }
     else {
 
@@ -286,22 +291,22 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       fd_in = fd_pipe[0];
 
       /* Make the current function output to pipe */
+
       fd_out = fd_pipe[1];
 
-      dprintf(debug, "Pipes: fd_out is %d, fd_in is %d\n\n", fd_out, fd_in);
     }
 
     /* Redirect Output */
 
-    dprintf(debug, "Redirect out: fd_out is %d\n", fd_out);
     dup2(fd_out, 1);
     close(fd_out);
 
     /* Create a child process */
+
     single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
-      dprintf(debug, "child\n");
+
       /* Ensure that the last element in the arguments list is NULL */
 
       if (single_command->arguments[single_command->num_args - 1] != NULL) {
@@ -315,8 +320,6 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       close(default_in);
       close(default_out);
       close(default_err);
-
-      dprintf(debug, "Within Child:\n\tfd_out: %d\n\tfd_in: %d\n", fd_out, fd_in);
 
       execvp(single_command->arguments[0],
           single_command->arguments);
@@ -333,10 +336,6 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
       perror("fork");
       return;
     }
-    else {
-      dprintf(debug, "Wait for %d\n", ret);
-//      waitpid(ret, NULL, 0);
-    }
   } // End for loop
 
   /* Parent Process */
@@ -352,6 +351,8 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
   close(default_err);
   close(default_out);
 
+  /* Set up signal handling for SIGCHLD */
+
   struct sigaction sa_zombies;
   sa_zombies.sa_handler = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
@@ -363,11 +364,13 @@ dprintf(debug, "Num single commands: %d\n", command->num_single_commands);
     exit(2);
   }
 
+  /* Wait for Child */
 
   background = command->background;
   if (!command->background) {
     waitpid(ret, NULL, 0);
   }
+
   free_command(command);
 
   if (isatty(0)) {
