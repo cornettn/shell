@@ -17,6 +17,10 @@ void create_single_command(single_command_t *simp) {
  */
 
 void free_single_command(single_command_t *simp) {
+  if (simp == NULL) {
+    return;
+  }
+
   for (int i = 0; i < simp->num_args; i++) {
     free(simp->arguments[i]);
     simp->arguments[i] = NULL;
