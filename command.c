@@ -56,7 +56,7 @@ void change_directory(char *dir) {
       result = getcwd(cwd, size);
     }
 
-    printf("Allocated %ld bytes\nString is %ld bytes long", size, strlen(cwd));
+    printf("Allocated %ld bytes\nString is %ld bytes long\nString: \"%s\"\n", size, strlen(cwd), cwd);
 
     /* Append the passed arg */
 
