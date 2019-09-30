@@ -61,8 +61,8 @@ void change_directory(char *dir) {
 
     /* Append the passed arg */
 
-    printf("size: %d\ncwd size: %ld\n", size, strlen(cwd));
-    int remaining_size = size - strlen(cwd);
+    printf("size: %ld\ncwd size: %ld\n", size, strlen(cwd));
+    size_t remaining_size = size - strlen(cwd);
     while (remaining_size < strlen(dir)) {
       size *= 2;
       cwd = realloc(cwd, size);
