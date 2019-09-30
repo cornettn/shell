@@ -82,9 +82,7 @@ int execute_builtin(command_t *command) {
   single_command_t *single = command->single_commands[0];
   if (!strcmp(single->arguments[0], "exit")) {
     free_single_command(single);
-    free(single);
     free_command(command);
-    free(command);
     exit(1);
   }
   else if (!strcmp(single->arguments[0], "printenv")) {
