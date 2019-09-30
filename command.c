@@ -82,9 +82,12 @@ int execute_builtin(command_t *command) {
   single_command_t *single = command->single_commands[0];
   if (!strcmp(single->arguments[0], "exit")) {
     free_command(g_current_command);
+    if (g_single_current_command) {
+      free_single_command(g_single_current_command);
+    }
     if (command != g_current_command) {
       free_command(command);
-    }
+    `}
     exit(1);
   }
   else if (!strcmp(single->arguments[0], "printenv")) {
@@ -157,6 +160,7 @@ void free_command(command_t *command) {
   }
 
   free(command->single_commands);
+  command->single_commands = NULL;
 
   if (command->out_file) {
     free(command->out_file);
@@ -178,6 +182,7 @@ void free_command(command_t *command) {
   command->background = false;
 
   free(command);
+  command = NULL;
 } /* free_command() */
 
 /*

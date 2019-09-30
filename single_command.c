@@ -23,8 +23,10 @@ void free_single_command(single_command_t *simp) {
   }
 
   free(simp->arguments);
+  simp->arguments = NULL;
 
   free(simp);
+  simp = NULL;
 } /* free_single_command() */
 
 /*
