@@ -53,7 +53,7 @@ void change_directory(char *dir) {
     char *result = getcwd(cwd, size);
     while (result == NULL) {
       size *= 2;
-      cwd = realloc(size);
+      cwd = realloc(cwd, size);
       result = getcwd(cwd, size);
     }
 
