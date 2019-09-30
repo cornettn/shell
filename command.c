@@ -61,7 +61,6 @@ void change_directory(char *dir) {
 
     /* Append the passed arg */
 
-    printf("size: %ld\ncwd size: %ld\n", size, strlen(cwd));
     size_t remaining_size = size - strlen(cwd);
     while (remaining_size < strlen(dir)) {
       size *= 2;
@@ -77,8 +76,7 @@ void change_directory(char *dir) {
     }
     *(cwd + cwd_len + strlen(dir) + 1) = '\0';
 
-    printf("Abs: \"%s\"\n", cwd);
-
+    chdir(cwd);
     free(cwd);
   }
 }
