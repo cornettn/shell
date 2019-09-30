@@ -73,7 +73,7 @@ void change_directory(char *dir) {
 
     *(cwd + cwd_len) = '/';
     for (size_t i = 1; i <= strlen(dir); i++) {
-      *(cwd + cwd_len + i) = *(dir + i);
+      *(cwd + cwd_len + i) = *(dir + i-1);
     }
     *(cwd + cwd_len + strlen(dir) + 1) = '\0';
 
