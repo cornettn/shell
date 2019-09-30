@@ -50,7 +50,7 @@ void change_directory(char *dir) {
 
     /* Get the cwd */
 
-    int size = strlen(getenv("PWD")) * sizeof(char);
+    size_t size = strlen(getenv("PWD")) * sizeof(char);
     char *cwd = (char *) malloc(size);
     char *result = getcwd(cwd, size);
     while (result == NULL) {
