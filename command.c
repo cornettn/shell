@@ -35,6 +35,10 @@ void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
 }
 
 void change_directory(char *dir) {
+  if ((dir == NULL) || ((*dir) == '\0')) {
+    chdir(getenv("HOME"));
+  }
+
   if ((*dir) == '/') {
 
     /* Passed an absolute path */
