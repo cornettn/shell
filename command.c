@@ -49,11 +49,11 @@ void change_directory(char *dir) {
 
     size_t size = strlen(getenv("PWD")) * sizeof(char);
     char *cwd = (char *) malloc(size);
-    cwd  = getcwd(cwd, size);
-    while (cwd == NULL) {
+    char *result = getcwd(cwd, size);
+    while (result == NULL) {
       size *= 2;
       cwd = realloc(cwd, size);
-      cwd = getcwd(cwd, size);
+      result = getcwd(cwd, size);
     }
 
     /* Append the passed arg */
