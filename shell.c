@@ -49,11 +49,11 @@ void sig_child_handler(int sid) {
 
 int main() {
   g_current_command = (command_t *)malloc(sizeof(command_t));
-  g_current_single_command =
-        (single_command_t *)malloc(sizeof(single_command_t));
+//  g_current_single_command =
+//        (single_command_t *)malloc(sizeof(single_command_t));
 
   create_command(g_current_command);
-  create_single_command(g_current_single_command);
+//  create_single_command(g_current_single_command);
 
   if (isatty(0)) {
     print_prompt();
