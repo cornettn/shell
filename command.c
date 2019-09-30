@@ -34,6 +34,20 @@ void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
   }
 }
 
+void change_directory(char *dir) {
+  if ((*dir) == '/') {
+
+    /* Passed an absolute path */
+
+    chdir(dir);
+  }
+  else {
+
+    /* Not an absolute path */
+
+  }
+}
+
 int execute_builtin(command_t *command) {
   single_command_t *single = command->single_commands[0];
   if (!strcmp(single->arguments[0], "exit")) {
@@ -63,19 +77,6 @@ int execute_builtin(command_t *command) {
   return 0;
 }
 
-void change_directory(char *dir) {
-  if ((*dir) == '/') {
-
-    /* Passed an absolute path */
-
-    chdir(dir);
-  }
-  else {
-
-    /* Not an absolute path */
-
-  }
-}
 
 /*
  *  Initialize a command_t
