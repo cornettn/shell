@@ -1,4 +1,4 @@
-/*
+*
  * CS252: Shell project
  *
  * Template file.
@@ -62,6 +62,13 @@ void change_directory(char *dir) {
     /* Append the passed arg */
 
     printf("size: %d\ncwd size: %ld\n", size, strlen(cwd));
+    int remaining_size = size - strlen(cwd);
+    while (remaining_size < strlen(dir)) {
+      size *= 2;
+      cwd = realloc(cwd, size);
+      remaining_size = size - strlen(cwd);
+    }
+
 
    // for (int i = 0; i < strlen(dir); i++) {
 
