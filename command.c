@@ -61,7 +61,7 @@ void change_directory(char *dir) {
 
     /* Append the passed arg */
 
-    printf("size: %d\ncwd size: %d\n", size, strlen(cwd));
+    printf("size: %d\ncwd size: %ld\n", size, strlen(cwd));
 
    // for (int i = 0; i < strlen(dir); i++) {
 
