@@ -1,4 +1,4 @@
-*
+/*
  * CS252: Shell project
  *
  * Template file.
