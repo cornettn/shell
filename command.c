@@ -87,7 +87,7 @@ int execute_builtin(command_t *command) {
     }
     if (command != g_current_command) {
       free_command(command);
-    `}
+    }
     exit(1);
   }
   else if (!strcmp(single->arguments[0], "printenv")) {
