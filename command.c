@@ -48,8 +48,17 @@ void change_directory(char *dir) {
 
     /* Not an absolute path */
 
-    char *cwd = get_current_dir_name();
+    int size = strlen(getenv("PWD")) * sizeof(char);
+    char *cwd = (char *) malloc(size);
+    char *result = getcwd(cwd, size);
+    while (result == NULL) {
+      size *= 2;
+      cwd = realloc(size);
+      result = getcwd(cwd, size);
+    }
+
     printf("cwd: \"%s\"\n", cwd);
+
 
    // for (int i = 0; i < strlen(dir); i++) {
 
