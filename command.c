@@ -74,6 +74,7 @@ void change_directory(char *dir) {
     *(cwd + cwd_len + strlen(dir) + 1) = '\0';
 
     chdir(cwd);
+    printf("Got here\n");
     free(cwd);
   }
 }
