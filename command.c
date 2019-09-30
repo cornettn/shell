@@ -69,10 +69,13 @@ void change_directory(char *dir) {
       remaining_size = size - strlen(cwd);
     }
 
+    int cwd_len = strlen(cwd);
+    for (int i = 0; i < strlen(dir); i++) {
+      *(cwd + cwd_len + i) = *(dir + i);
+    }
+    *(cwd + cwd_len + strlen(dir)) = '\0';
 
-   // for (int i = 0; i < strlen(dir); i++) {
-
-  //  }
+    printf("Abs: \"%s\"\n", cwd);
 
     free(cwd);
   }
