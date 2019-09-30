@@ -364,6 +364,7 @@ void execute_command(command_t *command) {
         single_command->arguments = (char **) realloc(single_command->arguments,
             (single_command->num_args + 1) * sizeof(char *));
         single_command->arguments[single_command->num_args] = NULL;
+        single_command->num_args++;
       }
 
       /* Close defaults - child does not need them */
