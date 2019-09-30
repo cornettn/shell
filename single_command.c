@@ -21,13 +21,15 @@ void free_single_command(single_command_t *simp) {
     return;
   }
 
-  for (int i = 0; i < simp->num_args; i++) {
-    free(simp->arguments[i]);
-    simp->arguments[i] = NULL;
-  }
+  if (simp->arguments != NULL) {
+    for (int i = 0; i < simp->num_args; i++) {
+      free(simp->arguments[i]);
+      simp->arguments[i] = NULL;
+    }
 
-  free(simp->arguments);
-  simp->arguments = NULL;
+    free(simp->arguments);
+    simp->arguments = NULL;
+  }
 
   free(simp);
   simp = NULL;
