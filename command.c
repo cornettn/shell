@@ -55,8 +55,26 @@ int execute_builtin(command_t *command) {
     unsetenv(single->arguments[1]);
     return 1;
   }
+  else if (!strcmp(single->arguments[0], "cd")) {
+    change_directory(single->arguments[1]);
+    return 1;
+  }
 
   return 0;
+}
+
+void change_directory(char *dir) {
+  if ((*dir) == '/') {
+
+    /* Passed an absolute path */
+
+    chdir(dir);
+  }
+  else {
+
+    /* Not an absolute path */
+
+  }
 }
 
 /*
