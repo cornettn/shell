@@ -38,8 +38,7 @@ void change_directory(char *dir) {
   if ((dir == NULL) || ((*dir) == '\0')) {
     chdir(getenv("HOME"));
   }
-
-  if ((*dir) == '/') {
+  else if ((*dir) == '/') {
 
     /* Passed an absolute path */
 
