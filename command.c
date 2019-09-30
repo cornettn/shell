@@ -56,6 +56,8 @@ void change_directory(char *dir) {
       result = getcwd(cwd, size);
     }
 
+    printf("Allocated %ld bytes\nString is %ld bytes long", size, strlen(cwd));
+
     /* Append the passed arg */
 
     size_t remaining_size = size - strlen(cwd);
