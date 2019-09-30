@@ -35,10 +35,7 @@ void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
 }
 
 void change_directory(char *dir) {
-  if ((dir == NULL) || ((*dir) == '\0')) {
-    chdir(getenv("HOME"));
-  }
-  else if ((*dir) == '/') {
+  if ((*dir) == '/') {
 
     /* Passed an absolute path */
 
@@ -104,7 +101,12 @@ int execute_builtin(command_t *command) {
     return 1;
   }
   else if (!strcmp(single->arguments[0], "cd")) {
-    change_directory(single->arguments[1]);
+    if (single->arguments[1]) {
+      change_directory(single->arguments[1]);
+    }
+    else {
+      chdir(getenv("HOME"));
+    }
     return 1;
   }
 
