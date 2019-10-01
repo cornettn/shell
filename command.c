@@ -373,7 +373,7 @@ void execute_command(command_t *command) {
       close(default_out);
       close(default_err);
 
-      if (!execute_builtin(command)) {
+      if (execute_builtin(command)) {
         execvp(single_command->arguments[0],
             single_command->arguments);
       }
