@@ -88,7 +88,7 @@ void change_directory(char *dir) {
 }
 
 int execute_builtin(single_command_t *single) {
-  dprintf(g_debug, "%s arg\n", single->arguments[0]);
+  dprintf(g_debug, "arg: \"%s\"\n", single->arguments[0]);
 
   if (!strcmp(single->arguments[0], "exit")) {
     free_command(g_current_command);
