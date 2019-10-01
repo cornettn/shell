@@ -57,17 +57,6 @@ void change_directory(char *dir) {
       result = getcwd(cwd, size);
     }
 
-    printf("Allocated %ld bytes\nString is %ld bytes long\nString: \"%s\"\n", size, strlen(cwd), cwd);
-
-    /* Append the passed arg */
-
-/*    size_t remaining_size = size - strlen(cwd);
-    while (remaining_size < strlen(dir)) {
-      size *= 2;
-      cwd = realloc(cwd, size);
-      remaining_size = size - strlen(cwd);
-    }
-*/
     int cwd_len = strlen(cwd);
     int dir_len = strlen(dir);
 
@@ -82,17 +71,13 @@ void change_directory(char *dir) {
     *(cwd + cwd_len + 1) = '\0';
     cwd_len = strlen(cwd);
 
-    printf("%s before\n", cwd);
-
     for (size_t i = 0; i < strlen(dir); i++) {
       *(cwd + cwd_len + i) = *(dir + i);
     }
     //*(cwd + cwd_len + strlen(dir)) = '\0';
 
-    printf("%s after\n", cwd);
 
     chdir(cwd);
-    printf("Got here\n");
     free(cwd);
   }
 }
