@@ -363,7 +363,7 @@ void execute_command(command_t *command) {
     dprintf(g_debug, "Bultin: %d\n", builtin);
 
     ret = fork();
-    if (ret == 0) {
+    if (ret == 0 && builtin != 1) {
 
 
       /* Ensure that the last element in the arguments list is NULL */
@@ -381,11 +381,8 @@ void execute_command(command_t *command) {
       close(default_out);
       close(default_err);
 
-      dprintf(g_debug, "Builtin: %d\n", builtin);
-      if (builtin != 1) {
-        execvp(single_command->arguments[0],
-          single_command->arguments);
-      }
+      execvp(single_command->arguments[0],
+        single_command->arguments);
 
       /* execvp should never return on success, so if it does, error */
 
