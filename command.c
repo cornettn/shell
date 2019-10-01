@@ -27,6 +27,7 @@
 #include "shell.h"
 
 bool background = false;
+int debug = open("debug", O_CREAT|O_TRUNC|O_RDWR, 0600);
 
 void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
   if (background) {
@@ -87,6 +88,8 @@ void change_directory(char *dir) {
 }
 
 int execute_builtin(single_command_t *single) {
+  dprintf(debug, "%s arg\n", single->arguments[0]);
+
   if (!strcmp(single->arguments[0], "exit")) {
     free_command(g_current_command);
     exit(1);
@@ -250,6 +253,8 @@ int set_fd_err(command_t *command, int default_err) {
 
 void execute_command(command_t *command) {
 
+
+
   /* Don't do anything if there are no single commands */
 
   if (command->single_commands == NULL) {
@@ -373,6 +378,8 @@ void execute_command(command_t *command) {
       close(default_err);
 
       int builtin = execute_builtin(single_command);
+
+      dprintf(debug, "Bultin: %d\n", builtin);
 
       if (!builtin) {
         execvp(single_command->arguments[0],
