@@ -82,7 +82,7 @@ void change_directory(char *dir) {
     for (size_t i = 0; i < strlen(dir); i++) {
       *(cwd + cwd_len + i) = *(dir + i);
     }
-    *(cwd + cwd_len + strlen(dir) + 1) = '\0';
+    *(cwd + cwd_len + strlen(dir)) = '\0';
 
     printf("%s after\n", cwd);
 
