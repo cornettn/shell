@@ -377,6 +377,8 @@ void execute_command(command_t *command) {
       close(default_out);
       close(default_err);
 
+      dprintf(g_debug, "execute builtin\n");
+
       int builtin = execute_builtin(single_command);
 
       dprintf(g_debug, "Bultin: %d\n", builtin);
