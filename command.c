@@ -261,7 +261,7 @@ void execute_command(command_t *command) {
     return;
   }
 
-//  print_command(command);
+  print_command(command);
 
 
   /* Save default file descriptors */
@@ -275,7 +275,6 @@ void execute_command(command_t *command) {
   int fd_err = set_fd_err(command, default_err);
 
   /* Redirect Error */
-
   dup2(fd_err, 2);
   close(fd_err);
 
@@ -357,7 +356,6 @@ void execute_command(command_t *command) {
     ret = fork();
     if (ret == 0) {
 
-      int builtin = execute_builtin(single_command);
 
       /* Ensure that the last element in the arguments list is NULL */
 
@@ -373,6 +371,8 @@ void execute_command(command_t *command) {
       close(default_in);
       close(default_out);
       close(default_err);
+
+      int builtin = execute_builtin(single_command);
 
       if (!builtin) {
         execvp(single_command->arguments[0],
