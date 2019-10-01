@@ -301,6 +301,7 @@ void execute_command(command_t *command) {
   /* Create a new fork for each single command */
 
   for (int i = 0; i < command->num_single_commands; i++) {
+    single_command_t * single_command = command->single_commands[i];
 
     /* Redirect Input */
 
@@ -353,9 +354,10 @@ void execute_command(command_t *command) {
 
     /* Create a child process */
 
-    single_command_t * single_command = command->single_commands[i];
     ret = fork();
     if (ret == 0) {
+
+      execute_builtin(single_command);
 
       /* Ensure that the last element in the arguments list is NULL */
 
@@ -372,10 +374,8 @@ void execute_command(command_t *command) {
       close(default_out);
       close(default_err);
 
-      if (!execute_builtin(single_command)) {
-        execvp(single_command->arguments[0],
-            single_command->arguments);
-      }
+      execvp(single_command->arguments[0],
+          single_command->arguments);
 
 
       /* execvp should never return on success, so if it does, error */
