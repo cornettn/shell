@@ -75,7 +75,7 @@ void change_directory(char *dir) {
 
     *(cwd + cwd_len) = '/';
     *(cwd + cwd_len + 1) = '\0';
-    cwd_len = str_len(cwd);
+    cwd_len = strlen(cwd);
 
     printf("%s before\n", cwd);
 
