@@ -86,8 +86,7 @@ void change_directory(char *dir) {
   }
 }
 
-int execute_builtin(command_t *command) {
-  single_command_t *single = command->single_commands[0];
+int execute_builtin(single_command_t *single) {
   if (!strcmp(single->arguments[0], "exit")) {
     free_command(g_current_command);
     exit(1);
