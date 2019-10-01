@@ -264,13 +264,6 @@ void execute_command(command_t *command) {
 
 //  print_command(command);
 
-  if (execute_builtin(command)) {
-    if (isatty(0)) {
-      print_prompt();
-    }
-    free_command(command);
-    return;
-  }
 
   /* Save default file descriptors */
 
@@ -380,8 +373,11 @@ void execute_command(command_t *command) {
       close(default_out);
       close(default_err);
 
-      execvp(single_command->arguments[0],
-          single_command->arguments);
+      if (!execute_builtin(command)) {
+        execvp(single_command->arguments[0],
+            single_command->arguments);
+      }
+
 
       /* execvp should never return on success, so if it does, error */
 
