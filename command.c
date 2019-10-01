@@ -357,7 +357,7 @@ void execute_command(command_t *command) {
     ret = fork();
     if (ret == 0) {
 
-      execute_builtin(single_command);
+      int builtin = execute_builtin(single_command);
 
       /* Ensure that the last element in the arguments list is NULL */
 
@@ -374,9 +374,10 @@ void execute_command(command_t *command) {
       close(default_out);
       close(default_err);
 
-      execvp(single_command->arguments[0],
+      if (!builtin) {
+        execvp(single_command->arguments[0],
           single_command->arguments);
-
+      }
 
       /* execvp should never return on success, so if it does, error */
 
