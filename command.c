@@ -22,6 +22,7 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <string.h>
+#include <errno.h>
 
 #include "shell.h"
 
@@ -76,7 +77,11 @@ void change_directory(char *dir) {
     }
     //*(cwd + cwd_len + strlen(dir)) = '\0';
 
-    chdir(cwd);
+    if (chdir(cwd) < 0) {
+      if (errno == ENOENT) {
+        fprintf(stderr, "cd: can't cd to %s\n", dir);
+      }
+    }
     free(cwd);
   }
 }
