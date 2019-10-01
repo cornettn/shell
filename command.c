@@ -71,7 +71,12 @@ void change_directory(char *dir) {
     int cwd_len = strlen(cwd);
     int dir_len = strlen(dir);
 
-    cwd = realloc(cwd, cwd_len + dir_len + 1);
+    char *copy = strdup(cwd);
+
+    free(cwd);
+    cwd = (char *)malloc(cwd_len + dir_len + 1);
+    strcpy(cwd, copy);
+    free(copy);
 
     *(cwd + cwd_len) = '/';
     *(cwd + cwd_len + 1) = '\0';
