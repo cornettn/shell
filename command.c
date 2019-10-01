@@ -27,7 +27,8 @@
 #include "shell.h"
 
 bool background = false;
-int debug = open("debug", O_CREAT|O_TRUNC|O_RDWR, 0600);
+int debug;
+debug = open("debug", O_CREAT|O_TRUNC|O_RDWR, 0600);
 
 void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
   if (background) {
