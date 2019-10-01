@@ -53,7 +53,7 @@ void change_directory(char *dir) {
     while (result == NULL) {
       size *= 2;
       free(cwd);
-      cwd = malloc(size);
+      cwd = (char *) malloc(size);
       result = getcwd(cwd, size);
     }
 
@@ -61,20 +61,30 @@ void change_directory(char *dir) {
 
     /* Append the passed arg */
 
-    size_t remaining_size = size - strlen(cwd);
+/*    size_t remaining_size = size - strlen(cwd);
     while (remaining_size < strlen(dir)) {
       size *= 2;
       cwd = realloc(cwd, size);
       remaining_size = size - strlen(cwd);
     }
-
+*/
     int cwd_len = strlen(cwd);
+    int dir_len = strlen(dir);
+
+    cwd = realloc(cwd, cwd_len + dir_len + 1);
 
     *(cwd + cwd_len) = '/';
-    for (size_t i = 1; i <= strlen(dir); i++) {
-      *(cwd + cwd_len + i) = *(dir + i-1);
+    *(cwd + cwd_len + 1) = '\0';
+    cwd_len = str_len(cwd);
+
+    printf("%s before\n", cwd);
+
+    for (size_t i = 0; i < strlen(dir); i++) {
+      *(cwd + cwd_len + i) = *(dir + i);
     }
     *(cwd + cwd_len + strlen(dir) + 1) = '\0';
+
+    printf("%s after\n", cwd);
 
     chdir(cwd);
     printf("Got here\n");
