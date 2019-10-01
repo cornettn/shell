@@ -379,7 +379,7 @@ void execute_command(command_t *command) {
 
       int builtin = execute_builtin(single_command);
 
-      dprintf(debug, "Bultin: %d\n", builtin);
+      dprintf(g_debug, "Bultin: %d\n", builtin);
 
       if (!builtin) {
         execvp(single_command->arguments[0],
