@@ -27,7 +27,7 @@
 #include "shell.h"
 
 bool background = false;
-const int debug = open("debug", O_CREAT|O_TRUNC|O_RDWR, 0600);
+int g_debug;
 
 void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
   if (background) {
@@ -88,7 +88,7 @@ void change_directory(char *dir) {
 }
 
 int execute_builtin(single_command_t *single) {
-  dprintf(debug, "%s arg\n", single->arguments[0]);
+  dprintf(g_debug, "%s arg\n", single->arguments[0]);
 
   if (!strcmp(single->arguments[0], "exit")) {
     free_command(g_current_command);
@@ -253,7 +253,7 @@ int set_fd_err(command_t *command, int default_err) {
 
 void execute_command(command_t *command) {
 
-
+  g_debug = open("debug", O_CREAT|O_TRUNC|O_RDWR, 0600);
 
   /* Don't do anything if there are no single commands */
 
