@@ -33,7 +33,6 @@
 
 
 node_t *g_background_process_head = NULL;
-bool background = false;
 int g_debug;
 
 /*
@@ -486,7 +485,6 @@ void execute_command(command_t *command) {
 
   /* Wait for Child */
 
-  background = command->background;
   if (!command->background) {
     waitpid(ret, NULL, 0);
   }
