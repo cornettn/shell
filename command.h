@@ -20,7 +20,7 @@ typedef struct command {
 } command_t;
 
 typedef struct node {
-  node *next;
+  struct node *next;
   size_t pid;
 } node_t;
 
