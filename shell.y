@@ -100,8 +100,17 @@ char *escape_env_variables(char *str) {
         *(env + j) = *(copy + i + 1 + j);
       }
       printf("Var: %s\n", env);
+      char *value = getenv(env);
+      if (value != NULL) {
+        printf("Val: %s\n", value);
+        int more_space = len + 3 - strlen(value);
+        if (more_space > 0) {
+          str = realloc(str, (len + more_space) * sizeof(char));
+        }
+      }
     } // if
   } // for
+  return str;
 }
 
 
