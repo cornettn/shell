@@ -40,7 +40,7 @@ int g_debug;
  *
  */
 
-void append_background_process(command_t *command, int pid) {
+void append_background_process(int pid) {
   if (g_background_process_head == NULL) {
     g_background_process_head = (node_t *) malloc(sizeof(node_t *));
     g_background_process_head->next = NULL;
@@ -491,7 +491,7 @@ void execute_command(command_t *command) {
     waitpid(ret, NULL, 0);
   }
   else {
-    append_background_process(command, ret);
+    append_background_process(ret);
   }
 
   free_command(command);
