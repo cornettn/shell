@@ -362,6 +362,12 @@ void execute_command(command_t *command) {
     int builtin = execute_builtin(single_command);
     dprintf(g_debug, "Bultin: %d\n", builtin);
 
+    if (builtin) {
+      dprinff(debug, "Dont Fork\n");
+    }
+    else {
+      dprintf(debug, "Fork\n");
+    }
     ret = fork();
     if (ret == 0 && builtin != 1) {
 
