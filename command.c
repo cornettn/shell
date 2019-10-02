@@ -367,40 +367,40 @@ void execute_command(command_t *command) {
     }
     else {
       dprintf(g_debug, "Fork\n");
-    }
-    ret = fork();
-    if (ret == 0 && builtin != 1) {
+      ret = fork();
+      if (ret == 0) {
 
 
-      /* Ensure that the last element in the arguments list is NULL */
+        /* Ensure that the last element in the arguments list is NULL */
 
-      if (single_command->arguments[single_command->num_args - 1] != NULL) {
-        single_command->arguments = (char **) realloc(single_command->arguments,
-            (single_command->num_args + 1) * sizeof(char *));
-        single_command->arguments[single_command->num_args] = NULL;
-        single_command->num_args++;
+        if (single_command->arguments[single_command->num_args - 1] != NULL) {
+          single_command->arguments = (char **) realloc(single_command->arguments,
+              (single_command->num_args + 1) * sizeof(char *));
+          single_command->arguments[single_command->num_args] = NULL;
+          single_command->num_args++;
+        }
+
+        /* Close defaults - child does not need them */
+
+        close(default_in);
+        close(default_out);
+        close(default_err);
+
+        execvp(single_command->arguments[0],
+          single_command->arguments);
+
+        /* execvp should never return on success, so if it does, error */
+
+        perror("execvp");
+        exit(1);
       }
+      else if (ret < 0) {
 
-      /* Close defaults - child does not need them */
+        /* fork error */
 
-      close(default_in);
-      close(default_out);
-      close(default_err);
-
-      execvp(single_command->arguments[0],
-        single_command->arguments);
-
-      /* execvp should never return on success, so if it does, error */
-
-      perror("execvp");
-      exit(1);
-    }
-    else if (ret < 0) {
-
-      /* fork error */
-
-      perror("fork");
-      return;
+        perror("fork");
+        return;
+      }
     }
   } // End for loop
 
