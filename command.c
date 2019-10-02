@@ -88,6 +88,10 @@ void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
   }
 }
 
+/*
+ * This function is responsible for changing the directory.
+ */
+
 void change_directory(char *dir) {
   if ((*dir) == '/') {
 
@@ -170,6 +174,10 @@ int execute_builtin(single_command_t *single) {
     else {
       chdir(getenv("HOME"));
     }
+    return 1;
+  }
+  else if (!strcmp(single->arguments[0], "source")) {
+    printf("source command not implemented\n");
     return 1;
   }
 
