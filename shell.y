@@ -44,14 +44,10 @@
 void yyerror(const char * s);
 int yylex();
 
-void expand_argument(char * str) {
-  int str_len = strlen(str);
-  char *passed_str = str;
-
-  /* If an argument starts with quotes */
+char *quoted_arg(char *str) {
   if ((*str) == '\"') {
     str++;
-    passed_str = (char *)malloc(str_len * (sizeof(char *)));
+    passed_str = (char *)malloc(str_len * (sizeof(char)));
     for (int i = 0; i < str_len; i++) {
       if ((*str) != '\"') {
         *(passed_str + i) = *str;
@@ -62,19 +58,43 @@ void expand_argument(char * str) {
       }
       str++;
     }
+    return passed_str;
   }
+  else {
+    return str;
+  }
+}
 
-  str_len = strlen(passed_str);
+char *escape_characters(char *str) {
+  str_len = strlen(str);
   for (int i = 0; i < str_len; i++) {
-    if (*(passed_str + i) == '\\') {
-      *(passed_str + i) = *(passed_str + i + 1);
+    if (*(str + i) == '\\') {
+      *(str + i) = *(str + i + 1);
       for (int j = i + 1; j <= str_len; j++) {
-        *(passed_str + j) = *(passed_str + j + 1);
+        *(str + j) = *(str + j + 1);
       }
-      //*(passed_str + str_len) = '\0';
-      str_len = strlen(passed_str);
+      *(str + str_len) = '\0';
+      str_len = strlen(str);
     }
   }
+  return str;
+}
+
+
+void expand_argument(char * str) {
+  int str_len = strlen(str);
+  char *passed_str = str;
+
+  /* Returns the char pointer without quotes in it*/
+
+  char *argument = quoted_arg(str);
+
+  /* Returns the char pointer where characters following
+   * a '/' have been escaped */
+
+  argument = escape_characters(argument);
+
+
 
   insert_argument(g_current_single_command, passed_str);
 }
