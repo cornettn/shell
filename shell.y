@@ -85,6 +85,7 @@ char *escape_characters(char *str) {
 char *escape_env_variables(char *str) {
   int len = strlen(str);
   char *copy = strdup(str);
+  char *env;
   int env_len = 0;
   for (int i = 0; i < len; i++) {
     if ((*(copy + i) == '{') && (*(copy + i - 1) == '$')) {
@@ -94,7 +95,11 @@ char *escape_env_variables(char *str) {
         }
         env_len++;
       }
-    printf("Len: %d\n", env_len);
+      env = (char *) malloc(env_len * sizeof(char));
+      for (int j = 0; j < env_len; j++) {
+        *(env + j) = *(copy + i + 1 + j);
+      }
+      printf("Var: %s\n", env);
     } // if
   } // for
 }
