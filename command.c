@@ -42,7 +42,7 @@ int g_debug;
 
 void append_background_process(command_t *command, int pid) {
   if (g_background_process_head == NULL) {
-    g_background_process_head = (node_t *) malloc(sizeof(node));
+    g_background_process_head = (node_t *) malloc(sizeof(node_t *));
     g_background_process_head->next = NULL;
     g_background_process_head->pid = pid;
   }
@@ -54,7 +54,7 @@ void append_background_process(command_t *command, int pid) {
 
     current->next = (node_t *) malloc(sizeof(node_t));
     current->next->next = NULL;
-    current->next->next = pid;
+    current->next->pid = pid;
   }
 }
 
