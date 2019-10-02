@@ -26,11 +26,65 @@
 
 #include "shell.h"
 
+typedef struct node {
+  node_t *next;
+  size_t pid;
+} node_t;
+
+
+node_t *g_background_process_head = NULL;
 bool background = false;
 int g_debug;
 
+/*
+ *
+ */
+
+void append_background_process(command_t *command, size_t pid) {
+  if (g_background_process_head == NULL) {
+    g_background_process_head = (node_t *) malloc(sizeof(node));
+    g_background_process_head->next = NULL;
+    g_background_process_head->pid = pid;
+  }
+  else {
+    node_t *current = g_background_process_head;
+    while (current->next != NULL) {
+      current = current->next;
+    }
+
+    current->next = (node_t *) malloc(sizeof(node_t));
+    current->next->next = NULL;
+    current->next->next = pid;
+  }
+}
+
+/*
+ *
+ */
+
+int is_background_process(int sid) {
+  node_t *current = g_background_process_head;
+  if (current == NULL) {
+    return 0;
+  }
+
+
+  while (current != NULL) {
+    if (current->pid == sid) {
+      return 1;
+    }
+    current = current->next;
+  }
+
+  return 0;
+}
+
+/*
+ * This function is responsible for handling zombie processes.
+ */
+
 void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
-  if (background) {
+  if (is_background_process(sid)) {
     printf("[%d] exited.\n", sid);
     print_prompt();
   }
@@ -360,12 +414,12 @@ void execute_command(command_t *command) {
     /* Create a child process */
 
     int builtin = execute_builtin(single_command);
-    dprintf(g_debug, "Bultin: %d\n", builtin);
+    dprintf(g_debug, "Is Bultin: %d\n", builtin);
 
-    if (builtin) {
-      dprintf(g_debug, "Dont Fork\n");
-    }
-    else {
+    if (!builtin) {
+
+      /* Fork if the command is not a builtin */
+
       dprintf(g_debug, "Fork\n");
       ret = fork();
       if (ret == 0) {
@@ -401,7 +455,7 @@ void execute_command(command_t *command) {
         perror("fork");
         return;
       }
-    }
+    } // end if builtin
   } // End for loop
 
   /* Parent Process */
@@ -435,6 +489,9 @@ void execute_command(command_t *command) {
   background = command->background;
   if (!command->background) {
     waitpid(ret, NULL, 0);
+  }
+  else {
+    append_background_process(command, ret);
   }
 
   free_command(command);
