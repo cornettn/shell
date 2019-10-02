@@ -82,6 +82,24 @@ char *escape_characters(char *str) {
 }
 
 
+char *escape_env_variables(char *str) {
+  int len = strlen(str);
+  char *copy = strdup(str);
+  int env_len = 0;
+  for (int i = 0; i < len; i++) {
+    if ((*(copy + i) == '{') && (*(copy + i - 1) == '$')) {
+      for (int j = i + 1; j < len; j++) {
+        if ((*(copy + j) == '}')) {
+          break;
+        }
+        env_len++;
+      }
+    printf("Len: %d\n", env_len);
+    } // if
+  } // for
+}
+
+
 void expand_argument(char * str) {
   char *passed_str = str;
 
@@ -93,6 +111,8 @@ void expand_argument(char * str) {
    * a '/' have been escaped */
 
   argument = escape_characters(argument);
+
+  argument = escape_env_variables(argument);
 
 
 

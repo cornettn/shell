@@ -225,7 +225,7 @@ void expand_argument(char * str) {
 
 
 
-  insert_argument(g_current_single_command, passed_str);
+  insert_argument(g_current_single_command, argument);
 }
 
 
