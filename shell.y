@@ -48,7 +48,7 @@ char *quoted_arg(char *str) {
   int str_len = strlen(str);
   if ((*str) == '\"') {
     str++;
-    passed_str = (char *)malloc(str_len * (sizeof(char)));
+    char *passed_str = (char *)malloc(str_len * (sizeof(char)));
     for (int i = 0; i < str_len; i++) {
       if ((*str) != '\"') {
         *(passed_str + i) = *str;
