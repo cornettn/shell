@@ -21,7 +21,7 @@ typedef struct command {
 
 typedef struct node {
   struct node *next;
-  size_t pid;
+  int pid;
 } node_t;
 
 void create_command(command_t *);
