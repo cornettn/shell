@@ -19,6 +19,11 @@ typedef struct command {
   int num_single_commands;
 } command_t;
 
+typedef struct node {
+  node_t *next;
+  size_t pid;
+} node_t;
+
 void create_command(command_t *);
 void insert_single_command(command_t *, single_command_t *);
 void free_command(command_t *);
