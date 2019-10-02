@@ -363,7 +363,7 @@ void execute_command(command_t *command) {
     dprintf(g_debug, "Bultin: %d\n", builtin);
 
     if (builtin) {
-      dprinff(g_debug, "Dont Fork\n");
+      dprinf(g_debug, "Dont Fork\n");
     }
     else {
       dprintf(g_debug, "Fork\n");
