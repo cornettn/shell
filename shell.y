@@ -45,6 +45,7 @@ void yyerror(const char * s);
 int yylex();
 
 char *quoted_arg(char *str) {
+  int str_len = strlen(str);
   if ((*str) == '\"') {
     str++;
     passed_str = (char *)malloc(str_len * (sizeof(char)));
@@ -66,7 +67,7 @@ char *quoted_arg(char *str) {
 }
 
 char *escape_characters(char *str) {
-  str_len = strlen(str);
+  int str_len = strlen(str);
   for (int i = 0; i < str_len; i++) {
     if (*(str + i) == '\\') {
       *(str + i) = *(str + i + 1);
@@ -82,7 +83,6 @@ char *escape_characters(char *str) {
 
 
 void expand_argument(char * str) {
-  int str_len = strlen(str);
   char *passed_str = str;
 
   /* Returns the char pointer without quotes in it*/
