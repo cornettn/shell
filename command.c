@@ -67,7 +67,6 @@ int is_background_process(int sid) {
     return 0;
   }
 
-
   while (current != NULL) {
     if (current->pid == sid) {
       return 1;
@@ -420,6 +419,7 @@ void execute_command(command_t *command) {
       /* Fork if the command is not a builtin */
 
       dprintf(g_debug, "Fork\n");
+
       ret = fork();
       if (ret == 0) {
 
