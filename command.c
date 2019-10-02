@@ -26,10 +26,10 @@
 
 #include "shell.h"
 
-typedef struct node {
-  node_t *next;
-  size_t pid;
-} node_t;
+//typedef struct node {
+//  node_t *next;
+//  size_t pid;
+//} node_t;
 
 
 node_t *g_background_process_head = NULL;
