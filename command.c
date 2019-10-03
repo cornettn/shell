@@ -334,7 +334,7 @@ void execute_command(command_t *command) {
   g_last_command->append_err = command->append_err;
   g_last_command->background = command->background;
 
-  for (int i = 0; command->num_single_commands; i++) {
+  for (int i = 0; i < command->num_single_commands; i++) {
     single_command_t *single = (single_command_t *) malloc(sizeof(single_command_t));
     create_single_command(single);
     if (command->single_commands[i] != NULL) {
