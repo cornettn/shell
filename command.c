@@ -319,6 +319,8 @@ void execute_command(command_t *command) {
   free(g_last_command);
   g_last_command = (command_t *) malloc(sizeof(command_t));
   memcpy(g_last_command, command, sizeof(command_t));
+  g_last_command->single_commands = NULL;
+  g_last_command->num_single_commands = 0;
 
   for (int i = 0; i < command->num_single_commands; i++) {
     insert_single_command(g_last_command, command->single_commands[i]);
