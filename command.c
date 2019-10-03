@@ -313,6 +313,8 @@ int set_fd_err(command_t *command, int default_err) {
  */
 
 void execute_command(command_t *command) {
+  free(g_last_command);
+  g_last_command = (command_t *) malloc(sizeof(command_t));
   g_last_command = command;
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
 
