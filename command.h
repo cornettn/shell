@@ -32,7 +32,7 @@ void print_command(command_t *);
 void execute_command(command_t *);
 
 extern command_t *g_current_command;
-extern command_t *g_last_command;
+command_t *g_last_command;
 
 int g_last_background_PID;
 
