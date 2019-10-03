@@ -127,6 +127,7 @@ char *escape_env_variables(char *str) {
       }
 
      // printf("Rest: %s\n", rest_of_string);
+      printf("Size of env var name: %d\n", env_len);
       env = (char *) malloc(env_len * sizeof(char));
 
       /* Get the actual value of the env var */
