@@ -159,6 +159,7 @@ char *get_value(char *env) {
   }
   else if (!strcmp(env, "!!")) {
     execute_command(g_last_command);
+    return NULL;
   }
   else if (!strcmp(env, "_")) {
     return NULL;
@@ -169,7 +170,8 @@ char *get_value(char *env) {
   else {
     str = strdup(getenv(env));
   }
-
+  return str;
+}
 
 
 char *escape_env_variables(char *str) {
