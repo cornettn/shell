@@ -337,11 +337,14 @@ void execute_command(command_t *command) {
   for (int i = 0; command->num_single_commands; i++) {
     single_command_t *single = (single_command_t *) malloc(sizeof(single_command_t));
     create_single_command(single);
-    for (int j = 0; j < command->single_commands[i]->num_args; j++) {
-      insert_argument(single, command->single_commands[i]->arguments[j]);
+    if (command->single_commands[i] != NULL) {
+      for (int j = 0; j < command->single_commands[i]->num_args; j++) {
+        insert_argument(single, command->single_commands[i]->arguments[j]);
+      }
+      insert_single_command(g_last_command, single);
     }
-    insert_single_command(g_last_command, single);
   }
+
 
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
 
