@@ -339,7 +339,8 @@ void execute_command(command_t *command) {
     create_single_command(single);
     if (command->single_commands[i] != NULL) {
       for (int j = 0; j < command->single_commands[i]->num_args; j++) {
-        insert_argument(single, &(command->single_commands[i]->arguments[j]));
+        char *arg = command->single_commands[i]->arguments[j];
+        insert_argument(single, arg);
       }
       insert_single_command(g_last_command, single);
     }
