@@ -31,7 +31,7 @@
 //  size_t pid;
 //} node_t;
 
-extern pid_t g_last_background_PID = -1;
+extern pid_t g_last_background_PID;
 node_t *g_background_process_head = NULL;
 int g_debug;
 
