@@ -238,10 +238,10 @@ char *escape_env_variables(char *str) {
   char *rest_of_string;
   int env_len = 0;
   for (int i = 0; i < len; i++) {
-    printf("str: %s\n", str);
-    printf("\ti: %c i-1: %c\n", *(str + i), *(str + i - 1));
+   // printf("str: %s\n", str);
+   // printf("\ti: %c i-1: %c\n", *(str + i), *(str + i - 1));
     if ((*(str + i) == '{') && (*(str + i - 1) == '$')) {
-    printf("\tIn For Loop\n");
+   // printf("\tIn For Loop\n");
     /* There is an environement varaiable to escape.
      * The name of the env var start at index i + 1 */
 
@@ -255,7 +255,7 @@ char *escape_env_variables(char *str) {
         env_len++;
       }
 
-      printf("Rest: %s\n", rest_of_string);
+     // printf("Rest: %s\n", rest_of_string);
       env = (char *) malloc(env_len * sizeof(char));
 
       /* Get the actual value of the env var */
@@ -269,8 +269,8 @@ char *escape_env_variables(char *str) {
 
       if (value != NULL) {
         int more_space = strlen(value) - env_len - 3;
-        printf("Curr len: %d\n", len);
-        printf("Len of val: %d\n", (int) strlen(value));
+       // printf("Curr len: %d\n", len);
+       // printf("Len of val: %d\n", (int) strlen(value));
         str = realloc(str, (len + more_space) * sizeof(char));
 
         int val_len = strlen(value);
@@ -293,7 +293,7 @@ char *escape_env_variables(char *str) {
 
       env_len = 0;
       len = strlen(str);
-      printf("String? \"%s\"\n", str);
+     // printf("String? \"%s\"\n", str);
       free(rest_of_string);
       free(env);
     } // if

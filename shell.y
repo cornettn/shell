@@ -104,6 +104,7 @@ char *escape_characters(char *str) {
 
 
 char *escape_env_variables(char *str) {
+  printf("Passed: %s\n", str);
   int len = strlen(str);
   char *env;
   char *rest_of_string;
@@ -169,6 +170,7 @@ char *escape_env_variables(char *str) {
       free(env);
     } // if
   } // for
+  printf("Returned: %s\n", str);
 
   return str;
 }
