@@ -339,8 +339,6 @@ void execute_command(command_t *command) {
     return;
   }
 
-  print_command(command);
-
 
   /* Save default file descriptors */
 
