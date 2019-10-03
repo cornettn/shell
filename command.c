@@ -320,9 +320,16 @@ void execute_command(command_t *command) {
     free_command(g_last_command);
   }
   g_last_command = (command_t *) malloc(sizeof(command_t));
-  g_last_command->out_file = strdup(command->out_file);
-  g_last_command->in_file = strdup(command->in_file);
-  g_last_command->err_file = strdup(command->err_file);
+  if (command->out_file) {
+    g_last_command->out_file = strdup(command->out_file);
+  }
+  if (command->in_file) {
+    g_last_command->in_file = strdup(command->in_file);
+  }
+  if (command->err_file) {
+    g_last_command->err_file = strdup(command->err_file);
+  }
+
   g_last_command->append_out = command->append_out;
   g_last_command->append_err = command->append_err;
   g_last_command->background = command->background;
