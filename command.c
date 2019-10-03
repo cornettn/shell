@@ -313,7 +313,7 @@ int set_fd_err(command_t *command, int default_err) {
  */
 
 void execute_command(command_t *command) {
-
+  g_last_command = command;
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
 
   /* Don't do anything if there are no single commands */
