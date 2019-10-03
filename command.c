@@ -320,6 +320,7 @@ void execute_command(command_t *command) {
     free_command(g_last_command);
   }
   g_last_command = (command_t *) malloc(sizeof(command_t));
+  create_command(g_last_command);
   if (command->out_file) {
     g_last_command->out_file = strdup(command->out_file);
   }
@@ -337,13 +338,11 @@ void execute_command(command_t *command) {
   for (int i = 0; i < command->num_single_commands; i++) {
     single_command_t *single = (single_command_t *) malloc(sizeof(single_command_t));
     create_single_command(single);
-    if (command->single_commands[i] != NULL) {
-      for (int j = 0; j < command->single_commands[i]->num_args; j++) {
-        char *arg = command->single_commands[i]->arguments[j];
-        insert_argument(single, arg);
-      }
-      insert_single_command(g_last_command, single);
+    for (int j = 0; j < command->single_commands[i]->num_args; j++) {
+      char *arg = command->single_commands[i]->arguments[j];
+      insert_argument(single, arg);
     }
+    insert_single_command(g_last_command, single);
   }
 
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
