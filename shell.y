@@ -201,7 +201,6 @@ char *escape_env_variables(char *str) {
       *(env + env_len) = '\0';
 
       char *value = get_value(env);
-     char *value = getenv(env);
 
       /* Replace the value of ${*} with the value */
 
