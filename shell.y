@@ -145,8 +145,8 @@ char *escape_env_variables(char *str) {
 
 
 
-
-      free(env)
+      free(rest_of_string);
+      free(env);
     } // if
   } // for
 
