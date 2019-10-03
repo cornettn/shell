@@ -268,7 +268,7 @@ char *escape_env_variables(char *str) {
       if (value != NULL) {
         int more_space = env_len + 3 - strlen(value);
         printf("Curr len: %d\n", len);
-        printf("Len of val: %d\n", strlen(value));
+        printf("Len of val: %d\n", (int) strlen(value));
         if (more_space > 0) {
           printf("Realloc str to have %d more bytes\n", more_space);
           str = realloc(str, (len + more_space) * sizeof(char));
