@@ -158,7 +158,7 @@ char *get_value(char *env) {
     sprintf(str, "%ld", (long) g_last_background_PID);
   }
   else if (!strcmp(env, "!!")) {
-    return NULL;
+    execute_command(g_last_command);
   }
   else if (!strcmp(env, "_")) {
     return NULL;
