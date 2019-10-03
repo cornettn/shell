@@ -102,17 +102,47 @@ char *escape_characters(char *str) {
   return str;
 }
 
+/*
+ * This fucntion is used to replace environement variables with their
+ * respective value.
+ * char * str: The str to insert the value into
+ * int i: The index of the '{' in ${VARIABLE} in the str
+ * char * value: The value of the variable to insert
+ */
+
+char *replace_env(char *str, int i, char *value) {
+  if (value != NULL) {
+    int more_space = strlen(value) - env_len - 3;
+    str = realloc(str, (len + more_space) * sizeof(char));
+
+    int val_len = strlen(value);
+    int val_count = 0;
+    int rest_count = 0;
+    for (int j = i - 1; j < len + more_space; j++) {
+      if (val_count < val_len) {
+        /* Write the env var value */
+        *(str + j) = *(value + val_count);
+        val_count++;
+      }
+      else {
+        /* Write the rest of the string */
+        *(str + j) = *(rest_of_string + rest_count);
+        rest_count++;
+      }
+    }
+    *(str + len + more_space) = '\0';
+  }
+  return str;
+}
+
 
 char *escape_env_variables(char *str) {
-  printf("Passed: %s\n", str);
   int len = strlen(str);
   char *env;
   char *rest_of_string;
   int env_len = 0;
   for (int i = 0; i < len; i++) {
-   printf("\ti: %c i-1: %c\n", *(str + i), *(str + i - 1));
     if ((*(str + i) == '{') && (*(str + i - 1) == '$')) {
-   // printf("\tIn For Loop\n");
     /* There is an environement varaiable to escape.
      * The name of the env var start at index i + 1 */
 
@@ -126,50 +156,22 @@ char *escape_env_variables(char *str) {
         env_len++;
       }
 
-     // printf("Rest: %s\n", rest_of_string);
-      printf("Size of env var name: %d\n", env_len);
       env = (char *) malloc((env_len + 1) * sizeof(char));
 
       /* Get the actual value of the env var */
 
       for (int j = 0; j < env_len; j++) {
-        printf("\t\t char: %c\n", *(str + i + 1 + j));
         *(env + j) = *(str + i + 1 + j);
       }
       *(env + env_len) = '\0';
-
-      printf("\tEnv Var Name: %s\n", env);
       char *value = getenv(env);
-      printf("\tValue: %s\n", value);
+
       /* Replace the value of ${*} with the value */
 
-      if (value != NULL) {
-        int more_space = strlen(value) - env_len - 3;
-       // printf("Curr len: %d\n", len);
-       // printf("Len of val: %d\n", (int) strlen(value));
-        str = realloc(str, (len + more_space) * sizeof(char));
-
-        int val_len = strlen(value);
-        int val_count = 0;
-        int rest_count = 0;
-        for (int j = i - 1; j < len + more_space; j++) {
-          if (val_count < val_len) {
-            /* Write the env var value */
-            *(str + j) = *(value + val_count);
-            val_count++;
-          }
-          else {
-            /* Write the rest of the string */
-            *(str + j) = *(rest_of_string + rest_count);
-            rest_count++;
-          }
-        }
-        *(str + len + more_space) = '\0';
-      }
+      str = replace_env(str, i, value);
 
       env_len = 0;
       len = strlen(str);
-      printf("\tString? \"%s\"\n", str);
       free(rest_of_string);
       free(env);
     } // if
