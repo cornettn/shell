@@ -204,6 +204,9 @@ char *escape_env_variables(char *str) {
       *(env + env_len) = '\0';
 
       char *value = get_value(env);
+      if (value == NULL) {
+        return NULL;
+      }
 
       /* Replace the value of ${*} with the value */
 
@@ -233,7 +236,9 @@ void expand_argument(char * str) {
   argument = escape_characters(argument);
 
   argument = escape_env_variables(argument);
-
+  if (argument == NULL) {
+    return;
+  }
 
 
   insert_argument(g_current_single_command, argument);
