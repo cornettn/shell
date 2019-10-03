@@ -31,5 +31,6 @@ void print_command(command_t *);
 void execute_command(command_t *);
 
 extern command_t *g_current_command;
+extern pid_t last_background_PID;
 
 #endif
