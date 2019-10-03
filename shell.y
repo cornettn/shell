@@ -163,6 +163,7 @@ char *escape_env_variables(char *str) {
             rest_count++;
           }
         }
+        *(str + len + more_space) = '\0';
       }
 
 
