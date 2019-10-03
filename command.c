@@ -316,7 +316,9 @@ void execute_command(command_t *command) {
 
   /* Copy this command to g_last_command */
 
-  free_command(g_last_command);
+  if (g_last_command != NULL) {
+    free_command(g_last_command);
+  }
   g_last_command = (command_t *) malloc(sizeof(command_t));
   g_last_command->out_file = strdup(command->out_file);
   g_last_command->in_file = strdup(command->in_file);
