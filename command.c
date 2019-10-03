@@ -315,7 +315,7 @@ int set_fd_err(command_t *command, int default_err) {
 void execute_command(command_t *command) {
 
   /* Copy this command to g_last_command */
-
+/*
   if (g_last_command != NULL) {
     free_command(g_last_command);
   }
@@ -344,7 +344,7 @@ void execute_command(command_t *command) {
       insert_single_command(g_last_command, single);
     }
   }
-
+*/
 
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
 
