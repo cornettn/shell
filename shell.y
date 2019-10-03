@@ -109,8 +109,9 @@ char *escape_env_variables(char *str) {
   char *rest_of_string;
   int env_len = 0;
   for (int i = 0; i < len; i++) {
+    printf("\ti: %c i-1: %c\n", *(str + i), *(str + i - 1));
     if ((*(str + i) == '{') && (*(str + i - 1) == '$')) {
-
+    printf("\tIn For Loop\n");
     /* There is an environement varaiable to escape.
      * The name of the env var start at index i + 1 */
 
