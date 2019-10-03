@@ -144,9 +144,9 @@ char *escape_env_variables(char *str) {
           printf("Realloc str to have %d more bytes\n", more_space);
           str = realloc(str, (len + more_space) * sizeof(char));
         }
-        else {
-          more_space = 0;
-        }
+       // else {
+       //   more_space = 0;
+       // }
 
         int val_len = strlen(value);
         int val_count = 0;

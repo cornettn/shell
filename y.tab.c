@@ -295,7 +295,7 @@ char *escape_env_variables(char *str) {
         *(str + len + more_space) = '\0';
       }
 
-
+      len = strlen(str);
       printf("String? \"%s\"\n", str);
       free(rest_of_string);
       free(env);
