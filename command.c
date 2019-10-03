@@ -316,14 +316,22 @@ void execute_command(command_t *command) {
 
   /* Copy this command to g_last_command */
 
-  free(g_last_command);
+  free_command(g_last_command);
   g_last_command = (command_t *) malloc(sizeof(command_t));
-  memcpy(g_last_command, command, sizeof(command_t));
-  g_last_command->single_commands = NULL;
-  g_last_command->num_single_commands = 0;
+  g_last_command->out_file = strdup(command->out_file);
+  g_last_command->in_file = strdup(command->in_file);
+  g_last_command->err_file = strdup(command->err_file);
+  g_last_command->append_out = command->append_out;
+  g_last_command->append_err = command->append_err;
+  g_last_command->background = command->background;
 
-  for (int i = 0; i < command->num_single_commands; i++) {
-    insert_single_command(g_last_command, command->single_commands[i]);
+  for (int i = 0; command->num_single_commands; i++) {
+    single_command_t *single = (single_command_t *) malloc(sizeof(single_command_t));
+    create_single_command(single);
+    for (int j = 0; j < command->single_commands[i]->num_args; j++) {
+      insert_argument(single, command->single_commands[i]->arguments[j]);
+    }
+    insert_single_command(g_last_command, single);
   }
 
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
