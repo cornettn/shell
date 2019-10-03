@@ -104,12 +104,11 @@ char *escape_characters(char *str) {
 
 char *escape_env_variables(char *str) {
   int len = strlen(str);
-  char *copy = strdup(str);
   char *env;
   char *rest_of_string;
   int env_len = 0;
   for (int i = 0; i < len; i++) {
-    if ((*(copy + i) == '{') && (*(copy + i - 1) == '$')) {
+    if ((*(str + i) == '{') && (*(str + i - 1) == '$')) {
 
     /* There is an environement varaiable to escape.
      * The name of the env var start at index i + 1 */
@@ -117,8 +116,8 @@ char *escape_env_variables(char *str) {
     /* Get the length of the env var */
 
     for (int j = i + 1; j < len; j++) {
-        if ((*(copy + j) == '}')) {
-          rest_of_string = substring(copy, j + 1, len);
+        if ((*(str + j) == '}')) {
+          rest_of_string = substring(str, j + 1, len);
           break;
         }
         env_len++;
@@ -130,7 +129,7 @@ char *escape_env_variables(char *str) {
       /* Get the actual value of the env var */
 
       for (int j = 0; j < env_len; j++) {
-        *(env + j) = *(copy + i + 1 + j);
+        *(env + j) = *(str + i + 1 + j);
       }
       char *value = getenv(env);
 
@@ -173,7 +172,6 @@ char *escape_env_variables(char *str) {
     } // if
   } // for
 
-  free(copy);
   return str;
 }
 
