@@ -51,6 +51,7 @@ char *substring(char *str, int start, int end) {
   for (int i = 0; i < size; i++) {
     *(sub + i) = *(str + start + i);
   }
+  *(sub + size) = '\0';
 
   return sub;
 }
