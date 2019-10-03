@@ -147,6 +147,7 @@ char *replace_env(char *str, int i, int env_len, char *value,
 char *get_value(char *env) {
   char *str;
   if (!strcmp(env, "$")) {
+    str = (char *) malloc(10 * sizeof(char));
     sprintf(str, "%ld", (long) getpid());
   }
   else if (!strcmp(env, "?")) {
@@ -165,7 +166,7 @@ char *get_value(char *env) {
     return NULL;
   }
   else {
-    return getenv(env);
+    str = strdup(getenv(env));
   }
   return str;
 }
@@ -207,6 +208,7 @@ char *escape_env_variables(char *str) {
       str = replace_env(str, i, env_len, value, rest_of_string);
 
       len = strlen(str);
+      free(value);
       free(rest_of_string);
       free(env);
     } // if

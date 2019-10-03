@@ -276,7 +276,7 @@ char *replace_env(char *str, int i, int env_len, char *value,
 char *get_value(char *env) {
   char *str;
   if (!strcmp(env, "$")) {
-    sprintf(str, "%ld", getpid());
+    sprintf(str, "%ld", (long) getpid());
   }
   else if (!strcmp(env, "?")) {
     return NULL;
