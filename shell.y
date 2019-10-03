@@ -169,8 +169,7 @@ char *get_value(char *env) {
   else {
     str = strdup(getenv(env));
   }
-  return str;
-}
+
 
 
 char *escape_env_variables(char *str) {
