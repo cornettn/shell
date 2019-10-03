@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 
+#include <sys/wait.h>
 #include "single_command.h"
 
 // Command Data Structure
@@ -31,6 +32,6 @@ void print_command(command_t *);
 void execute_command(command_t *);
 
 extern command_t *g_current_command;
-extern pid_t last_background_PID;
+extern pid_t g_last_background_PID;
 
 #endif
