@@ -144,6 +144,33 @@ char *replace_env(char *str, int i, int env_len, char *value,
 }
 
 
+char *get_value(char *env) {
+  char *str;
+  if (!strcmp(env, "$")) {
+    sprintf(str, "%ld", getpid());
+  }
+  else if (!strcmp(env, "?")) {
+    return NULL;
+  }
+  else if (!strcmp(env, "!")) {
+    return NULL;
+  }
+  else if (!strcmp(env, "!!")) {
+    return NULL;
+  }
+  else if (!strcmp(env, "_")) {
+    return NULL;
+  }
+  else if (!strcmp(env, "SHELL")) {
+    return NULL;
+  }
+  else {
+    return getenv(env);
+  }
+  return str;
+}
+
+
 char *escape_env_variables(char *str) {
   int len = strlen(str);
   char *env;
@@ -172,7 +199,9 @@ char *escape_env_variables(char *str) {
         *(env + j) = *(str + i + 1 + j);
       }
       *(env + env_len) = '\0';
-      char *value = getenv(env);
+
+      char *value = get_value(env);
+     char *value = getenv(env);
 
       /* Replace the value of ${*} with the value */
 
