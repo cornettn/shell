@@ -134,6 +134,8 @@ char *escape_env_variables(char *str) {
       for (int j = 0; j < env_len; j++) {
         *(env + j) = *(str + i + 1 + j);
       }
+
+      printf("\tEnv Var Name: %s\n", env);
       char *value = getenv(env);
       printf("\tValue: %s\n", value);
       /* Replace the value of ${*} with the value */
