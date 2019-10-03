@@ -280,7 +280,7 @@ char *escape_env_variables(char *str) {
         for (int j = i - 1; j < len + more_space; j++) {
           if (val_count < val_len) {
             /* Write the env var value */
-            *(str + j) = *(value + count);
+            *(str + j) = *(value + val_count);
             val_count++;
           }
           else {
