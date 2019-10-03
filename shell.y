@@ -136,6 +136,7 @@ char *escape_env_variables(char *str) {
         printf("\t\t char: %c\n", *(str + i + 1 + j));
         *(env + j) = *(str + i + 1 + j);
       }
+      *(env + env_len) = '\0';
 
       printf("\tEnv Var Name: %s\n", env);
       char *value = getenv(env);
