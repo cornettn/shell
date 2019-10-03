@@ -40,6 +40,7 @@ int g_debug;
  */
 
 void append_background_process(int pid) {
+  g_last_background_PID = pid;
   if (g_background_process_head == NULL) {
     g_background_process_head = (node_t *) malloc(sizeof(node_t *));
     g_background_process_head->next = NULL;

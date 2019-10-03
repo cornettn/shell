@@ -154,7 +154,8 @@ char *get_value(char *env) {
     return NULL;
   }
   else if (!strcmp(env, "!")) {
-    return NULL;
+    str = (char *) malloc(10 * sizeof(char));
+    sprintf(str, "%ld", (long) g_last_background_PID);
   }
   else if (!strcmp(env, "!!")) {
     return NULL;
