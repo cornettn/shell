@@ -118,7 +118,7 @@ char *escape_env_variables(char *str) {
 
     for (int j = i + 1; j < len; j++) {
         if ((*(copy + j) == '}')) {
-          rest_of_string = substring(copy, j, len);
+          rest_of_string = substring(copy, j + 1, len);
           break;
         }
         env_len++;
@@ -141,10 +141,29 @@ char *escape_env_variables(char *str) {
         if (more_space > 0) {
           str = realloc(str, (len + more_space) * sizeof(char));
         }
+        else {
+          more_space = 0;
+        }
+
+        int val_len = strlen(value);
+        int val_count = 0;
+        int rest_count = 0;
+        for (int j = i - 1; j < len + more_space; j++) {
+          if (val_count < val_len) {
+            /* Write the env var value */
+            *(str + j) = *(value + count);
+            val_count++;
+          }
+          else {
+            /* Write the rest of the string */
+            *(str + j) = *(rest_of_string + rest_count);
+            rest_count++;
+          }
+        }
       }
 
 
-
+      printf("String? \"%s\"\n", str);
       free(rest_of_string);
       free(env);
     } // if
