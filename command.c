@@ -315,7 +315,7 @@ int set_fd_err(command_t *command, int default_err) {
 void execute_command(command_t *command) {
 
   /* Copy this command to g_last_command */
-/*
+
   if (g_last_command != NULL) {
     free_command(g_last_command);
   }
@@ -339,12 +339,11 @@ void execute_command(command_t *command) {
     create_single_command(single);
     if (command->single_commands[i] != NULL) {
       for (int j = 0; j < command->single_commands[i]->num_args; j++) {
-        insert_argument(single, command->single_commands[i]->arguments[j]);
+        insert_argument(single, &command->single_commands[i]->arguments[j]);
       }
       insert_single_command(g_last_command, single);
     }
   }
-*/
 
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
 
