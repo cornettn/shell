@@ -312,10 +312,18 @@ int set_fd_err(command_t *command, int default_err) {
  *  Execute a command
  */
 
-void execute_command(command_t *command) {
+void execute_command(command_t *command) {i
+
+  /* Copy this command to g_last_command */
+
   free(g_last_command);
   g_last_command = (command_t *) malloc(sizeof(command_t));
   memcpy(g_last_command, command, sizeof(command_t));
+
+  for (int i = 0; i < command->num_single_commands; i++) {
+    insert_single_command(g_last_command, command->single_commands[i]);
+  }
+
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
 
   /* Don't do anything if there are no single commands */
