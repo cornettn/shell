@@ -137,7 +137,7 @@ char *escape_env_variables(char *str) {
       /* Replace the value of ${*} with the value */
 
       if (value != NULL) {
-        int more_space = env_len + 3 - strlen(value);
+        int more_space = strlen(value) - env_len - 3;
         printf("Curr len: %d\n", len);
         printf("Len of val: %d\n", (int) strlen(value));
         if (more_space > 0) {
