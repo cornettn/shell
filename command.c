@@ -312,7 +312,7 @@ int set_fd_err(command_t *command, int default_err) {
  *  Execute a command
  */
 
-void execute_command(command_t *command) {i
+void execute_command(command_t *command) {
 
   /* Copy this command to g_last_command */
 
