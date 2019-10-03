@@ -44,6 +44,22 @@
 void yyerror(const char * s);
 int yylex();
 
+char *substring(char *str, int start, int end) {
+  int size = end - start;
+  char *sub = (char *) malloc(size * sizeof(char));
+
+  for (int i = 0; i < size; i++) {
+    *(sub + i) = *(str + start + i);
+  }
+
+  return sub;
+}
+
+/*
+ * This function will take a string and remove quotes from the
+ * start and the back.
+ */
+
 char *quoted_arg(char *str) {
   int str_len = strlen(str);
   if ((*str) == '\"') {
@@ -66,6 +82,10 @@ char *quoted_arg(char *str) {
   }
 }
 
+/*
+ * This function will escape any characters that are preceded by a '\'
+ */
+
 char *escape_characters(char *str) {
   int str_len = strlen(str);
   for (int i = 0; i < str_len; i++) {
@@ -86,30 +106,51 @@ char *escape_env_variables(char *str) {
   int len = strlen(str);
   char *copy = strdup(str);
   char *env;
+  char *rest_of_string;
   int env_len = 0;
   for (int i = 0; i < len; i++) {
     if ((*(copy + i) == '{') && (*(copy + i - 1) == '$')) {
-      for (int j = i + 1; j < len; j++) {
+
+    /* There is an environement varaiable to escape.
+     * The name of the env var start at index i + 1 */
+
+    /* Get the length of the env var */
+
+    for (int j = i + 1; j < len; j++) {
         if ((*(copy + j) == '}')) {
+          rest_of_string = substring(copy, j, len);
           break;
         }
         env_len++;
       }
+
+      printf("Rest: %s\n", rest_of_string);
       env = (char *) malloc(env_len * sizeof(char));
+
+      /* Get the actual value of the env var */
+
       for (int j = 0; j < env_len; j++) {
         *(env + j) = *(copy + i + 1 + j);
       }
-      printf("Var: %s\n", env);
       char *value = getenv(env);
+
+      /* Replace the value of ${*} with the value */
+
       if (value != NULL) {
-        printf("Val: %s\n", value);
-        int more_space = len + 3 - strlen(value);
+        int more_space = env_len + 3 - strlen(value);
         if (more_space > 0) {
           str = realloc(str, (len + more_space) * sizeof(char));
         }
       }
+
+
+
+
+      free(env)
     } // if
   } // for
+
+  free(copy);
   return str;
 }
 
