@@ -110,7 +110,8 @@ char *escape_characters(char *str) {
  * char * value: The value of the variable to insert
  */
 
-char *replace_env(char *str, int i, char *value) {
+char *replace_env(char *str, int i, char *value, char *remaining_str) {
+  int len = strlen(str);
   if (value != NULL) {
     int more_space = strlen(value) - env_len - 3;
     str = realloc(str, (len + more_space) * sizeof(char));
@@ -126,7 +127,7 @@ char *replace_env(char *str, int i, char *value) {
       }
       else {
         /* Write the rest of the string */
-        *(str + j) = *(rest_of_string + rest_count);
+        *(str + j) = *(remaining_str + rest_count);
         rest_count++;
       }
     }
@@ -168,7 +169,7 @@ char *escape_env_variables(char *str) {
 
       /* Replace the value of ${*} with the value */
 
-      str = replace_env(str, i, value);
+      str = replace_env(str, i, value, rest_of_string);
 
       env_len = 0;
       len = strlen(str);

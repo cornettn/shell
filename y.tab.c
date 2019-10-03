@@ -231,17 +231,47 @@ char *escape_characters(char *str) {
   return str;
 }
 
+/*
+ * This fucntion is used to replace environement variables with their
+ * respective value.
+ * char * str: The str to insert the value into
+ * int i: The index of the '{' in ${VARIABLE} in the str
+ * char * value: The value of the variable to insert
+ */
+
+char *replace_env(char *str, int i, char *value) {
+  if (value != NULL) {
+    int more_space = strlen(value) - env_len - 3;
+    str = realloc(str, (len + more_space) * sizeof(char));
+
+    int val_len = strlen(value);
+    int val_count = 0;
+    int rest_count = 0;
+    for (int j = i - 1; j < len + more_space; j++) {
+      if (val_count < val_len) {
+        /* Write the env var value */
+        *(str + j) = *(value + val_count);
+        val_count++;
+      }
+      else {
+        /* Write the rest of the string */
+        *(str + j) = *(rest_of_string + rest_count);
+        rest_count++;
+      }
+    }
+    *(str + len + more_space) = '\0';
+  }
+  return str;
+}
+
 
 char *escape_env_variables(char *str) {
-  printf("Passed: %s\n", str);
   int len = strlen(str);
   char *env;
   char *rest_of_string;
   int env_len = 0;
   for (int i = 0; i < len; i++) {
-   printf("\ti: %c i-1: %c\n", *(str + i), *(str + i - 1));
     if ((*(str + i) == '{') && (*(str + i - 1) == '$')) {
-   // printf("\tIn For Loop\n");
     /* There is an environement varaiable to escape.
      * The name of the env var start at index i + 1 */
 
@@ -255,50 +285,22 @@ char *escape_env_variables(char *str) {
         env_len++;
       }
 
-     // printf("Rest: %s\n", rest_of_string);
-      printf("Size of env var name: %d\n", env_len);
       env = (char *) malloc((env_len + 1) * sizeof(char));
 
       /* Get the actual value of the env var */
 
       for (int j = 0; j < env_len; j++) {
-        printf("\t\t char: %c\n", *(str + i + 1 + j));
         *(env + j) = *(str + i + 1 + j);
       }
       *(env + env_len) = '\0';
-
-      printf("\tEnv Var Name: %s\n", env);
       char *value = getenv(env);
-      printf("\tValue: %s\n", value);
+
       /* Replace the value of ${*} with the value */
 
-      if (value != NULL) {
-        int more_space = strlen(value) - env_len - 3;
-       // printf("Curr len: %d\n", len);
-       // printf("Len of val: %d\n", (int) strlen(value));
-        str = realloc(str, (len + more_space) * sizeof(char));
-
-        int val_len = strlen(value);
-        int val_count = 0;
-        int rest_count = 0;
-        for (int j = i - 1; j < len + more_space; j++) {
-          if (val_count < val_len) {
-            /* Write the env var value */
-            *(str + j) = *(value + val_count);
-            val_count++;
-          }
-          else {
-            /* Write the rest of the string */
-            *(str + j) = *(rest_of_string + rest_count);
-            rest_count++;
-          }
-        }
-        *(str + len + more_space) = '\0';
-      }
+      str = replace_env(str, i, value);
 
       env_len = 0;
       len = strlen(str);
-      printf("\tString? \"%s\"\n", str);
       free(rest_of_string);
       free(env);
     } // if
@@ -330,7 +332,7 @@ void expand_argument(char * str) {
 
 
 
-#line 334 "y.tab.c" /* yacc.c:358  */
+#line 336 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -628,9 +630,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   208,   208,   212,   217,   225,   226,   229,   233,   235,
-     240,   246,   247,   251,   258,   268,   269,   270,   274,   284,
-     287,   298,   304,   315
+       0,   210,   210,   214,   219,   227,   228,   231,   235,   237,
+     242,   248,   249,   253,   260,   270,   271,   272,   276,   286,
+     289,   300,   306,   317
 };
 #endif
 
@@ -1422,66 +1424,66 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 212 "shell.y" /* yacc.c:1646  */
+#line 214 "shell.y" /* yacc.c:1646  */
     {
       execute_command(g_current_command);
       g_current_command = malloc(sizeof(command_t));
       create_command(g_current_command);
     }
-#line 1432 "y.tab.c" /* yacc.c:1646  */
+#line 1434 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 217 "shell.y" /* yacc.c:1646  */
+#line 219 "shell.y" /* yacc.c:1646  */
     {
       execute_command(g_current_command);
       g_current_command = malloc(sizeof(command_t));
       create_command(g_current_command);
     }
-#line 1442 "y.tab.c" /* yacc.c:1646  */
+#line 1444 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 226 "shell.y" /* yacc.c:1646  */
+#line 228 "shell.y" /* yacc.c:1646  */
     {
     g_current_command->background = true;
   }
-#line 1450 "y.tab.c" /* yacc.c:1646  */
+#line 1452 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 233 "shell.y" /* yacc.c:1646  */
-    {
-    }
-#line 1457 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 9:
 #line 235 "shell.y" /* yacc.c:1646  */
     {
     }
-#line 1464 "y.tab.c" /* yacc.c:1646  */
+#line 1459 "y.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 237 "shell.y" /* yacc.c:1646  */
+    {
+    }
+#line 1466 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 240 "shell.y" /* yacc.c:1646  */
+#line 242 "shell.y" /* yacc.c:1646  */
     {
       insert_single_command(g_current_command, g_current_single_command);
     }
-#line 1472 "y.tab.c" /* yacc.c:1646  */
+#line 1474 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 251 "shell.y" /* yacc.c:1646  */
+#line 253 "shell.y" /* yacc.c:1646  */
     {
       expand_argument((yyvsp[0].string));
 /*      insert_argument(g_current_single_command, $1); */
     }
-#line 1481 "y.tab.c" /* yacc.c:1646  */
+#line 1483 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 258 "shell.y" /* yacc.c:1646  */
+#line 260 "shell.y" /* yacc.c:1646  */
     {
       g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
@@ -1489,11 +1491,11 @@ yyreduce:
       expand_argument((yyvsp[0].string));
 /*      insert_argument(g_current_single_command, $1); */
     }
-#line 1493 "y.tab.c" /* yacc.c:1646  */
+#line 1495 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 274 "shell.y" /* yacc.c:1646  */
+#line 276 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
         printf("Ambiguous output redirect.\n");
@@ -1504,19 +1506,19 @@ yyreduce:
                     O_CREAT|O_TRUNC|O_RDWR, 0600);
       close(fd);
     }
-#line 1508 "y.tab.c" /* yacc.c:1646  */
+#line 1510 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 284 "shell.y" /* yacc.c:1646  */
+#line 286 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->in_file = (yyvsp[0].string);
     }
-#line 1516 "y.tab.c" /* yacc.c:1646  */
+#line 1518 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 287 "shell.y" /* yacc.c:1646  */
+#line 289 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
         printf("Ambiguous output redirect.\n");
@@ -1528,22 +1530,22 @@ yyreduce:
                     O_CREAT|O_APPEND|O_RDWR, 0600);
       close(fd);
     }
-#line 1532 "y.tab.c" /* yacc.c:1646  */
+#line 1534 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 298 "shell.y" /* yacc.c:1646  */
+#line 300 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->err_file = (yyvsp[0].string);
       int fd = open(g_current_command->out_file,
                     O_CREAT|O_TRUNC|O_RDWR, 0600);
       close(fd);
     }
-#line 1543 "y.tab.c" /* yacc.c:1646  */
+#line 1545 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 304 "shell.y" /* yacc.c:1646  */
+#line 306 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
         printf("Ambiguous output redirect.\n");
@@ -1555,11 +1557,11 @@ yyreduce:
                     O_CREAT|O_TRUNC|O_RDWR, 0600);
       close(fd);
     }
-#line 1559 "y.tab.c" /* yacc.c:1646  */
+#line 1561 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 315 "shell.y" /* yacc.c:1646  */
+#line 317 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
         printf("Ambiguous output redirect.\n");
@@ -1573,11 +1575,11 @@ yyreduce:
                     O_CREAT|O_APPEND|O_RDWR, 0600);
       close(fd);
     }
-#line 1577 "y.tab.c" /* yacc.c:1646  */
+#line 1579 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1581 "y.tab.c" /* yacc.c:1646  */
+#line 1583 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1805,7 +1807,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 331 "shell.y" /* yacc.c:1906  */
+#line 333 "shell.y" /* yacc.c:1906  */
 
 
 void
