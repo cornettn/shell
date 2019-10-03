@@ -183,7 +183,6 @@ char *escape_env_variables(char *str) {
       free(env);
     } // if
   } // for
-  printf("Returned: %s\n", str);
 
   return str;
 }
