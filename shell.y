@@ -44,6 +44,10 @@
 void yyerror(const char * s);
 int yylex();
 
+/*
+ * This function returns a newly allocated char pointer that is the substring.
+ */
+
 char *substring(char *str, int start, int end) {
   int size = end - start;
   char *sub = (char *) malloc(size * sizeof(char));
@@ -107,10 +111,13 @@ char *escape_characters(char *str) {
  * respective value.
  * char * str: The str to insert the value into
  * int i: The index of the '{' in ${VARIABLE} in the str
+ * int env_len: The length of the environment varaible
  * char * value: The value of the variable to insert
+ * char * remaining_str: The remainder of the string after the env variable.
  */
 
-char *replace_env(char *str, int i, char *value, char *remaining_str) {
+char *replace_env(char *str, int i, int env_len, char *value,
+                  char *remaining_str) {
   int len = strlen(str);
   if (value != NULL) {
     int more_space = strlen(value) - env_len - 3;
@@ -141,8 +148,8 @@ char *escape_env_variables(char *str) {
   int len = strlen(str);
   char *env;
   char *rest_of_string;
-  int env_len = 0;
   for (int i = 0; i < len; i++) {
+    int env_len = 0;
     if ((*(str + i) == '{') && (*(str + i - 1) == '$')) {
     /* There is an environement varaiable to escape.
      * The name of the env var start at index i + 1 */
@@ -169,9 +176,8 @@ char *escape_env_variables(char *str) {
 
       /* Replace the value of ${*} with the value */
 
-      str = replace_env(str, i, value, rest_of_string);
+      str = replace_env(str, i, env_len, value, rest_of_string);
 
-      env_len = 0;
       len = strlen(str);
       free(rest_of_string);
       free(env);
