@@ -132,6 +132,7 @@ char *escape_env_variables(char *str) {
       /* Get the actual value of the env var */
 
       for (int j = 0; j < env_len; j++) {
+        printf("\t\t char: %c\n", *(str + i + 1 + j));
         *(env + j) = *(str + i + 1 + j);
       }
 
