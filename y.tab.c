@@ -341,7 +341,6 @@ char *escape_env_variables(char *str) {
       /* Replace the value of ${*} with the value */
 
       str = replace_env(str, i, env_len, value, rest_of_string);
-      printf("str: %s\n", str);
 
       len = strlen(str);
       free(value);
@@ -350,6 +349,7 @@ char *escape_env_variables(char *str) {
     } // if
   } // for
 
+  printf("str: %s\n", str);
   return str;
 }
 
