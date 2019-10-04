@@ -555,7 +555,8 @@ void execute_command(command_t *command) {
   /* Wait for Child */
 
   if (!command->background) {
-    waitpid(ret, NULL, 0);
+    waitpid(ret, g_last_exit_code, 0);
+    *g_last_exit_code = WEXITSTATUS(g_last_exit_code);
   }
   else {
     append_background_process(ret);
