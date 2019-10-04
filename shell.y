@@ -152,7 +152,7 @@ char *get_value(char *env) {
     return str;
   }
   else if (!strcmp(env, "?")) {
-    return NULL;
+    return g_status;
   }
   else if (!strcmp(env, "!")) {
     str = (char *) malloc(10 * sizeof(char));
