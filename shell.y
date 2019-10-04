@@ -239,7 +239,7 @@ void expand_argument(char * str) {
 
   argument = escape_env_variables(argument);
   if (argument == NULL) {
-    yyparse();
+//    yyparse();
     return;
   }
 
