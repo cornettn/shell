@@ -557,8 +557,8 @@ void execute_command(command_t *command) {
 
   if (!command->background) {
     waitpid(ret, g_last_exit_code, 0);
-    if (WIFEXITED(g_last_exit_code)) {
-      *g_last_exit_code = WEXITSTATUS(g_last_exit_code);
+    if (WIFEXITED(*g_last_exit_code)) {
+      *g_last_exit_code = WEXITSTATUS(*g_last_exit_code);
     }
   }
   else {
