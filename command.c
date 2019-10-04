@@ -558,8 +558,8 @@ void execute_command(command_t *command) {
   int status;
   if (!command->background) {
     waitpid(ret, &status, 0);
+    printf("Update g_status\n");
     if (WIFEXITED(status)) {
-      printf("Update g_status\n");
       g_status = WEXITSTATUS(status);
     }
   }
