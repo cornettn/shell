@@ -339,7 +339,7 @@ void execute_command(command_t *command) {
     single_command_t *single = (single_command_t *) malloc(sizeof(single_command_t));
     create_single_command(single);
     for (int j = 0; j < command->single_commands[i]->num_args; j++) {
-      char *arg = command->single_commands[i]->arguments[j];
+      char *arg = strdup(command->single_commands[i]->arguments[j]);
       insert_argument(single, arg);
     }
     insert_single_command(g_last_command, single);
