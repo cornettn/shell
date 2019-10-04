@@ -48,6 +48,8 @@ void sig_child_handler(int sid) {
  */
 
 int main() {
+  g_shell_name = argv[0];
+
   g_current_command = (command_t *)malloc(sizeof(command_t));
 
   create_command(g_current_command);
