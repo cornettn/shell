@@ -206,6 +206,9 @@ char *escape_env_variables(char *str) {
 
       char *value = get_value(env);
       if (value == NULL) {
+        free(value);
+        free(rest_of_string);
+        free(env);
         return NULL;
       }
 
@@ -238,6 +241,7 @@ void expand_argument(char * str) {
 
   argument = escape_env_variables(argument);
   if (argument == NULL) {
+    free_command(g_current_command);
     yyparse();
     return;
   }
