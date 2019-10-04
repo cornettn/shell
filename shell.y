@@ -166,7 +166,8 @@ char *get_value(char *env) {
     return strdup(g_last_argument);
   }
   else if (!strcmp(env, "SHELL")) {
-    return NULL;
+    char *path = realpath(argv[0], path);
+    return path;
   }
   else {
     str = strdup(getenv(env));
