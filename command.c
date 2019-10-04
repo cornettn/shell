@@ -555,10 +555,11 @@ void execute_command(command_t *command) {
 
   /* Wait for Child */
 
+  int status;
   if (!command->background) {
-    waitpid(ret, g_last_exit_code, 0);
-    if (WIFEXITED(*g_last_exit_code)) {
-      *g_last_exit_code = WEXITSTATUS(*g_last_exit_code);
+    waitpid(ret, &status, 0);
+    if (WIFEXITED(status)) {
+      g_status = WEXITSTATUS(status);
     }
   }
   else {

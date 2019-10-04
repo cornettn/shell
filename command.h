@@ -37,6 +37,6 @@ command_t *g_last_command;
 int g_last_background_PID;
 char *g_last_argument;
 char *g_shell_name;
-int *g_last_exit_code;
+int *g_status;
 
 #endif
