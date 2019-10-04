@@ -149,7 +149,8 @@ int execute_builtin(single_command_t *single) {
   if (!strcmp(single->arguments[0], "exit")) {
     dprintf(g_debug, "Def should exit\n");
     free_command(g_current_command);
-    exit(1);
+    free_command(g_last_command);
+    free(g_last_argument);
   }
   else if (!strcmp(single->arguments[0], "printenv")) {
     char **var = __environ;
