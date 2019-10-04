@@ -243,6 +243,8 @@ void expand_argument(char * str) {
     return;
   }
 
+  printf("Arg: %s\n", argument);
+
 
   insert_argument(g_current_single_command, argument);
 }
