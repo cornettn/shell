@@ -47,7 +47,7 @@ void sig_child_handler(int sid) {
  *  yyparse and never returns
  */
 
-int main() {
+int main(int argc, char **argc) {
   g_shell_name = argv[0];
 
   g_current_command = (command_t *)malloc(sizeof(command_t));
