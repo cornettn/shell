@@ -148,8 +148,11 @@ int execute_builtin(single_command_t *single) {
 
   if (!strcmp(single->arguments[0], "exit")) {
     dprintf(g_debug, "Def should exit\n");
+    printf("free g_curr\n");
     free_command(g_current_command);
+    printf("free g_last\n");
     free_command(g_last_command);
+    printf("free g_last_arg\n");
     free(g_last_argument);
     exit(1);
   }
@@ -377,6 +380,7 @@ void execute_command(command_t *command) {
   }
 
   if (g_last_command != NULL && command != g_last_command) {
+    printf("free g_lastr\n");
     free_command(g_last_command);
     g_last_command = command_dup(command);
   }
@@ -563,6 +567,7 @@ void execute_command(command_t *command) {
 
   if (command != g_last_command) {
     free_command(command);
+    printf("free command\n");
   }
 
   if (isatty(0) && command != g_last_command) {

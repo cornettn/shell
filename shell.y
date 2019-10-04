@@ -241,6 +241,7 @@ void expand_argument(char * str) {
 
   argument = escape_env_variables(argument);
   if (argument == NULL) {
+    printf("free g_curr\n");
     free_command(g_current_command);
     free_single_command(g_current_single_command);
     yyparse();
