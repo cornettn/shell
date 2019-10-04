@@ -345,6 +345,11 @@ void execute_command(command_t *command) {
 
   /* Copy this command to g_last_command */
 
+  if (g_last_command == NULL) {
+    g_last_command = command_dup(command);
+  }
+
+
   if (g_last_command != NULL && command != g_last_command) {
     free_command(g_last_command);
     g_last_command = command_dup(command);
