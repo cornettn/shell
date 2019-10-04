@@ -151,6 +151,7 @@ int execute_builtin(single_command_t *single) {
     free_command(g_current_command);
     free_command(g_last_command);
     free(g_last_argument);
+    exit(1);
   }
   else if (!strcmp(single->arguments[0], "printenv")) {
     char **var = __environ;
