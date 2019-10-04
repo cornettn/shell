@@ -283,6 +283,35 @@ void print_command(command_t *command) {
   printf( "\n\n" );
 } /* print_command() */
 
+command_t *command_dup(command_t *command) {
+  command_t *new_command = (command_t *) malloc(sizeof(command_t));
+  create_command(new_command);
+  if (command->out_file) {
+    new_command->out_file = strdup(command->out_file);
+  }
+  if (command->in_file) {
+    new_command->in_file = strdup(command->in_file);
+  }
+  if (command->err_file) {
+    new_command->err_file = strdup(command->err_file);
+  }
+
+  new_command->append_out = command->append_out;
+  new_command->append_err = command->append_err;
+  new_command->background = command->background;
+
+  for (int i = 0; i < command->num_single_commands; i++) {
+    single_command_t *single = (single_command_t *) malloc(sizeof(single_command_t));
+    create_single_command(single);
+    for (int j = 0; j < command->single_commands[i]->num_args; j++) {
+      char *arg = strdup(command->single_commands[i]->arguments[j]);
+      insert_argument(single, arg);
+    }
+    insert_single_command(new_command, single);
+  }
+  return new_command;
+}
+
 /*
  * This function will set standard error according to the specifications.
  */
@@ -316,33 +345,9 @@ void execute_command(command_t *command) {
 
   /* Copy this command to g_last_command */
 
-  if (g_last_command != NULL) {
+  if (g_last_command != NULL && command != g_last_command) {
     free_command(g_last_command);
-  }
-  g_last_command = (command_t *) malloc(sizeof(command_t));
-  create_command(g_last_command);
-  if (command->out_file) {
-    g_last_command->out_file = strdup(command->out_file);
-  }
-  if (command->in_file) {
-    g_last_command->in_file = strdup(command->in_file);
-  }
-  if (command->err_file) {
-    g_last_command->err_file = strdup(command->err_file);
-  }
-
-  g_last_command->append_out = command->append_out;
-  g_last_command->append_err = command->append_err;
-  g_last_command->background = command->background;
-
-  for (int i = 0; i < command->num_single_commands; i++) {
-    single_command_t *single = (single_command_t *) malloc(sizeof(single_command_t));
-    create_single_command(single);
-    for (int j = 0; j < command->single_commands[i]->num_args; j++) {
-      char *arg = strdup(command->single_commands[i]->arguments[j]);
-      insert_argument(single, arg);
-    }
-    insert_single_command(g_last_command, single);
+    g_last_command = command_dup(command);
   }
 
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
@@ -529,7 +534,9 @@ void execute_command(command_t *command) {
     append_background_process(ret);
   }
 
-  free_command(command);
+  if (command != g_last_command) {
+    free_command(command);
+  }
 
   if (isatty(0)) {
     print_prompt();
