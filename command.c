@@ -559,6 +559,7 @@ void execute_command(command_t *command) {
   if (!command->background) {
     waitpid(ret, &status, 0);
     if (WIFEXITED(status)) {
+      printf("Update g_status\n");
       g_status = WEXITSTATUS(status);
     }
   }
