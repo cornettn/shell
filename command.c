@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <types.h>
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <string.h>
@@ -556,7 +557,9 @@ void execute_command(command_t *command) {
 
   if (!command->background) {
     waitpid(ret, g_last_exit_code, 0);
-    *g_last_exit_code = WEXITSTATUS(g_last_exit_code);
+    if (WIFEXITED(g_last_exit_code)) {
+      *g_last_exit_code = WEXITSTATUS(g_last_exit_code);
+    }
   }
   else {
     append_background_process(ret);
