@@ -347,12 +347,16 @@ void execute_command(command_t *command) {
 
   if (g_last_command == NULL) {
     g_last_command = command_dup(command);
+    command_t last_single = g_last_command->single_commands[g_command->num_single_commands - 1];
+    g_last_argument = strdup(last_single->arguments[last_single->num_args - 1]);
   }
 
 
   if (g_last_command != NULL && command != g_last_command) {
     free_command(g_last_command);
     g_last_command = command_dup(command);
+    command_t last_single = g_last_command->single_commands[g_command->num_single_commands - 1];
+    g_last_argument = strdup(last_single->arguments[last_single->num_args - 1]);
   }
 
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);

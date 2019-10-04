@@ -35,5 +35,7 @@ extern command_t *g_current_command;
 command_t *g_last_command;
 
 int g_last_background_PID;
+char *g_last_argument;
+
 
 #endif
