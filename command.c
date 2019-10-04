@@ -343,6 +343,13 @@ int set_fd_err(command_t *command, int default_err) {
 
 void execute_command(command_t *command) {
 
+  if (command == NULL) {
+    if (isatty(0)) {
+      print_prompt();
+    }
+    return;
+  }
+
   /* Copy this command to g_last_command */
 
   if (g_last_command == NULL) {
