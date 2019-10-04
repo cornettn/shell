@@ -237,7 +237,6 @@ void expand_argument(char * str) {
 
   argument = escape_env_variables(argument);
   if (argument == NULL) {
-    print_prompt();
     yyparse();
     return;
   }
