@@ -149,6 +149,7 @@ char *get_value(char *env) {
   if (!strcmp(env, "$")) {
     str = (char *) malloc(10 * sizeof(char));
     sprintf(str, "%ld", (long) getpid());
+    return str;
   }
   else if (!strcmp(env, "?")) {
     return NULL;
@@ -211,6 +212,7 @@ char *escape_env_variables(char *str) {
       /* Replace the value of ${*} with the value */
 
       str = replace_env(str, i, env_len, value, rest_of_string);
+      printf("%S\n", str);
 
       len = strlen(str);
       free(value);
