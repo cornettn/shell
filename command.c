@@ -226,6 +226,13 @@ void insert_single_command(command_t *command, single_command_t *simp) {
  */
 
 void free_command(command_t *command) {
+  if (command == NULL) {
+    return;
+  }
+  else if (command->single_commands == NULL) {
+    return;
+  }
+
   for (int i = 0; i < command->num_single_commands; i++) {
     free_single_command(command->single_commands[i]);
   }
