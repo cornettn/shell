@@ -559,9 +559,11 @@ void execute_command(command_t *command) {
   if (!command->background) {
     waitpid(ret, &status, 0);
     printf("Update g_status\n");
-    printf("Exited? %b\n", WIFEXITED(status));
     if (WIFEXITED(status)) {
       g_status = WEXITSTATUS(status);
+    }
+    else {
+      printf("not exited\n");
     }
   }
   else {
