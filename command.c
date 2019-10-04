@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <types.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <string.h>
