@@ -558,6 +558,17 @@ void execute_command(command_t *command) {
   int status;
   if (!command->background) {
     waitpid(ret, &status, 0);
+
+    if (WIFEXITED(status)) {
+      printf("child exited, status=%d\n", WEXITSTATUS(status));
+    }
+    else if (WIFSIGNALED(status)) {
+      printf("child killed (signal %d)\n", WTERMSIG(status));
+    }
+    else if (WIFSTOPPED(status)) {
+      printf("child stopped (signal %d)\n", WSTOPSIG(status));
+    }
+
     printf("Update g_status\n");
     if (WIFEXITED(status)) {
       g_status = WEXITSTATUS(status);
