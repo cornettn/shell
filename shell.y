@@ -220,7 +220,6 @@ char *escape_env_variables(char *str) {
     } // if
   } // for
 
-  printf("str: %s\n", str);
   return str;
 }
 
@@ -242,9 +241,6 @@ void expand_argument(char * str) {
     yyparse();
     return;
   }
-
-  printf("Arg: %s\n", argument);
-
 
   insert_argument(g_current_single_command, argument);
 }
