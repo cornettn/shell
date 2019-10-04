@@ -343,10 +343,21 @@ int set_fd_err(command_t *command, int default_err) {
 
 void execute_command(command_t *command) {
 
-  if (command == NULL) {
+  if (command->num_single_commands == 0) {
     if (isatty(0)) {
       print_prompt();
     }
+    return;
+  }
+
+  /* Don't do anything if there are no single commands */
+
+  if (command->single_commands == NULL) {
+    int input = dup(0);
+    if (isatty(input)) {
+      print_prompt();
+    }
+    close(input);
     return;
   }
 
@@ -372,16 +383,6 @@ void execute_command(command_t *command) {
 
   g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
 
-  /* Don't do anything if there are no single commands */
-
-  if (command->single_commands == NULL) {
-    int input = dup(0);
-    if (isatty(input)) {
-      print_prompt();
-    }
-    close(input);
-    return;
-  }
 
 
   /* Save default file descriptors */
