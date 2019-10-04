@@ -543,7 +543,7 @@ void execute_command(command_t *command) {
     free_command(command);
   }
 
-  if (isatty(0)) {
+  if (isatty(0) && command != g_last_command) {
     print_prompt();
   }
 } /* execute_command() */
