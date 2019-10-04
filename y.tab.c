@@ -292,7 +292,7 @@ char *get_value(char *env) {
     return NULL;
   }
   else if (!strcmp(env, "_")) {
-    return NULL;
+    return strdup(g_last_argument);
   }
   else if (!strcmp(env, "SHELL")) {
     return NULL;
