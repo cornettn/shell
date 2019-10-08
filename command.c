@@ -559,6 +559,7 @@ void execute_command(command_t *command) {
   if (!command->background) {
     waitpid(ret, &status, 0);
 
+    /*
     if (WIFEXITED(status)) {
       printf("child exited, status=%d\n", WEXITSTATUS(status));
     }
@@ -575,6 +576,7 @@ void execute_command(command_t *command) {
     else {
       printf("not exited\n");
     }
+    */
   }
   else {
     append_background_process(ret);
