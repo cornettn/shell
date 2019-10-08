@@ -569,7 +569,6 @@ void execute_command(command_t *command) {
       printf("child stopped (signal %d)\n", WSTOPSIG(status));
     }
 
-    printf("Update g_status\n");
     if (WIFEXITED(status)) {
       g_status = WEXITSTATUS(status);
     }
