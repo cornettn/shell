@@ -367,7 +367,10 @@ void sort_array_strings(char **array, int num) {
 } /* sort_array() */
 
 
-void expand_wildcards(char *prefix, char *suffix) {
+char **add_item(char **array, char *item,
+
+
+void expand_wildcards(char *prefix, char *suffix, char **array, int *size) {
   if (suffix[0] == '\0') {
     insert_argument(g_current_single_command, strdup(prefix));
     return;
@@ -396,7 +399,7 @@ void expand_wildcards(char *prefix, char *suffix) {
       sprintf(new_prefix, "%s/%s", prefix, component);
     }
     free(component);
-    expand_wildcards(new_prefix, suffix);
+    expand_wildcards(new_prefix, suffix, array, size);
     free(new_prefix);
   }
   else {
@@ -430,7 +433,7 @@ void expand_wildcards(char *prefix, char *suffix) {
         else {
           sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
         }
-        expand_wildcards(new_prefix, suffix);
+        expand_wildcards(new_prefix, suffix, array, size);
       }
       else {
         test++;
@@ -530,7 +533,10 @@ void expand_argument(char * str) {
         old_expand_wildcards(argument);
       }
       else {
-        expand_wildcards(prefix, argument);
+        char **array = (char **) malloc(sizeof(char *));
+        int *size = (int *) malloc(sizeof(int));
+        *size = 20;
+        expand_wildcards(prefix, argument, array, size);
       }
     }
     else {
