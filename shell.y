@@ -391,10 +391,7 @@ void expand_wildcards(char *prefix, char *suffix) {
 
   char new_prefix[MAXFILENAME];
   if (!has_wildcards(component)) {
-    if (prefix[0] == '\0') {
-      sprintf(new_prefix, "%s", component);
-    }
-    else {
+    if (component[0] != '\0') {
       sprintf(new_prefix, "%s/%s", prefix, component);
     }
     free(component);
