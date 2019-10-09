@@ -373,7 +373,7 @@ char *to_regex(char *str) {
   char *arg_pos = str;
   char *regex_pos = regex;
 
-  *reg_pos++ = '^';
+  *regex_pos++ = '^';
   while(*arg_pos) {
     if (*arg_pos == '*') {
       *regex_pos++ = '.';
