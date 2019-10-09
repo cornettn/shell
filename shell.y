@@ -374,7 +374,7 @@ void expand_wildcards(char *prefix, char *suffix) {
   }
 
   /* Find location of next '/' */
-
+  bool slash = false;
   char *s = strchr(suffix, '/');
   char *component = (char *) malloc(MAXFILENAME);
   if (s != NULL) {
@@ -383,6 +383,7 @@ void expand_wildcards(char *prefix, char *suffix) {
     /* Advance suffix */
 
     suffix = s + 1;
+    slash = true;
   }
   else {
     strcpy(component, suffix);
@@ -391,7 +392,7 @@ void expand_wildcards(char *prefix, char *suffix) {
 
   char new_prefix[MAXFILENAME];
   if (!has_wildcards(component)) {
-    if (prefix[0] == '\0') {
+    if (prefix[0] == '\0' || !slash) {
       sprintf(new_prefix, "%s", component);
     }
     else {
@@ -424,7 +425,7 @@ void expand_wildcards(char *prefix, char *suffix) {
     while ((ent = readdir(dir)) != NULL) {
       int result = regexec(&reg, ent->d_name, 0, NULL, 0);
       if (result != REG_NOMATCH) {
-        if (prefix[0] == '\0') {
+        if (prefix[0] == '\0' || !slash) {
           sprintf(new_prefix, "%s", ent->d_name);
         }
         else {
