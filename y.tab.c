@@ -420,7 +420,7 @@ void expand_wildcards(char *str) {
       return;
     }
 
-    struct direct *ent;
+    struct dirent *ent;
 
     while ((ent = (struct dirent *)readdir(dir)) != NULL) {
       int nmatch = 0;
