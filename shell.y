@@ -524,7 +524,9 @@ void expand_argument(char * str) {
   if (!quoted) {
     char *prefix = (char *) malloc(MAXFILENAME);
     *prefix = '\0';
-    expand_wildcards(prefix, argument);
+    if (has_wildcards(argument) {
+      expand_wildcards(prefix, argument);
+    }
     free(prefix);
   }
   else {
