@@ -331,7 +331,7 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg,
 int my_compare(const void *a, const void *b) {
   char *str_a = *(char **) a;
   char *str_b = *(char **) b;
-  return strcmp(str_a, str_b);
+  return strcasecmp(str_a, str_b);
 }
 
 
