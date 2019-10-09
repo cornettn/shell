@@ -376,7 +376,7 @@ void expand_wildcards(char *prefix, char *suffix) {
   /* Find location of next '/' */
 
   char *s = strchr(suffix, '/');
-  char component[MAXFILENAME];
+  char *component = (char *) malloc(MAXFILENAME);
   if (s != NULL) {
     strncpy(component, suffix, s - suffix);
 
@@ -397,6 +397,7 @@ void expand_wildcards(char *prefix, char *suffix) {
     else {
       sprintf(new_prefix, "%s/%s", prefix, component);
     }
+    free(component);
     expand_wildcards(new_prefix, suffix);
   }
   else {
@@ -429,6 +430,7 @@ void expand_wildcards(char *prefix, char *suffix) {
         else {
           sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
         }
+        free(component);
         expand_wildcards(new_prefix, suffix);
       }
       else {
