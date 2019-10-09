@@ -525,7 +525,12 @@ void expand_argument(char * str) {
     char *prefix = (char *) malloc(MAXFILENAME);
     *prefix = '\0';
     if (has_wildcards(argument)) {
-      expand_wildcards(prefix, argument);
+      if (strchr(argument, '/') == NULL) {
+        old_expand_wildcards(argument);
+      }
+      else {
+        expand_wildcards(prefix, argument);
+      }
     }
     else {
       insert_argument(g_current_single_command, argument);
