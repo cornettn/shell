@@ -148,6 +148,12 @@ char *replace_env(char *str, int i, int env_len, char *value,
 }
 
 
+/*
+ * This function is used to get the value of the env variable. i.e. ${this}
+ * char *env: The string of the environment variable to the value of.
+ * return char *: The string corresponding to the value of env var.
+ */
+
 char *get_value(char *env) {
   char *str;
   if (!strcmp(env, "$")) {
@@ -179,7 +185,7 @@ char *get_value(char *env) {
     str = strdup(getenv(env));
   }
   return str;
-}
+} /* get_value() */
 
 /*
  * This function is used to escape any environment variables within the passed argument.
@@ -284,6 +290,15 @@ char *to_regex(char *str) {
   return regex;
 } /* to_regex() */
 
+/*
+ * This function is used to get an array of matching strings.
+ * char ** array: A pointer to the array that will be filled with matches.
+ * DIR *dir: The directory to check through
+ * regex_t reg: The regex structure to use for matching
+ * char *regex: The regex string to check against
+ * int *count: A pointer to the number of matches found
+ * return char**: The array of all the matches.
+ */
 
 char **find_matching_strings(char **array, DIR *dir, regex_t reg,
                              char *regex, int *count) {
@@ -324,20 +339,37 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg,
     }
   *(count) = num_entries;
   return array;
-}
+} /* find_matching_strings() */
 
+/*
+ * This function is used in conjunction with qsort to sort strings.
+ * return int: A negative number is a < b, 0 if a = b,
+ *             positive number if a > b
+ */
 
 int my_compare(const void *a, const void *b) {
   char *str_a = *(char **) a;
   char *str_b = *(char **) b;
   return strcmp(str_a, str_b);
-}
+} /* my_compare() */
 
+
+/*
+ * This function will sort an array using qsort.
+ * char **array: The array to sort.
+ * int num: The number of elements to sort.
+ */
 
 void sort_array_strings(char **array, int num) {
   qsort(array, num, sizeof(char *), my_compare);
-}
+} /* sort_array() */
 
+
+/*
+ * This function is used to expand any wildcards that are in the passed
+ * argument. i.e. '*', '?'
+ * char *str: The argument to expand the wildcards from.
+ */
 
 void expand_wildcards(char *str) {
   if (!has_wildcards(str)) {
@@ -381,7 +413,12 @@ void expand_wildcards(char *str) {
     free(array);
 
   } // else
-}
+} /* expand_wildcards() */
+
+/*
+ * This function is used to expand the argument to its full meeaning.
+ * char *str: The argument to expand.
+ */
 
 void expand_argument(char * str) {
   char *passed_str = str;
@@ -413,7 +450,7 @@ void expand_argument(char * str) {
   else {
     insert_argument(g_current_single_command, argument);
   }
-}
+} /* exapnd_argument() */
 
 
 %}
