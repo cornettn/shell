@@ -375,8 +375,7 @@ char *escape_env_variables(char *str) {
  */
 
 bool has_wildcards(char *str) {
-  return (strchr(str, '?') != NULL) || (strchr(str, '*') != NULL) ||
-         (strchr(str, '.') != NULL);
+  return (strchr(str, '?') != NULL) || (strchr(str, '*') != NULL);
 } /* has_wildcards() */
 
 /*
@@ -541,7 +540,7 @@ void expand_argument(char * str) {
 
 
 
-#line 545 "y.tab.c" /* yacc.c:358  */
+#line 544 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -839,9 +838,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   418,   418,   422,   427,   435,   436,   439,   443,   445,
-     450,   456,   457,   461,   468,   478,   479,   480,   484,   494,
-     497,   508,   514,   525
+       0,   417,   417,   421,   426,   434,   435,   438,   442,   444,
+     449,   455,   456,   460,   467,   477,   478,   479,   483,   493,
+     496,   507,   513,   524
 };
 #endif
 
@@ -1633,66 +1632,66 @@ yyreduce:
   switch (yyn)
     {
         case 3:
-#line 422 "shell.y" /* yacc.c:1646  */
+#line 421 "shell.y" /* yacc.c:1646  */
     {
       execute_command(g_current_command);
       g_current_command = malloc(sizeof(command_t));
       create_command(g_current_command);
     }
-#line 1643 "y.tab.c" /* yacc.c:1646  */
+#line 1642 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 427 "shell.y" /* yacc.c:1646  */
+#line 426 "shell.y" /* yacc.c:1646  */
     {
       execute_command(g_current_command);
       g_current_command = malloc(sizeof(command_t));
       create_command(g_current_command);
     }
-#line 1653 "y.tab.c" /* yacc.c:1646  */
+#line 1652 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 436 "shell.y" /* yacc.c:1646  */
+#line 435 "shell.y" /* yacc.c:1646  */
     {
     g_current_command->background = true;
   }
-#line 1661 "y.tab.c" /* yacc.c:1646  */
+#line 1660 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 443 "shell.y" /* yacc.c:1646  */
+#line 442 "shell.y" /* yacc.c:1646  */
     {
     }
-#line 1668 "y.tab.c" /* yacc.c:1646  */
+#line 1667 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 445 "shell.y" /* yacc.c:1646  */
+#line 444 "shell.y" /* yacc.c:1646  */
     {
     }
-#line 1675 "y.tab.c" /* yacc.c:1646  */
+#line 1674 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 450 "shell.y" /* yacc.c:1646  */
+#line 449 "shell.y" /* yacc.c:1646  */
     {
       insert_single_command(g_current_command, g_current_single_command);
     }
-#line 1683 "y.tab.c" /* yacc.c:1646  */
+#line 1682 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 461 "shell.y" /* yacc.c:1646  */
+#line 460 "shell.y" /* yacc.c:1646  */
     {
       expand_argument((yyvsp[0].string));
 /*      insert_argument(g_current_single_command, $1); */
     }
-#line 1692 "y.tab.c" /* yacc.c:1646  */
+#line 1691 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 468 "shell.y" /* yacc.c:1646  */
+#line 467 "shell.y" /* yacc.c:1646  */
     {
       g_current_single_command = malloc(sizeof(single_command_t));
       create_single_command(g_current_single_command);
@@ -1700,11 +1699,11 @@ yyreduce:
       expand_argument((yyvsp[0].string));
 /*      insert_argument(g_current_single_command, $1); */
     }
-#line 1704 "y.tab.c" /* yacc.c:1646  */
+#line 1703 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 484 "shell.y" /* yacc.c:1646  */
+#line 483 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
         printf("Ambiguous output redirect.\n");
@@ -1715,19 +1714,19 @@ yyreduce:
                     O_CREAT|O_TRUNC|O_RDWR, 0600);
       close(fd);
     }
-#line 1719 "y.tab.c" /* yacc.c:1646  */
+#line 1718 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 494 "shell.y" /* yacc.c:1646  */
+#line 493 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->in_file = (yyvsp[0].string);
     }
-#line 1727 "y.tab.c" /* yacc.c:1646  */
+#line 1726 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 497 "shell.y" /* yacc.c:1646  */
+#line 496 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
         printf("Ambiguous output redirect.\n");
@@ -1739,22 +1738,22 @@ yyreduce:
                     O_CREAT|O_APPEND|O_RDWR, 0600);
       close(fd);
     }
-#line 1743 "y.tab.c" /* yacc.c:1646  */
+#line 1742 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 508 "shell.y" /* yacc.c:1646  */
+#line 507 "shell.y" /* yacc.c:1646  */
     {
       g_current_command->err_file = (yyvsp[0].string);
       int fd = open(g_current_command->out_file,
                     O_CREAT|O_TRUNC|O_RDWR, 0600);
       close(fd);
     }
-#line 1754 "y.tab.c" /* yacc.c:1646  */
+#line 1753 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 514 "shell.y" /* yacc.c:1646  */
+#line 513 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
         printf("Ambiguous output redirect.\n");
@@ -1766,11 +1765,11 @@ yyreduce:
                     O_CREAT|O_TRUNC|O_RDWR, 0600);
       close(fd);
     }
-#line 1770 "y.tab.c" /* yacc.c:1646  */
+#line 1769 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 525 "shell.y" /* yacc.c:1646  */
+#line 524 "shell.y" /* yacc.c:1646  */
     {
       if (g_current_command->out_file) {
         printf("Ambiguous output redirect.\n");
@@ -1784,11 +1783,11 @@ yyreduce:
                     O_CREAT|O_APPEND|O_RDWR, 0600);
       close(fd);
     }
-#line 1788 "y.tab.c" /* yacc.c:1646  */
+#line 1787 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1792 "y.tab.c" /* yacc.c:1646  */
+#line 1791 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2016,7 +2015,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 541 "shell.y" /* yacc.c:1906  */
+#line 540 "shell.y" /* yacc.c:1906  */
 
 
 void
