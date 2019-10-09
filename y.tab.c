@@ -422,7 +422,7 @@ void expand_wildcards(char *str) {
 
     struct direct *ent;
 
-    while ((ent = readdir(dir)) != NULL) {
+    while ((ent = (struct dirent *)readdir(dir)) != NULL) {
       int nmatch = 0;
       regmatch_t match[nmatch];
       status = regexec(&reg, regex, nmatch, match, 0);
