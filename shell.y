@@ -295,7 +295,8 @@ void expand_wildcards(char *str) {
     while ((ent = (struct dirent *)readdir(dir)) != NULL) {
       int nmatch = 0;
       regmatch_t match[nmatch];
-      status = regexec(&reg, regex, nmatch, NULL, 0);
+      status = regexec(&reg, ent->d_name, nmatch, NULL, 0);
+      printf("d_name: %s\n", ent->d_name);
       if (status != REG_NOMATCH) {
         insert_argument(g_current_single_command, strdup(ent->d_name));
       }
