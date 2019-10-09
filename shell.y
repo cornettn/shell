@@ -285,6 +285,42 @@ char *to_regex(char *str) {
 } /* to_regex() */
 
 
+char **find_matching_strings(char **array, DIR *dir, regex_t reg) {
+    struct dirent *ent;
+    int max_entries = 20;
+    int num_entries = 0;
+    array = (char **) malloc(max_entries * sizeof(char *));
+
+    /* Iterate through the directory and find all matching strings */
+
+    while ((ent = (struct dirent *)readdir(dir)) != NULL) {
+      int nmatch = 0;
+      regmatch_t match[nmatch];
+      status = regexec(&reg, ent->d_name, nmatch, NULL, 0);
+      if (status != REG_NOMATCH) {
+        if (num_entries == max_entries) {
+          max_entries *= 2;
+          array = realloc(array, max_entries * sizeof(char *));
+          assert(array != NULL);
+        }
+        array[num_entries] = strdup(ent->d_name);
+        num_entries++;
+      }
+    }
+  return num_entires;
+}
+
+
+int my_compare(const void *a, const void *b) {
+  return strcmp((const char *) a, (const char *) b);
+}
+
+
+void sort_array_strings(char **array, int num) {
+  qsort(array, num, sizeof(char *), my_compare);
+}
+
+
 void expand_wildcards(char *str) {
   if (!has_wildcards(str)) {
 
@@ -311,18 +347,20 @@ void expand_wildcards(char *str) {
       return;
     }
 
-    struct dirent *ent;
+    char **array;
+    int num_entries = find_matching_strings(array, dir, reg);
 
-    while ((ent = (struct dirent *)readdir(dir)) != NULL) {
-      int nmatch = 0;
-      regmatch_t match[nmatch];
-      status = regexec(&reg, ent->d_name, nmatch, NULL, 0);
-      printf("d_name: %s\n", ent->d_name);
-      if (status != REG_NOMATCH) {
-        insert_argument(g_current_single_command, strdup(ent->d_name));
-      }
-    }
     closedir(dir);
+
+    sort_array_strings(array, num_entries);
+
+    for (int i = 0; i < num_entries; i++) {
+      insert_argument(g_current_single_command, strdup(array[i]));
+      free(array[i]);
+    }
+
+    free(array);
+
   } // else
 }
 
