@@ -286,7 +286,7 @@ char *to_regex(char *str) {
 } /* to_regex() */
 
 
-int find_matching_strings(char **array, DIR *dir, regex_t reg) {
+char **find_matching_strings(char **array, DIR *dir, regex_t reg, int *count) {
     struct dirent *ent;
     int max_entries = 20;
     int num_entries = 0;
@@ -308,7 +308,8 @@ int find_matching_strings(char **array, DIR *dir, regex_t reg) {
         num_entries++;
       }
     }
-  return num_entries;
+  *(count) = num_entries;
+  return array;
 }
 
 
@@ -352,11 +353,12 @@ void expand_wildcards(char *str) {
     }
 
     char **array = (char **) malloc(sizeof(char *));
-    int num_entries = find_matching_strings(array, dir, reg);
+    int *count = (int *) malloc(sizeof(int));
+    array = find_matching_strings(array, dir, reg, count);
 
     closedir(dir);
 
-    sort_array_strings(array, num_entries);
+    sort_array_strings(array, *count);
 
     for (int i = 0; i < num_entries; i++) {
       insert_argument(g_current_single_command, strdup(array[i]));
