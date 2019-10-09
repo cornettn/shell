@@ -83,6 +83,7 @@ int is_background_process(int sid) {
  */
 
 void sig_child_handler(int sid) { //, siginfo_t *info, void *ucontext) {
+  printf("Process: %d\n", sid);
   if (is_background_process(sid)) {
     printf("[%d] exited.\n", sid);
     print_prompt();
