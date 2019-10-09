@@ -38,6 +38,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <regex.h>
+#include <dirent.h>
 
 #include "command.h"
 #include "single_command.h"
