@@ -35,11 +35,11 @@ test_env_var_bang Passed 1/1
 test_env_var_uscore Passed 1/1
 test_wildcards1 Passed 3/3
 test_wildcards2 Failed 0/1
-test_wildcards3 Failed 0/1
+test_wildcards3 Passed 1/1
 test_wildcards4 Failed 0/1
 test_wildcards5 Failed 0/1
 test_wildcards6 Failed 0/1
 test_wildcards7 Failed 0/1
 test_tilde Failed 0/2
 test_robustness Failed 0/10
-Total:                   36.5 of 70.0
+Total:                   37.5 of 70.0
