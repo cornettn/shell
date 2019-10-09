@@ -490,7 +490,7 @@ void expand_wildcards(char *str) {
 
     sort_array_strings(array, *count);
 
-    for (int i = 0; i < num_entries; i++) {
+    for (int i = 0; i < *count; i++) {
       insert_argument(g_current_single_command, strdup(array[i]));
       free(array[i]);
     }
