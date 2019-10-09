@@ -527,6 +527,9 @@ void expand_argument(char * str) {
     if (has_wildcards(argument)) {
       expand_wildcards(prefix, argument);
     }
+    else {
+      insert_argument(g_current_single_command, argument);
+    }
     free(prefix);
   }
   else {
