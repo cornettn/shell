@@ -560,7 +560,6 @@ void expand_wildcards(char *prefix, char *suffix) {
         else {
           sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
         }
-        free(component);
         expand_wildcards(new_prefix, suffix);
       }
       else {
@@ -568,6 +567,7 @@ void expand_wildcards(char *prefix, char *suffix) {
       }
     }
 
+    free(component);
     free(new_prefix);
     closedir(dir);
   }
