@@ -37,6 +37,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <regex.h>
 
 #include "command.h"
 #include "single_command.h"
@@ -231,6 +232,77 @@ char *escape_env_variables(char *str) {
 }
 
 
+bool has_wildcards(char *str) {
+  return ((strchr(str, '?') != NULL || (strchr(str, '.') != NULL;))
+}
+
+
+char *to_regex(char *str) {
+  char *regex = (char *) malloc(2 * strlen(str) + 3);
+  char *arg_pos = str;
+  char *regex_pos = regex;
+
+  *reg_pos++ = '^';
+  while(*arg_pos) {
+    if (*arg_pos == '*') {
+      *regex_pos++ = '.';
+      *regex_pos++ = '*';
+    }
+    else if (*arg_pos == '?') {
+      *regex_pos++ = '.';
+    }
+    else if (*arg_pos == '.') {
+      *regex_pos++ = '\\';
+      *regex_pos == '.';
+    }
+    else {
+      *regex_pos++ = *arg_pos;
+    }
+
+    arg_pos++;
+  }
+  *regex_pos++ = '$';
+  *regex_pos = '\0';
+  return regex;
+}
+
+
+void expand_wildcards(char *str) {
+  if (!has_wildcards(str)) {
+    /* No wildcards */
+    insert_argument(g_current_single_command, argument);
+    return;
+  }
+  else {
+    /* Wild cards are present */
+    char *regex = to_regex(str);
+    regex_t reg;
+    int status = regcomp(&reg, regex, REG_EXTENDED);
+    if (status != 0) {
+      perror("compile");
+      return;
+    }
+
+    DIR *dir = opendir(".");
+    if (dir == NULL) {
+      perror("opendir");
+      return;
+    }
+
+    struct direct *ent;
+
+    while ((ent = readdir(dir)) != NULL) {
+      regmatch_t match;
+      int nmatch = 0;
+      status = regexec(&reg, regex, nmatch, match, 0);
+      if (status != REG_NOMATCH) {
+        insert_argument(g_current_single_command, strdup(ent->d_name));
+      }
+    }
+    closedir(dir);
+  } // else
+}
+
 void expand_argument(char * str) {
   char *passed_str = str;
 
@@ -250,6 +322,8 @@ void expand_argument(char * str) {
     yyparse();
     return;
   }
+
+  expand_wildcards(argument);
 
   insert_argument(g_current_single_command, argument);
 }

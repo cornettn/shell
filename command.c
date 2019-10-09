@@ -547,6 +547,7 @@ void execute_command(command_t *command) {
   sa_zombies.sa_handler = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
   sa_zombies.sa_flags = SA_RESTART;
+//  sa_zombies.sa_sigaction
   int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
 
   if (zombie) {
