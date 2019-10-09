@@ -386,6 +386,7 @@ void expand_wildcards(char *prefix, char *suffix) {
   }
   else {
     strcpy(component, suffix);
+    suffix += strlen(suffix);
   }
 
   char new_prefix[MAXFILENAME];
