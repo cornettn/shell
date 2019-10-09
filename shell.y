@@ -423,7 +423,12 @@ void expand_wildcards(char *prefix, char *suffix) {
     while ((ent = readdir(dir)) != NULL) {
       int result = regexec(&reg, ent->d_name, 0, NULL, 0);
       if (result != REG_NOMATCH) {
-        sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+        if (prefix[0] == '\0') {
+          sprintf(new_prefix, "%s", ent->d_name);
+        }
+        else {
+          sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+        }
         expand_wildcards(new_prefix, suffix);
       }
       else {
