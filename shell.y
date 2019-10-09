@@ -376,7 +376,7 @@ void expand_wildcards(char *prefix, char *suffix) {
   /* Find location of next '/' */
 
   char *s = strchr(suffix, '/');
-  char comp[MAXFILENAME];
+  char component[MAXFILENAME];
   if (s != NULL) {
     strncpy(component, suffix, s - suffix);
 
@@ -402,8 +402,9 @@ void expand_wildcards(char *prefix, char *suffix) {
     return;
   }
 
-  char *directory = if prefix[0] == '\0' ? "." : prefix;
-  DIR *dir = opendir(dir);
+  struct dirent *ent;
+  char *directory = (prefix[0] == '\0') ? "." : prefix;
+  DIR *dir = opendir(directory);
   if (dir == NULL) {
     return;
   }
