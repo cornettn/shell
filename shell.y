@@ -527,7 +527,7 @@ void expand_argument(char * str) {
     expand_wildcards(prefix, argument);
     free(prefix);
   }
-  else {b
+  else {
     insert_argument(g_current_single_command, argument);
   }
 } /* exapnd_argument() */
