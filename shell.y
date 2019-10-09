@@ -271,7 +271,7 @@ char *to_regex(char *str) {
 void expand_wildcards(char *str) {
   if (!has_wildcards(str)) {
     /* No wildcards */
-    insert_argument(g_current_single_command, argument);
+    insert_argument(g_current_single_command, str);
     return;
   }
   else {
@@ -293,8 +293,8 @@ void expand_wildcards(char *str) {
     struct direct *ent;
 
     while ((ent = readdir(dir)) != NULL) {
-      regmatch_t match;
       int nmatch = 0;
+      regmatch_t match[nmatch];
       status = regexec(&reg, regex, nmatch, match, 0);
       if (status != REG_NOMATCH) {
         insert_argument(g_current_single_command, strdup(ent->d_name));
