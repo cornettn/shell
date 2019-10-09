@@ -389,6 +389,9 @@ void expand_argument(char * str) {
   /* Returns the char pointer without quotes in it*/
 
   char *argument = quoted_arg(str);
+  if (strcmp(argument, passed_str) == 0) {
+    printf("no quotes\n");
+  }
 
   /* Returns the char pointer where characters following
    * a '/' have been escaped */
