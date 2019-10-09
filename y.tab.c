@@ -456,7 +456,7 @@ void expand_argument(char * str) {
 
   expand_wildcards(argument);
 
-  insert_argument(g_current_single_command, argument);
+  //insert_argument(g_current_single_command, argument);
 }
 
 
