@@ -392,7 +392,7 @@ void expand_wildcards(char *prefix, char *suffix) {
 
   char new_prefix[MAXFILENAME];
   if (!has_wildcards(component)) {
-    if (prefix[0] == '\0' || !slash) {
+    if (prefix[0] == '\0' && !slash) {
       sprintf(new_prefix, "%s", component);
     }
     else {
@@ -425,7 +425,7 @@ void expand_wildcards(char *prefix, char *suffix) {
     while ((ent = readdir(dir)) != NULL) {
       int result = regexec(&reg, ent->d_name, 0, NULL, 0);
       if (result != REG_NOMATCH) {
-        if (prefix[0] == '\0' || !slash) {
+        if (prefix[0] == '\0' && !slash) {
           sprintf(new_prefix, "%s", ent->d_name);
         }
         else {
