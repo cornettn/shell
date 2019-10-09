@@ -180,6 +180,11 @@ char *get_value(char *env) {
   return str;
 }
 
+/*
+ * This function is used to escape any environment variables within the passed argument.
+ * char *str: The argument to escape the variables from.
+ * return char *: A pointer to the new argument with escaped variables.
+ */
 
 char *escape_env_variables(char *str) {
   int len = strlen(str);
@@ -230,13 +235,25 @@ char *escape_env_variables(char *str) {
   } // for
 
   return str;
-}
+} /* escape_env_varaibles() */
 
+/*
+ * This function determines whether or not the string has any wildcards in it.
+ * char *str: The string to test against.
+ * return bool: True if wildcards are present, False otherwise.
+ */
 
 bool has_wildcards(char *str) {
-  return ((strchr(str, '?') != NULL || (strchr(str, '.') != NULL)));
-}
+  return (strchr(str, '?') != NULL) || (strchr(str, '*') != NULL) ||
+         (strchr(str, '.') != NULL);
+} /* has_wildcards() */
 
+/*
+ * This function will convert the bash wildcarded string into a regex string.
+ * char *str: The string to convert to regex.
+ * return char *: A dynamically allocated pointer to a string containing
+ *                regex version of str.
+ */
 
 char *to_regex(char *str) {
   char *regex = (char *) malloc(2 * strlen(str) + 3);
@@ -265,17 +282,21 @@ char *to_regex(char *str) {
   *regex_pos++ = '$';
   *regex_pos = '\0';
   return regex;
-}
+} /* to_regex() */
 
 
 void expand_wildcards(char *str) {
   if (!has_wildcards(str)) {
+
     /* No wildcards */
+
     insert_argument(g_current_single_command, str);
     return;
   }
   else {
+
     /* Wild cards are present */
+
     char *regex = to_regex(str);
     regex_t reg;
     int status = regcomp(&reg, regex, REG_EXTENDED);
