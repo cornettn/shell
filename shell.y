@@ -45,6 +45,8 @@
 #include "single_command.h"
 #include "shell.h"
 
+#define MAXFILENAME (1024)
+
 void yyerror(const char * s);
 int yylex();
 
@@ -365,13 +367,65 @@ void sort_array_strings(char **array, int num) {
 } /* sort_array() */
 
 
+void expand_wildcards(char *prefix, char *suffix) {
+  if (suffix[0] == '\0') {
+    insert_argument(g_current_single_command, strdup(prefix));
+    return;
+  }
+
+  /* Find location of next '/' */
+
+  char *s = strchr(suffix, '/');
+  char comp[MAXFILENAME];
+  if (s != NULL) {
+    strncpy(component, suffix, s - suffix);
+
+    /* Advance suffix */
+
+    suffix = s + 1;
+  }
+  else {
+    strcpy(component, suffix);
+  }
+
+  char new_prefix[MAXFILENAME];
+  if (!has_wildcards(component)) {
+    sprintf(new_prefix, "%s/%s", prefix, component);
+    expand_wildcards(new_prefix, suffix);
+  }
+
+  char *regex = to_regex(component);
+  regex_t reg;
+  int status = regcomp(&reg, regex, REG_EXTENDED);
+  if (status != 0) {
+    perror("compile");
+    return;
+  }
+
+  char *directory = if prefix[0] == '\0' ? "." : prefix;
+  DIR *dir = opendir(dir);
+  if (dir == NULL) {
+    return;
+  }
+
+  while ((ent = readdir(dir)) != NULL) {
+    if (regexec(&reg, ent->d_name, 0, NULL, 0)) {
+      sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+      expand_wildcards(new_prefix, suffix);
+    }
+  }
+
+  closedir(dir);
+
+}
+
 /*
  * This function is used to expand any wildcards that are in the passed
  * argument. i.e. '*', '?'
  * char *str: The argument to expand the wildcards from.
  */
 
-void expand_wildcards(char *str) {
+void old_expand_wildcards(char *str) {
   if (!has_wildcards(str)) {
 
     /* No wildcards */
@@ -445,7 +499,8 @@ void expand_argument(char * str) {
   }
 
   if (!quoted) {
-    expand_wildcards(argument);
+    char *prefix = (char *) malloc(MAXFILENAME);
+    expand_wildcards(prefix, argument);
   }
   else {
     insert_argument(g_current_single_command, argument);
