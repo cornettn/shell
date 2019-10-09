@@ -367,10 +367,20 @@ void sort_array_strings(char **array, int num) {
 } /* sort_array() */
 
 
-char **add_item(char **array, char *item,
+char **add_item(char **array, char *item, int *size) {
+  if (num_entries == max_entries) {
+    max_entries *= 2;
+            array = realloc(array, max_entries * sizeof(char *));
+            assert(array != NULL);
+          }
+          array[num_entries] = strdup(ent->d_name);
+          num_entries++;
+
+}
 
 
 void expand_wildcards(char *prefix, char *suffix, char **array, int *size) {
+
   if (suffix[0] == '\0') {
     insert_argument(g_current_single_command, strdup(prefix));
     return;
