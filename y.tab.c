@@ -481,7 +481,7 @@ void expand_wildcards(char *str) {
       return;
     }
 
-    char **array (char **) malloc(size(char *));
+    char **array = (char **) malloc(size(char *));
     int num_entries = find_matching_strings(array, dir, reg);
 
     closedir(dir);
