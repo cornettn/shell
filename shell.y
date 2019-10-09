@@ -511,6 +511,7 @@ void expand_argument(char * str) {
   if (!quoted) {
     char *prefix = (char *) malloc(MAXFILENAME);
     expand_wildcards(prefix, argument);
+    free(prefix);
   }
   else {
     insert_argument(g_current_single_command, argument);
