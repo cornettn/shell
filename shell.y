@@ -245,8 +245,7 @@ char *escape_env_variables(char *str) {
  */
 
 bool has_wildcards(char *str) {
-  return (strchr(str, '?') != NULL) || (strchr(str, '*') != NULL) ||
-         (strchr(str, '.') != NULL);
+  return (strchr(str, '?') != NULL) || (strchr(str, '*') != NULL);
 } /* has_wildcards() */
 
 /*
