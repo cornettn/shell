@@ -286,7 +286,8 @@ char *to_regex(char *str) {
 } /* to_regex() */
 
 
-char **find_matching_strings(char **array, DIR *dir, regex_t reg, int *count) {
+char **find_matching_strings(char **array, DIR *dir, regex_t reg,
+                             char *regex, int *count) {
     struct dirent *ent;
     int max_entries = 20;
     int num_entries = 0;
@@ -299,13 +300,27 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg, int *count) {
       regmatch_t match[nmatch];
       int status = regexec(&reg, ent->d_name, nmatch, NULL, 0);
       if (status != REG_NOMATCH) {
-        if (num_entries == max_entries) {
-          max_entries *= 2;
-          array = realloc(array, max_entries * sizeof(char *));
-          assert(array != NULL);
+
+        /* Match */
+        bool add = false;
+        if (ent->d_name[0] == '.') {
+          if (regex[0] == '.') {
+            add = true;
+          }
         }
-        array[num_entries] = strdup(ent->d_name);
-        num_entries++;
+        else {
+          add = true;
+        }
+
+        if (add) {
+          if (num_entries == max_entries) {
+            max_entries *= 2;
+            array = realloc(array, max_entries * sizeof(char *));
+            assert(array != NULL);
+          }
+          array[num_entries] = strdup(ent->d_name);
+          num_entries++;
+        }
       }
     }
   *(count) = num_entries;
@@ -353,7 +368,7 @@ void expand_wildcards(char *str) {
 
     char **array = (char **) malloc(sizeof(char *));
     int *count = (int *) malloc(sizeof(int));
-    array = find_matching_strings(array, dir, reg, count);
+    array = find_matching_strings(array, dir, reg, regex, count);
 
     closedir(dir);
 
