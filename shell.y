@@ -432,13 +432,13 @@ void expand_wildcards(char *prefix, char *suffix) {
         }
         free(component);
         expand_wildcards(new_prefix, suffix);
-        free(new_prefix);
       }
       else {
         test++;
       }
     }
 
+    free(new_prefix);
     closedir(dir);
   }
 }
