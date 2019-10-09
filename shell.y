@@ -39,6 +39,7 @@
 #include <stdlib.h>
 #include <regex.h>
 #include <dirent.h>
+#include <assert.h>
 
 #include "command.h"
 #include "single_command.h"
@@ -285,7 +286,7 @@ char *to_regex(char *str) {
 } /* to_regex() */
 
 
-char **find_matching_strings(char **array, DIR *dir, regex_t reg) {
+int find_matching_strings(char **array, DIR *dir, regex_t reg) {
     struct dirent *ent;
     int max_entries = 20;
     int num_entries = 0;
@@ -296,7 +297,7 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg) {
     while ((ent = (struct dirent *)readdir(dir)) != NULL) {
       int nmatch = 0;
       regmatch_t match[nmatch];
-      status = regexec(&reg, ent->d_name, nmatch, NULL, 0);
+      int status = regexec(&reg, ent->d_name, nmatch, NULL, 0);
       if (status != REG_NOMATCH) {
         if (num_entries == max_entries) {
           max_entries *= 2;
@@ -307,7 +308,7 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg) {
         num_entries++;
       }
     }
-  return num_entires;
+  return num_entries;
 }
 
 
