@@ -399,31 +399,34 @@ void expand_wildcards(char *prefix, char *suffix) {
     }
     expand_wildcards(new_prefix, suffix);
   }
+  else {
 
-  char *regex = to_regex(component);
-  regex_t reg;
-  int status = regcomp(&reg, regex, REG_EXTENDED);
-  if (status != 0) {
-    perror("compile");
-    return;
-  }
+    /* has wildcards */
 
-  struct dirent *ent;
-  char *directory = (prefix[0] == '\0') ? "." : prefix;
-  DIR *dir = opendir(directory);
-  if (dir == NULL) {
-    return;
-  }
-
-  while ((ent = readdir(dir)) != NULL) {
-    if (regexec(&reg, ent->d_name, 0, NULL, 0)) {
-      sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
-      expand_wildcards(new_prefix, suffix);
+    char *regex = to_regex(component);
+    regex_t reg;
+    int status = regcomp(&reg, regex, REG_EXTENDED);
+    if (status != 0) {
+      perror("compile");
+      return;
     }
+
+    struct dirent *ent;
+    char *directory = (prefix[0] == '\0') ? "." : prefix;
+    DIR *dir = opendir(directory);
+    if (dir == NULL) {
+      return;
+    }
+
+    while ((ent = readdir(dir)) != NULL) {
+      if (regexec(&reg, ent->d_name, 0, NULL, 0)) {
+        sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
+        expand_wildcards(new_prefix, suffix);
+      }
+    }
+
+    closedir(dir);
   }
-
-  closedir(dir);
-
 }
 
 /*
