@@ -385,12 +385,13 @@ void expand_wildcards(char *str) {
 
 void expand_argument(char * str) {
   char *passed_str = str;
+  bool quoted = false;
 
   /* Returns the char pointer without quotes in it*/
 
   char *argument = quoted_arg(str);
-  if (strcmp(argument, passed_str) == 0) {
-    printf("no quotes\n");
+  if (strcmp(argument, passed_str) != 0) {
+    quoted = true;
   }
 
   /* Returns the char pointer where characters following
@@ -406,9 +407,12 @@ void expand_argument(char * str) {
     return;
   }
 
-  expand_wildcards(argument);
-
-  //insert_argument(g_current_single_command, argument);
+  if (!quoted) {
+    expand_wildcards(argument);
+  }
+  else {
+    insert_argument(g_current_single_command, argument);
+  }
 }
 
 
