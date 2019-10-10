@@ -497,7 +497,7 @@ void sort_array_strings(char **array, int num) {
 } /* sort_array() */
 
 
-char **add_item(char **array, char *item, int *size) {
+char **add_item(char **array, char *item) {
   if (*size == g_max_entries) {
     g_max_entries *= 2;
     array = realloc(array, g_max_entries * sizeof(char *));
@@ -681,7 +681,7 @@ void expand_argument(char * str) {
         *array = '\0';
         int *size = (int *) malloc(sizeof(int));
         *size = 0;
-        expand_wildcards(prefix, argument, array, size);
+        expand_wildcards(prefix, argument, array);
       }
     }
     else {
