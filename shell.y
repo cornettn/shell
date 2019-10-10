@@ -451,6 +451,9 @@ void expand_wildcards(char *prefix, char *suffix) {
         }
       }
 
+      if (strchr(ent->d_name, 'r') != NULL)
+        int stop = 0;
+
       int result = regexec(&reg, ent->d_name, 0, NULL, 0);
       if (result != REG_NOMATCH) {
 
