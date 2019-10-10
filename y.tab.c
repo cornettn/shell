@@ -682,7 +682,7 @@ void expand_argument(char * str) {
         sort_array_strings(g_array, g_counter);
 
         for (int i = 0; i < g_counter; i++) {
-          insert_argument(g_curr_single_command, g_array[i]);
+          insert_argument(g_current_single_command, g_array[i]);
           free(g_array[i]);
         }
         free(g_array);
