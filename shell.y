@@ -316,7 +316,7 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg,
       regmatch_t match[nmatch];
       int status = regexec(&reg, ent->d_name, nmatch, NULL, 0);
       if (status != REG_NOMATCH) {
-
+        printf("%s matches\n", ent->d_name);
         /* Match */
         bool add = false;
         if (ent->d_name[0] == '.') {
