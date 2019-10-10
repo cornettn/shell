@@ -373,9 +373,10 @@ char **add_item(char **array, char *item, int *size) {
     array = realloc(array, g_max_entries * sizeof(char *));
     assert(array != NULL);
   }
+  printf("Setting array[%d] to %s\n", *size, item);
   array[*size] = strdup(item);
   (*size)++;
-  printf("Setting array[%d] to %s\n", *size, item);
+  printf("\tAfter inc: %d\n", *size);
   return array;
 }
 
