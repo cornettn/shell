@@ -367,27 +367,23 @@ void sort_array_strings(char **array, int num) {
 } /* sort_array() */
 
 
-char **add_item(char **array, char *item) {
-/*  if (g_counter == g_max_entries) {
+void add_item(char *item) {
+  if (g_counter == g_max_entries) {
     g_max_entries *= 2;
-    array = realloc(array, g_max_entries * sizeof(char *));
-    assert(array != NULL);
+    g_array = realloc(g_array, g_max_entries * sizeof(char *));
+    assert(g_array != NULL);
   }
-*/
-
-  array = realloc(array, g_counter + 1 * sizeof(char *));
 
   printf("Setting array[%d] to %s\n", g_counter, item);
-  array[g_counter] = strdup(item);
+  g_array[g_counter] = strdup(item);
   g_counter++;
-  return array;
 }
 
 
-void expand_wildcards(char *prefix, char *suffix, char **array) {
+void expand_wildcards(char *prefix, char *suffix) {
 
   if (suffix[0] == '\0') {
-    array = add_item(array, prefix);
+    array = add_item(prefix);
     //insert_argument(g_current_single_command, strdup(prefix));
     return;
   }
@@ -449,7 +445,7 @@ void expand_wildcards(char *prefix, char *suffix, char **array) {
         else {
           sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
         }
-        expand_wildcards(new_prefix, suffix, array);
+        expand_wildcards(new_prefix, suffix);
       }
       else {
         test++;
@@ -522,6 +518,7 @@ void expand_argument(char * str) {
   bool quoted = false;
   g_max_entries = 20;
   g_counter = 0;
+  g_arrary = (char **) malloc(g_max_entries * sizeof(char *));
 
   /* Returns the char pointer without quotes in it*/
 
@@ -551,14 +548,12 @@ void expand_argument(char * str) {
         old_expand_wildcards(argument);
       }
       else {
-        char **array = (char **) malloc(sizeof(char *));
-        array[0] = "\0";
-        expand_wildcards(prefix, argument, array);
+        expand_wildcards(prefix, argument);
 
         for (int i = 0; i < g_counter; i++) {
-          free(array[i]);
+          free(g_array[i]);
         }
-        free(array);
+        free(g_array);
       }
     }
     else {

@@ -10,5 +10,7 @@ extern command_t *g_current_command;
 extern single_command_t *g_current_single_command;
 
 int g_counter;
+int g_max_entries;
+char **g_array;
 
 #endif
