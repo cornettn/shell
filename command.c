@@ -82,7 +82,7 @@ int is_background_process(int sid) {
  * This function is responsible for handling zombie processes.
  */
 
-void sig_child_handler(int sid, siginfo_t *info) { //, void *ucontext) {
+void sig_child_handler(int sid, siginfo_t *info, void *ucontext) {
 
   g_status = info->si_status;
   //printf("Process: %d\n", sid);
