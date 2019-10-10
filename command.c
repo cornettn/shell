@@ -83,6 +83,8 @@ int is_background_process(int sid) {
  */
 
 void sig_child_handler(int sid, siginfo_t *info, void *ucontext) {
+  ucontext = NULL;
+
   g_status = info->si_status;
   //printf("Process: %d\n", sid);
   if (is_background_process(info->si_pid)) {
@@ -545,7 +547,7 @@ void execute_command(command_t *command) {
   /* Set up signal handling for SIGCHLD */
 
   struct sigaction sa_zombies;
-  sa_zombies.sa_sigaction = (void *) sig_child_handler;
+  sa_zombies.sa_sigaction = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
   sa_zombies.sa_flags = SA_RESTART|SA_SIGINFO;
 //  sa_zombies.sa_sigaction
