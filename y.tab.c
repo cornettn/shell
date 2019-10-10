@@ -503,18 +503,17 @@ char **add_item(char **array, char *item, int *size) {
     array = realloc(array, g_max_entries * sizeof(char *));
     assert(array != NULL);
   }
-  printf("Setting array[%d] to %s\n", *size, item);
-  array[*size] = strdup(item);
-  (*size)++;
-  printf("\tAfter inc: %d\n", *size);
+  printf("Setting array[%d] to %s\n", g_counter, item);
+  array[g_counter] = strdup(item);
+  g_counter++;
   return array;
 }
 
 
-void expand_wildcards(char *prefix, char *suffix, char **array, int *size) {
+void expand_wildcards(char *prefix, char *suffix, char **array) {
 
   if (suffix[0] == '\0') {
-    array = add_item(array, prefix, size);
+    array = add_item(array, prefix);
     //insert_argument(g_current_single_command, strdup(prefix));
     return;
   }
@@ -542,7 +541,7 @@ void expand_wildcards(char *prefix, char *suffix, char **array, int *size) {
       sprintf(new_prefix, "%s/%s", prefix, component);
     }
     free(component);
-    expand_wildcards(new_prefix, suffix, array, size);
+    expand_wildcards(new_prefix, suffix, array);
     free(new_prefix);
   }
   else {
@@ -576,7 +575,7 @@ void expand_wildcards(char *prefix, char *suffix, char **array, int *size) {
         else {
           sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
         }
-        expand_wildcards(new_prefix, suffix, array, size);
+        expand_wildcards(new_prefix, suffix, array);
       }
       else {
         test++;
@@ -648,6 +647,7 @@ void expand_argument(char * str) {
   char *passed_str = str;
   bool quoted = false;
   g_max_entries = 20;
+  g_counter = 0;
 
   /* Returns the char pointer without quotes in it*/
 
