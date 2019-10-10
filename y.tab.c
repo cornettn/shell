@@ -645,7 +645,7 @@ void old_expand_wildcards(char *str) {
 void expand_argument(char * str) {
   char *passed_str = str;
   bool quoted = false;
-  g_max_entries = 0;
+  g_max_entries = 20;
 
   /* Returns the char pointer without quotes in it*/
 
