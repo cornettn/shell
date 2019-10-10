@@ -546,8 +546,9 @@ void expand_argument(char * str) {
       }
       else {
         char **array = (char **) malloc(sizeof(char *));
+        array[0][0] = '\0';
         int *size = (int *) malloc(sizeof(int));
-        *size = 20;
+        *size = 0;
         expand_wildcards(prefix, argument, array, size);
       }
     }
