@@ -677,7 +677,7 @@ void expand_argument(char * str) {
         old_expand_wildcards(argument);
       }
       else {
-        char **array = (char **) malloc(sizeof(char *));
+        char **array = (char **) malloc(g_max_entries * sizeof(char *))
         *array = '\0';
         int *size = (int *) malloc(sizeof(int));
         *size = 0;
