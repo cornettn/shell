@@ -368,11 +368,17 @@ void sort_array_strings(char **array, int num) {
 
 
 char **add_item(char **array, char *item) {
-  if (g_counter == g_max_entries) {
+/*  if (g_counter == g_max_entries) {
     g_max_entries *= 2;
     array = realloc(array, g_max_entries * sizeof(char *));
     assert(array != NULL);
   }
+*/
+
+  if (g_counter >= g_max_entries) {
+    array = realloc(array, g_counter + 1 * sizeof(char *));
+  }
+
   printf("Setting array[%d] to %s\n", g_counter, item);
   array[g_counter] = strdup(item);
   g_counter++;
