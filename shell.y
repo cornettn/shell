@@ -442,7 +442,15 @@ void expand_wildcards(char *prefix, char *suffix) {
       return;
     }
 
+    bool flag = false;
     while ((ent = readdir(dir)) != NULL) {
+
+      if (ent->d_name[0] == '.') {
+        if (component[0] != '.') {
+          continue;
+        }
+      }
+
       int result = regexec(&reg, ent->d_name, 0, NULL, 0);
       if (result != REG_NOMATCH) {
 
