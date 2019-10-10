@@ -9,4 +9,6 @@ void print_prompt();
 extern command_t *g_current_command;
 extern single_command_t *g_current_single_command;
 
+int g_counter;
+
 #endif
