@@ -27,6 +27,9 @@
 
 #include "shell.h"
 
+
+#define UNUSED(x) (void)(x)
+
 //typedef struct node {
 //  node_t *next;
 //  size_t pid;
@@ -83,6 +86,7 @@ int is_background_process(int sid) {
  */
 
 void sig_child_handler(int sid, siginfo_t *info, void *ucontext) {
+  UNUSED(ucontext);
 
   g_status = info->si_status;
   //printf("Process: %d\n", sid);
