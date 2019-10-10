@@ -492,6 +492,7 @@ void old_expand_wildcards(char *str) {
     /* Wild cards are present */
 
     char *regex = to_regex(str);
+    printf("regex:%s\n", regex);
     regex_t reg;
     int status = regcomp(&reg, regex, REG_EXTENDED);
     if (status != 0) {
