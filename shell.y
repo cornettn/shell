@@ -553,6 +553,10 @@ void expand_argument(char * str) {
         sort_array_strings(g_array, g_counter);
 
         for (int i = 0; i < g_counter; i++) {
+          printf("g_array[%d]: %s\n", i, g_arrar[i]);
+        }
+
+        for (int i = 0; i < g_counter; i++) {
           free(g_array[i]);
         }
         free(g_array);
