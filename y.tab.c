@@ -409,7 +409,7 @@ char *to_regex(char *str) {
     }
     else if (*arg_pos == '.') {
       *regex_pos++ = '\\';
-      *regex_pos == '.';
+      *regex_pos++ = '.';
     }
     else {
       *regex_pos++ = *arg_pos;
