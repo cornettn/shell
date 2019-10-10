@@ -87,6 +87,7 @@ int is_background_process(int sid) {
 
 void sig_child_handler(int sid, siginfo_t *info, void *ucontext) {
   UNUSED(ucontext);
+  UNUSED(sid);
 
   g_status = info->si_status;
   //printf("Process: %d\n", sid);
