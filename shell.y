@@ -400,7 +400,7 @@ void expand_wildcards(char *prefix, char *suffix) {
   *component = '\0';
   if (s != NULL) {
     strncpy(component, suffix, s - suffix);
-
+    component[s - suffix] = '\0';
     /* Advance suffix */
 
     suffix = s + 1;
@@ -565,6 +565,7 @@ void expand_argument(char * str) {
       }
       else {
         expand_wildcards(prefix, argument);
+        regmatch_t match[nmatch];
 
         sort_array_strings(g_array, g_counter);
 
