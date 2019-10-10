@@ -411,7 +411,7 @@ void expand_wildcards(char *prefix, char *suffix) {
       sprintf(new_prefix, "%s/%s", prefix, component);
     }
     free(component);
-    expand_wildcards(new_prefix, suffix, array);
+    expand_wildcards(new_prefix, suffix);
     free(new_prefix);
   }
   else {
