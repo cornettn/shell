@@ -451,7 +451,8 @@ void expand_wildcards(char *prefix, char *suffix) {
         }
       }
 
-      if (strchr(ent->d_name, 'r') != NULL) {
+      if (strchr(ent->d_name, 'r') != NULL &&
+          strchr(ent->d_name, '-') != NULL) {
         int stop = 0;
       }
 
