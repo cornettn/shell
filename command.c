@@ -91,7 +91,7 @@ void sig_child_handler(int sid, siginfo_t *info, void *ucontext) {
   g_status = info->si_status;
   //printf("Process: %d\n", sid);
   if (is_background_process(info->si_pid)) {
-    printf("[%d] exited.\n", sid);
+    printf("[%d] exited.\n", info->si_pid);
     print_prompt();
   }
 }
