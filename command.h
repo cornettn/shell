@@ -38,5 +38,6 @@ int g_last_background_PID;
 char *g_last_argument;
 char *g_shell_name;
 int g_status;
+int g_max_entries;
 
 #endif

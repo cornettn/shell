@@ -368,21 +368,22 @@ void sort_array_strings(char **array, int num) {
 
 
 char **add_item(char **array, char *item, int *size) {
-  if (num_entries == max_entries) {
-    max_entries *= 2;
-            array = realloc(array, max_entries * sizeof(char *));
-            assert(array != NULL);
-          }
-          array[num_entries] = strdup(ent->d_name);
-          num_entries++;
-
+  if (*size == g_max_entries) {
+    g_max_entries *= 2;
+    array = realloc(array, max_entries * sizeof(char *));
+    assert(array != NULL);
+  }
+  array[*size] = strdup(ent->d_name);
+  *size++;
+  return array;
 }
 
 
 void expand_wildcards(char *prefix, char *suffix, char **array, int *size) {
 
   if (suffix[0] == '\0') {
-    insert_argument(g_current_single_command, strdup(prefix));
+    array = add_item(array, prefix, size);
+    //insert_argument(g_current_single_command, strdup(prefix));
     return;
   }
 
@@ -514,6 +515,7 @@ void old_expand_wildcards(char *str) {
 void expand_argument(char * str) {
   char *passed_str = str;
   bool quoted = false;
+  g_max_entries = 0;
 
   /* Returns the char pointer without quotes in it*/
 
