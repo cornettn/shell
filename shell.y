@@ -374,7 +374,7 @@ char **add_item(char **array, char *item, int *size) {
     assert(array != NULL);
   }
   array[*size] = strdup(item);
-  *size = (*size) + 1;
+  (*size)++;
   printf("Setting array[%d] to %s\n", *size, item);
   return array;
 }
