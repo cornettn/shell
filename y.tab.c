@@ -442,11 +442,11 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg,
     /* Iterate through the directory and find all matching strings */
 
     while ((ent = (struct dirent *)readdir(dir)) != NULL) {
-      printf("Ent: %s\n", ent->d_name);
+      //printf("Ent: %s\n", ent->d_name);
       int nmatch = 0;
       int status = regexec(&reg, ent->d_name, 0, NULL, 0);
       if (status != REG_NOMATCH) {
-        printf("%s matches\n", ent->d_name);
+        //printf("%s matches\n", ent->d_name);
         /* Match */
         bool add = false;
         if (ent->d_name[0] == '.') {
@@ -622,7 +622,7 @@ void old_expand_wildcards(char *str) {
     /* Wild cards are present */
 
     char *regex = to_regex(str);
-    printf("regex:%s\n", regex);
+    //printf("regex:%s\n", regex);
     regex_t reg;
     int status = regcomp(&reg, regex, REG_EXTENDED);
     if (status != 0) {
