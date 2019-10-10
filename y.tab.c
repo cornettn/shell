@@ -504,7 +504,7 @@ char **add_item(char **array, char *item, int *size) {
     assert(array != NULL);
   }
   array[*size] = strdup(item);
-  *size++;
+  *size = *size + 1;
   return array;
 }
 
