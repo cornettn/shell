@@ -553,7 +553,7 @@ void expand_argument(char * str) {
 
         for (int i = 0; i < g_counter; i++) {
           printf("[%d]: %s\n", i, g_array[i]);
-          insert_argument(g_current_single_command, g_array[i]);
+          insert_argument(g_current_single_command, strdup(g_array[i]));
         }
 
 
