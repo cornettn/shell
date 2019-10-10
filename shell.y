@@ -375,9 +375,7 @@ char **add_item(char **array, char *item) {
   }
 */
 
-  if (g_counter >= g_max_entries) {
-    array = realloc(array, g_counter + 1 * sizeof(char *));
-  }
+  array = realloc(array, g_counter + 1 * sizeof(char *));
 
   printf("Setting array[%d] to %s\n", g_counter, item);
   array[g_counter] = strdup(item);
@@ -553,11 +551,14 @@ void expand_argument(char * str) {
         old_expand_wildcards(argument);
       }
       else {
-        char **array = (char **) malloc(g_max_entries * sizeof(char *));
+        char **array = (char **) malloc(sizeof(char *));
         array[0] = "\0";
-        int *size = (int *) malloc(sizeof(int));
-        *size = 0;
         expand_wildcards(prefix, argument, array);
+
+        for (int i = 0; i < g_counter; i++) {
+          free(array[i]);
+        }
+        free(array);
       }
     }
     else {
