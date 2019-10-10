@@ -433,7 +433,7 @@ char *to_regex(char *str) {
  */
 
 char **find_matching_strings(char **array, DIR *dir, regex_t reg,
-                             char *regex, int *count) {
+                             char *str, int *count) {
     struct dirent *ent;
     int max_entries = 20;
     int num_entries = 0;
@@ -450,7 +450,7 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg,
         /* Match */
         bool add = false;
         if (ent->d_name[0] == '.') {
-          if (regex[0] == '.') {
+          if (str[0] == '.') {
             add = true;
           }
         }
@@ -637,7 +637,7 @@ void old_expand_wildcards(char *str) {
 
     char **array = (char **) malloc(sizeof(char *));
     int *count = (int *) malloc(sizeof(int));
-    array = find_matching_strings(array, dir, reg, regex, count);
+    array = find_matching_strings(array, dir, reg, str, count);
 
     closedir(dir);
 
