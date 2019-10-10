@@ -565,7 +565,6 @@ void expand_argument(char * str) {
       }
       else {
         expand_wildcards(prefix, argument);
-        regmatch_t match[nmatch];
 
         sort_array_strings(g_array, g_counter);
 
