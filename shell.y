@@ -368,7 +368,7 @@ void sort_array_strings(char **array, int num) {
 
 
 char **add_item(char **array, char *item) {
-  if (*size == g_max_entries) {
+  if (g_counter == g_max_entries) {
     g_max_entries *= 2;
     array = realloc(array, g_max_entries * sizeof(char *));
     assert(array != NULL);
