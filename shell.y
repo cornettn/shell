@@ -552,7 +552,6 @@ void expand_argument(char * str) {
         sort_array_strings(g_array, g_counter);
 
         for (int i = 0; i < g_counter; i++) {
-          printf("[%d]: %s\n", i, g_array[i]);
           insert_argument(g_current_single_command, strdup(g_array[i]));
         }
 
