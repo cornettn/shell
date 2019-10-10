@@ -370,10 +370,10 @@ void sort_array_strings(char **array, int num) {
 char **add_item(char **array, char *item, int *size) {
   if (*size == g_max_entries) {
     g_max_entries *= 2;
-    array = realloc(array, max_entries * sizeof(char *));
+    array = realloc(array, g_max_entries * sizeof(char *));
     assert(array != NULL);
   }
-  array[*size] = strdup(ent->d_name);
+  array[*size] = strdup(item);
   *size++;
   return array;
 }
