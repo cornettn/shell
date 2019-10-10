@@ -383,7 +383,7 @@ void add_item(char *item) {
 void expand_wildcards(char *prefix, char *suffix) {
 
   if (suffix[0] == '\0') {
-    array = add_item(prefix);
+    add_item(prefix);
     //insert_argument(g_current_single_command, strdup(prefix));
     return;
   }
@@ -518,7 +518,7 @@ void expand_argument(char * str) {
   bool quoted = false;
   g_max_entries = 20;
   g_counter = 0;
-  g_arrary = (char **) malloc(g_max_entries * sizeof(char *));
+  g_array = (char **) malloc(g_max_entries * sizeof(char *));
 
   /* Returns the char pointer without quotes in it*/
 
