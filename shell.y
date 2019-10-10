@@ -382,7 +382,14 @@ void add_item(char *item) {
 void expand_wildcards(char *prefix, char *suffix) {
 
   if (suffix[0] == '\0') {
-    add_item(prefix);
+    if (prefix[0] == '.') {
+      if (g_curr_regex[0] == '.') {
+        add_item(prefix);
+      }
+    }
+    else {
+      add_item(prefix);
+    }
     //insert_argument(g_current_single_command, strdup(prefix));
     return;
   }
@@ -418,6 +425,7 @@ void expand_wildcards(char *prefix, char *suffix) {
     /* has wildcards */
 
     char *regex = to_regex(component);
+    g_curr_regex = regex;
     regex_t reg;
     int status = regcomp(&reg, regex, REG_EXTENDED);
     if (status != 0) {
