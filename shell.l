@@ -65,6 +65,10 @@ void myunputc(int c) {
   return APPEND_STDOUT_STDERR;
 }
 
+$\(.*\) {
+  printf("Test\n");
+}
+
 (\"[^\n\t]+\") {
   yylval.string = strdup(yytext);
   return WORD;
