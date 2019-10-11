@@ -27,7 +27,7 @@ int mygetc(FILE *f) {
     return getc(f);
   }
 
-  if (p == NULL || *p = 0) {
+  if (p == NULL || *p == 0) {
     char *s = read_line();
     p = s;
   }
