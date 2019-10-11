@@ -264,7 +264,7 @@ bool has_wildcards(char *str) {
  */
 
 char *to_regex(char *str) {
-  printf("Malloc regex\n");
+  //printf("Malloc regex\n");
   char *regex = (char *) malloc(2 * strlen(str) + 3);
   char *arg_pos = str;
   char *regex_pos = regex;
@@ -309,7 +309,7 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg,
     int max_entries = 20;
     int num_entries = 0;
 
-    printf("Malloc array\n");
+    //printf("Malloc array\n");
     array = (char **) malloc(max_entries * sizeof(char *));
 
     /* Iterate through the directory and find all matching strings */
@@ -334,7 +334,7 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg,
         if (add) {
           if (num_entries == max_entries) {
             max_entries *= 2;
-            printf("realloc array\n");
+            //printf("realloc array\n");
             array = realloc(array, max_entries * sizeof(char *));
             assert(array != NULL);
           }
@@ -374,7 +374,7 @@ void sort_array_strings(char **array, int num) {
 void add_item(char *item) {
   if (g_counter == g_max_entries) {
     g_max_entries *= 2;
-    printf("realloc g_array\n");
+    //printf("realloc g_array\n");
     g_array = realloc(g_array, g_max_entries * sizeof(char *));
     assert(g_array != NULL);
   }
@@ -401,7 +401,7 @@ void expand_wildcards(char *prefix, char *suffix) {
 
   /* Find location of next '/' */
   char *s = strchr(suffix, '/');
-  printf("Malloc component\n");
+  //printf("Malloc component\n");
   char *component = (char *) malloc(MAXFILENAME);
   *component = '\0';
   if (s != NULL) {
@@ -416,17 +416,17 @@ void expand_wildcards(char *prefix, char *suffix) {
     suffix += strlen(suffix);
   }
 
-  printf("Malloc new_prefix\n");
+  //printf("Malloc new_prefix\n");
   char *new_prefix = (char *) malloc(MAXFILENAME);
   *new_prefix = '\0';
   if (!has_wildcards(component)) {
     if (component[0] != '\0') {
       sprintf(new_prefix, "%s/%s", prefix, component);
     }
-    printf("Free compo\n");
+    //printf("Free compo\n");
     free(component);
     expand_wildcards(new_prefix, suffix);
-    printf("Free new_prefix\n");
+    //printf("Free new_prefix\n");
     free(new_prefix);
   }
   else {
@@ -486,9 +486,9 @@ void expand_wildcards(char *prefix, char *suffix) {
       }
     }
 
-    printf("Free component\n");
+    //printf("Free component\n");
     free(component);
-    printf("Free new_prefix\n");
+    //printf("Free new_prefix\n");
     free(new_prefix);
     closedir(dir);
   }
@@ -527,9 +527,9 @@ void old_expand_wildcards(char *str) {
       return;
     }
 
-    printf("malloc array\n");
+    //printf("malloc array\n");
     char **array = (char **) malloc(sizeof(char *));
-    printf("malloc count\n");
+    //printf("malloc count\n");
     int *count = (int *) malloc(sizeof(int));
     array = find_matching_strings(array, dir, reg, str, count);
 
@@ -539,10 +539,10 @@ void old_expand_wildcards(char *str) {
 
     for (int i = 0; i < *count; i++) {
       insert_argument(g_current_single_command, strdup(array[i]));
-      printf("free array[i]\n");
+      //printf("free array[i]\n");
       free(array[i]);
     }
-    printf("free array\n");
+    //printf("free array\n");
 
     free(array);
 
