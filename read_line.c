@@ -152,12 +152,12 @@ char *read_line() {
 
         /* Left Arrow Key */
 
-       ch = 27;
-       write(1, &ch, 1);
-       ch = 91;
-       write(1, &ch, 1);
-       ch = 68;
-       write(1, &ch, 1);
+        ch = 27;
+        write(1, &ch, 1);
+        ch = 91;
+        write(1, &ch, 1);
+        ch = 68;
+        write(1, &ch, 1);
 
       }
       else if ((ch1 == 91) && (ch2 == 67)) {
