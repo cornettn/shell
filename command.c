@@ -558,7 +558,7 @@ void execute_command(command_t *command) {
   struct sigaction sa_zombies;
   sa_zombies.sa_sigaction = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
-  sa_zombies.sa_flags = SA_RESTART|SA_SIGINFO;
+  sa_zombies.sa_flags = SA_RESTART|SA_NOCLDWAIT|SA_SIGINFO;
 //  sa_zombies.sa_sigaction
   int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
 
