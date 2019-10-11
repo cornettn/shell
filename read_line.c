@@ -45,6 +45,8 @@ void read_line_print_usage() {
  */
 
 char *read_line() {
+  struct termios *term = (struct termios *) malloc(sizeof(struct termios));
+  tcgetattr(0, term);
 
   // Set terminal in raw mode
   tty_raw_mode();
@@ -153,7 +155,10 @@ char *read_line() {
   g_line_length++;
   g_line_buffer[g_line_length] = 0;
 
-  tcsetattr(0, TCSANOW, NULL);
+
+  tcsetattr(0, TCSANOW, term);
+
+  free(term);
 
   return g_line_buffer;
 } /* read_line() */
