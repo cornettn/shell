@@ -66,7 +66,9 @@ void myunputc(int c) {
 }
 
 $\(.*\) {
-  printf("Test\n");
+  printf("Test\n")
+  yylval.string = strdup(yytext);
+  printf("%s\n", yylval.string);
 }
 
 (\"[^\n\t]+\") {
