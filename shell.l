@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 
-extern \C" char * read_line();
+extern char * read_line();
 
 int mygetc(FILE *f) {
   static char *p;

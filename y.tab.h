@@ -62,7 +62,7 @@ extern int yydebug;
     STDERR = 266,
     APPEND_STDOUT_STDERR = 267,
     STDOUT_STDERR = 268,
-    ENV = 269
+    SUBSHELL = 269
   };
 #endif
 /* Tokens.  */
@@ -77,7 +77,7 @@ extern int yydebug;
 #define STDERR 266
 #define APPEND_STDOUT_STDERR 267
 #define STDOUT_STDERR 268
-#define ENV 269
+#define SUBSHELL 269
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
