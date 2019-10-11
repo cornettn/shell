@@ -13,6 +13,36 @@
 
 #include <stdio.h>
 
+
+extern \C" char * read_line();
+
+int mygetc(FILE *f) {
+  static char *p;
+  char ch;
+
+  if (!isatty(0)) {
+
+    /* Std In is not a terminal */
+
+    return getc(f);
+  }
+
+  if (p == NULL || *p = 0) {
+    char *s = read_line();
+    p = s;
+  }
+
+  ch = *p;
+  p++;
+
+  return ch;
+
+}
+
+#undef getc
+#define getc(f) mygetc(f)
+
+
 static void yyunput (int c,char *buf_ptr  );
 
 void myunputc(int c) {
@@ -75,7 +105,7 @@ $\(.*\) {
   yylval.string = strdup(count);
   free(str);
 
-  printf("%s\n", yylval.string);
+  return SUBSHELL;
 }
 
 (\"[^\n\t]+\") {
