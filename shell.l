@@ -72,7 +72,10 @@ $\(.*\) {
   count[strlen(str) - 1] = '\0';
   count += 2;
 
-  printf("%s\n", count);
+  yylval.string = strdup(count);
+  free(str);
+
+  printf("%s\n", yylval.string);
 }
 
 (\"[^\n\t]+\") {
