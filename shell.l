@@ -69,7 +69,7 @@ $\(.*\) {
   printf("Test\n");
   char *str = strdup(yytext);
   char *count = str;
-  count[strlen(str)] = '\0';
+  count[strlen(str) - 1] = '\0';
   count += 2;
 
   printf("%s\n", count);
