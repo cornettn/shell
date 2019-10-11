@@ -442,6 +442,9 @@ void expand_wildcards(char *prefix, char *suffix) {
       return;
     }
 
+    free(regex);
+    regex = NULL;
+
     int test = 0;
 
     struct dirent *ent;
@@ -554,9 +557,6 @@ void old_expand_wildcards(char *str) {
 void expand_argument(char * str) {
   char *passed_str = str;
   bool quoted = false;
-  g_max_entries = 20;
-  g_counter = 0;
-  g_array = (char **) malloc(g_max_entries * sizeof(char *));
 
   /* Returns the char pointer without quotes in it*/
 
@@ -579,6 +579,9 @@ void expand_argument(char * str) {
   }
 
   if (!quoted) {
+    g_max_entries = 20;
+    g_counter = 0;
+    g_array = (char **) malloc(g_max_entries * sizeof(char *));
     char *prefix = (char *) malloc(MAXFILENAME);
     *prefix = '\0';
     if (has_wildcards(argument)) {

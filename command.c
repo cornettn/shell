@@ -152,14 +152,19 @@ void change_directory(char *dir) {
   }
 }
 
+void free_globals() {
+  free_command(g_current_command);
+  free_command(g_last_command);
+  free(g_last_argument);
+
+}
+
 int execute_builtin(single_command_t *single) {
   dprintf(g_debug, "arg: \"%s\"\n", single->arguments[0]);
 
   if (!strcmp(single->arguments[0], "exit")) {
     dprintf(g_debug, "Def should exit\n");
-    free_command(g_current_command);
-    free_command(g_last_command);
-    free(g_last_argument);
+    free_globals();
     exit(1);
   }
   else if (!strcmp(single->arguments[0], "printenv")) {
