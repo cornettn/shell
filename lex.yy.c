@@ -886,7 +886,7 @@ case 11:
 YY_RULE_SETUP
 #line 68 "shell.l"
 {
-  printf("Test\n")
+  printf("Test\n");
   yylval.string = strdup(yytext);
   printf("%s\n", yylval.string);
 }

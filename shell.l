@@ -67,8 +67,11 @@ void myunputc(int c) {
 
 $\(.*\) {
   printf("Test\n");
-  yylval.string = strdup(yytext);
-  printf("%s\n", yylval.string);
+  char *str = strdup(yytext);
+  char *count = str;
+  count += 2;
+
+  printf("%s\n", count);
 }
 
 (\"[^\n\t]+\") {
