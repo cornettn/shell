@@ -333,8 +333,8 @@ char **find_matching_strings(char **array, DIR *dir, regex_t reg,
 
         if (add) {
           if (num_entries == max_entries) {
-            max_entries *= 2;i
-            printf("realloc array\m");
+            max_entries *= 2;
+            printf("realloc array\n");
             array = realloc(array, max_entries * sizeof(char *));
             assert(array != NULL);
           }
