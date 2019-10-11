@@ -516,7 +516,7 @@ char *yytext_ptr;
 #include "y.tab.h"
 
 #include <stdio.h>
-
+#include <unistd.h>
 
 extern char * read_line();
 

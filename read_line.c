@@ -152,6 +152,8 @@ char *read_line() {
   g_line_length++;
   g_line_buffer[g_line_length] = 0;
 
+  tcsetattr(0, TCSANOW, NULL);
+
   return g_line_buffer;
 } /* read_line() */
 
