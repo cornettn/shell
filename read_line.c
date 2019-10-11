@@ -184,7 +184,9 @@ char *read_line() {
         // Copy line from history
         strcpy(g_line_buffer, g_history[g_history_index]);
         g_line_length = strlen(g_line_buffer);
-        g_history_index = (g_history_index - 1) % (g_history_length);
+        if (g_history_index - 1 >= 0) {
+          g_history_index = (g_history_index - 1) % (g_history_length);
+        }
 
         // echo line
         write(1, g_line_buffer, g_line_length);
