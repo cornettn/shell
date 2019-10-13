@@ -67,7 +67,7 @@ char *read_line() {
       // It is a printable character.
 
       // Do echo
-      write(1, &ch, 1);
+    //  write(1, &ch, 1);
 
       // If max number of character reached return.
       if (g_line_length == (MAX_BUFFER_LINE - 2)) {
