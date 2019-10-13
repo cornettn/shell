@@ -66,8 +66,8 @@ char *read_line() {
     if (ch >= 32 && ch <= 126) {
       // It is a printable character.
 
-      // Do echo
-    //  write(1, &ch, 1);
+      // Write the character to the screen
+      write(1, &ch, 1);
 
       // If max number of character reached return.
       if (g_line_length == (MAX_BUFFER_LINE - 2)) {
@@ -86,9 +86,30 @@ char *read_line() {
       g_line_length++;
       insert_pos++;
 
+
+      // Erase old line
+      // Print backspaces
+      int i = 0;
+      for (i = 0; i < g_line_length; i++) {
+        ch = 8;
+        write(1, &ch, 1);
+      }
+
+      // Print spaces on top
+      for (i = 0; i < g_line_length; i++) {
+        ch = ' ';
+        write(1, &ch, 1);
+      }
+
+      // Print backspaces
+      for (i = 0; i < g_line_length; i++) {
+        ch = 8;
+        write(1, &ch, 1);
+      }
+
       /* Print the new line */
 
-      for (int i = insert_pos; i < g_line_length; i++) {
+      for (int i = 0; i < g_line_length; i++) {
         ch = g_line_buffer[i];
         write(1, &ch, 1);
       }
