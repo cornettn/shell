@@ -113,7 +113,7 @@ char *read_line() {
       g_line_buffer[0] = 0;
       break;
     }
-    else if (ch == 8 && g_line_length > 0) {
+    else if (ch == 8 || ch == 127 && g_line_length > 0) {
       // <backspace> was typed. Remove previous character read.
 
       // Go back one character
