@@ -187,7 +187,7 @@ char *read_line() {
       if ((ch1 == 91) && (ch2 == 65)) {
         // Up arrow. Print next line in history.
 
-        if (g_history_length == 0) {
+        if (g_history_length == 0 || g_history_index == g_history_length) {
           continue;
         }
 
@@ -270,6 +270,9 @@ char *read_line() {
       else if ((ch1 == 91) && (ch2 == 66)) {
 
         /* Down Arrow Key */
+        if (g_history_length == 0 || g_history_index == 0) {
+          continue;
+        }
 
         // Erase old line
         // Print backspaces
@@ -292,14 +295,20 @@ char *read_line() {
         }
 
         // Copy line from history
-        strcpy(g_line_buffer, g_history[g_history_index]);
-        g_line_length = strlen(g_line_buffer);
-        if (g_history_index - 1 >= 0) {
-          g_history_index = (g_history_index - 1) % (g_history_length);
+
+        if (g_history_index - 1 > 0) {
+          g_history_index--;
+          strcpy(g_line_buffer, g_history[g_history_length - g_history_index]);
         }
+        else {
+          strcpy(g_line_buffer, "");
+        }
+
+        g_line_length = strlen(g_line_buffer);
 
         // echo line
         write(1, g_line_buffer, g_line_length);
+        insert_pos = g_line_length;
       }
     }
   } // while loop
