@@ -75,6 +75,11 @@ char *read_line() {
         break;
       }
 
+
+      for (int i = insert_pos + 1; i < g_line_length; i++) {
+        g_line_buffer[i] = g_line_buffer[i - 1];
+      }
+
       // add char to buffer.
       g_line_buffer[insert_pos] = ch;
       g_line_length++;
