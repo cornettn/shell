@@ -164,9 +164,12 @@ char *read_line() {
       else if ((ch1 == 91) && (ch2 == 68)) {
 
         /* Left Arrow Key */
-        /* Write the left arrow */
 
-        printf("\t LEFT ARROW \t");
+        if (insert_pos == 0) {
+          continue;
+        }
+
+        /* Write the left arrow */
 
         ch = 27;
         write(1, &ch, 1);
@@ -177,9 +180,7 @@ char *read_line() {
 
         /* Update insert pos */
 
-        if (insert_pos >= 0) {
-          insert_pos--;
-        }
+        insert_pos--;
 
       }
       else if ((ch1 == 91) && (ch2 == 67)) {
