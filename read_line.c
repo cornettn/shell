@@ -59,7 +59,7 @@ char *read_line() {
 
   // Read one line until enter is typed
   while (1) {
-
+  printf("loop");
     // Read one character in raw mode.
     char ch = '\0';
     read(0, &ch, 1);
