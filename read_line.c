@@ -87,7 +87,7 @@ char *read_line() {
       insert_pos++;
 
       for (int i = insert_pos; i < g_line_length; i++) {
-        ch = &g_line_buffer[i];
+        ch = g_line_buffer[i];
         write(1, &ch, 1);
       }
     }
