@@ -59,7 +59,6 @@ char *read_line() {
 
   // Read one line until enter is typed
   while (1) {
-  printf("loop");
     // Read one character in raw mode.
     char ch = '\0';
     read(0, &ch, 1);
@@ -162,7 +161,7 @@ char *read_line() {
         // echo line
         write(1, g_line_buffer, g_line_length);
       }
-      else if ((ch1 == 91) && (ch2 == 65)) {
+      else if ((ch1 == 91) && (ch2 == 68)) {
 
         /* Left Arrow Key */
         /* Write the left arrow */
