@@ -45,6 +45,9 @@ void read_line_print_usage() {
  */
 
 char *read_line() {
+
+  /* Get the attributes of the tty being used before changing to raw mode */
+
   struct termios *term = (struct termios *) malloc(sizeof(struct termios));
   tcgetattr(0, term);
 
@@ -52,6 +55,7 @@ char *read_line() {
   tty_raw_mode();
 
   g_line_length = 0;
+  int insert_pos = 0;
 
   // Read one line until enter is typed
   while (1) {
@@ -72,8 +76,9 @@ char *read_line() {
       }
 
       // add char to buffer.
-      g_line_buffer[g_line_length] = ch;
+      g_line_buffer[insert_pos] = ch;
       g_line_length++;
+      insert_pos++;
     }
     else if (ch == 10) {
       // <Enter> was typed. Return line
@@ -151,6 +156,7 @@ char *read_line() {
       else if ((ch1 == 91) && (ch2 == 65)) {
 
         /* Left Arrow Key */
+        /* Write the left arrow */
 
         ch = 27;
         write(1, &ch, 1);
@@ -158,6 +164,12 @@ char *read_line() {
         write(1, &ch, 1);
         ch = 68;
         write(1, &ch, 1);
+
+        /* Update insert pos */
+
+        if (insert_pos >= 0) {
+          insert_pos--;
+        }
 
       }
       else if ((ch1 == 91) && (ch2 == 67)) {
@@ -200,7 +212,7 @@ char *read_line() {
         write(1, g_line_buffer, g_line_length);
       }
     }
-  }
+  } // while loop
 
   // Add eol and null char at the end of string
   g_line_buffer[g_line_length] = 10;
