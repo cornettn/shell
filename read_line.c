@@ -199,6 +199,22 @@ char *read_line() {
 
         /* Right Arrow Key */
 
+        if (insert_pos == g_line_length) {
+          continue;
+        }
+
+        /* Write the left arrow */
+
+        ch = 27;
+        write(1, &ch, 1);
+        ch = 91;
+        write(1, &ch, 1);
+        ch = 67;
+        write(1, &ch, 1);
+
+        /* Update insert pos */
+
+        insert_pos++;
       }
       else if ((ch1 == 91) && (ch2 == 66)) {
 
