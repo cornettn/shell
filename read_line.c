@@ -86,30 +86,9 @@ char *read_line() {
       g_line_length++;
       insert_pos++;
 
-
-      // Erase old line
-      // Print backspaces
-      int i = 0;
-      for (i = 0; i < g_line_length; i++) {
-        ch = 8;
-        write(1, &ch, 1);
-      }
-
-      // Print spaces on top
-      for (i = 0; i < g_line_length; i++) {
-        ch = ' ';
-        write(1, &ch, 1);
-      }
-
-      // Print backspaces
-      for (i = 0; i < g_line_length; i++) {
-        ch = 8;
-        write(1, &ch, 1);
-      }
-
       /* Print the new line */
 
-      for (int i = 0; i < g_line_length; i++) {
+      for (int i = insert_pos; i < g_line_length; i++) {
         ch = g_line_buffer[i];
         write(1, &ch, 1);
       }
@@ -119,6 +98,18 @@ char *read_line() {
 
       ch = 8;
       write(1, &ch, 1);
+
+
+      for (int i = g_line_length; i > insert_pos; i--) {
+        /* Write the left arrow */
+
+        ch = 27;
+        write(1, &ch, 1);
+        ch = 91;
+        write(1, &ch, 1);
+        ch = 68;
+        write(1, &ch, 1);
+      }
 
     }
     else if (ch == 10) {
