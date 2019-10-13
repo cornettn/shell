@@ -133,7 +133,7 @@ char *read_line() {
         g_history = realloc(g_history, (g_history_length + 1) * sizeof(char *));
       }
       g_history[g_history_length] = (char *) malloc(g_line_length * sizeof(char));
-      g_history[g_history_length] = strndup(g_history[g_history_length],
+      g_history[g_history_length] = strncpy(g_history[g_history_length],
                                             g_line_buffer, g_line_length);
       g_history_length++;
       break;
