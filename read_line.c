@@ -58,6 +58,7 @@ void shift_left(int insert_pos) {
 }
 
 void return_to_position(int insert_pos) {
+  char ch = 0;
   for (int i = g_line_length; i > insert_pos; i--) {
     /* Write the left arrow */
     ch = 27;
