@@ -76,7 +76,7 @@ char *read_line() {
 
       /* Shift everything to the right of the cursor */
 
-      for (int i = insert_pos + 1; i < g_line_length; i++) {
+      for (int i = g_line_length; i > insert_pos; i--) {
         g_line_buffer[i] = g_line_buffer[i - 1];
       }
 
