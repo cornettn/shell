@@ -167,6 +167,8 @@ char *read_line() {
         /* Left Arrow Key */
         /* Write the left arrow */
 
+        printf("\t LEFT ARROW \t");
+
         ch = 27;
         write(1, &ch, 1);
         ch = 91;
