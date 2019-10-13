@@ -144,10 +144,15 @@ char *read_line() {
     else if ((ch == 8) || (ch == 127)) {
       // <backspace> was typed. Remove previous character read.
 
-
       if ((insert_pos == 0) || (g_line_length == 0)) {
         continue;
       }
+
+      shift_left(insert_pos);
+
+      // Remove one character from buffer
+      g_line_length--;
+      insert_pos--;
 
       // Go back one character
       ch = 8;
@@ -161,8 +166,10 @@ char *read_line() {
       ch = 8;
       write(1, &ch, 1);
 
-      // Remove one character from buffer
-      g_line_length--;
+
+      return_to_position(insert_pos);
+
+
     }
     else if (ch == 27) {
       // Escape sequence. Read two chars more
