@@ -86,10 +86,19 @@ char *read_line() {
       g_line_length++;
       insert_pos++;
 
+      /* Print the new line */
+
       for (int i = insert_pos; i < g_line_length; i++) {
         ch = g_line_buffer[i];
         write(1, &ch, 1);
       }
+
+      ch = 32;
+      write(1, &ch, 1);
+
+      ch = 8;
+      write(1, &ch, 1);
+
     }
     else if (ch == 10) {
       // <Enter> was typed. Return line
