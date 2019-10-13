@@ -93,8 +93,8 @@ char *read_line() {
         write(1, &ch, 1);
       }
 
-      ch = 32;
-      write(1, &ch, 1);
+      //ch = 32;
+      //write(1, &ch, 1);
 
       ch = 8;
       write(1, &ch, 1);
