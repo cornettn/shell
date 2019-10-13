@@ -17,15 +17,8 @@ char g_line_buffer[MAX_BUFFER_LINE];
 // This history does not change.
 // Yours have to be updated.
 int g_history_index = 0;
-char * g_history[] = {
-  "ls -al | grep x",
-  "ps -e",
-  "cat read-line-example.c",
-  "vi hello.c",
-  "make",
-  "ls -al | grep xxx | grep yyy"
-};
-int g_history_length = sizeof(g_history) / sizeof(char *);
+char ** g_history;
+int g_history_length = 0;
 
 /*
  *  Prints usage for read_line
@@ -133,6 +126,16 @@ char *read_line() {
       // Print newline
       write(1, &ch, 1);
 
+      if (g_history_length == 0) {
+        g_history = (char **) malloc(sizeof(char *));
+      }
+      else {
+        g_history = realloc(g_history, (g_history_length + 1) * sizeof(char *));
+      }
+      g_history[g_history_length] = (char *) malloc(g_line_length * sizeof(char));
+      g_history[g_history_length] = strndup(g_history[g_history_length],
+                                            g_line_buffer, g_line_length);
+      g_history_length++;
       break;
     }
     else if (ch == 31) {
@@ -184,6 +187,10 @@ char *read_line() {
       if ((ch1 == 91) && (ch2 == 65)) {
         // Up arrow. Print next line in history.
 
+        if (g_history_length == 0) {
+          continue;
+        }
+
         // Erase old line
         // Print backspaces
         int i = 0;
@@ -205,13 +212,17 @@ char *read_line() {
         }
 
         // Copy line from history
-        strcpy(g_line_buffer, g_history[g_history_index]);
-        g_line_length = strlen(g_line_buffer);
-        if (g_history_index + 1 < g_history_length) {
-          g_history_index = (g_history_index + 1) % (g_history_length);
+
+        if (g_history_index < g_history_length) {
+          g_history_index++;
         }
+
+        strcpy(g_line_buffer, g_history[g_history_length - g_history_index]);
+        g_line_length = strlen(g_line_buffer);
+
         // echo line
         write(1, g_line_buffer, g_line_length);
+        insert_pos = g_line_length;
       }
       else if ((ch1 == 91) && (ch2 == 68)) {
 
