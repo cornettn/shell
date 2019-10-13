@@ -40,6 +40,35 @@ void read_line_print_usage() {
   write(1, usage, strlen(usage));
 } /* read_line_print_usage() */
 
+
+void shift_right(int insert_pos) {
+  /* Shift everything to the right of the cursor right */
+
+  for (int i = g_line_length + 1; i > insert_pos; i--) {
+    g_line_buffer[i] = g_line_buffer[i - 1];
+  }
+}
+
+void shift_left(int insert_pos) {
+  /* Shift everything to the right of the cursor left */
+
+  for (int i = insert_pos; i < g_line_length; i++) {
+    g_line_buffer[i] = g_line_buffer[i + 1];
+  }
+}
+
+void return_to_position(int insert_pos) {
+  for (int i = g_line_length; i > insert_pos; i--) {
+    /* Write the left arrow */
+    ch = 27;
+    write(1, &ch, 1);
+    ch = 91;
+    write(1, &ch, 1);
+    ch = 68;
+    write(1, &ch, 1);
+  }
+}
+
 /*
  * Input a line with some basic editing.
  */
@@ -74,11 +103,7 @@ char *read_line() {
         break;
       }
 
-      /* Shift everything to the right of the cursor */
-
-      for (int i = g_line_length + 1; i > insert_pos; i--) {
-        g_line_buffer[i] = g_line_buffer[i - 1];
-      }
+      shift_right(insert_pos);
 
       /* Add char to buffer */
 
@@ -99,17 +124,7 @@ char *read_line() {
       ch = 8;
       write(1, &ch, 1);
 
-
-      for (int i = g_line_length; i > insert_pos; i--) {
-        /* Write the left arrow */
-
-        ch = 27;
-        write(1, &ch, 1);
-        ch = 91;
-        write(1, &ch, 1);
-        ch = 68;
-        write(1, &ch, 1);
-      }
+      return_to_position(insert_pos);
 
     }
     else if (ch == 10) {
@@ -125,8 +140,13 @@ char *read_line() {
       g_line_buffer[0] = 0;
       break;
     }
-    else if (((ch == 8) || (ch == 127)) && (g_line_length > 0)) {
+    else if ((ch == 8) || (ch == 127)) {
       // <backspace> was typed. Remove previous character read.
+
+
+      if ((insert_pos == 0) || (g_line_length == 0)) {
+        continue;
+      }
 
       // Go back one character
       ch = 8;
