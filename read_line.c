@@ -213,10 +213,10 @@ char *read_line() {
         // Copy line from history
 
         if (g_history_index < g_history_length) {
-          //g_history_index++;
+          g_history_index++;
         }
 
-        strcpy(g_line_buffer, g_history[g_history_length - g_history_index++]);
+        strcpy(g_line_buffer, g_history[g_history_length - g_history_index]);
         g_line_length = strlen(g_line_buffer);
 
         // echo line
