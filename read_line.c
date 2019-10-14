@@ -194,6 +194,14 @@ char *read_line() {
         continue;
       }
 
+      // Write a space to erase the last character read
+      ch = ' ';
+      write(1, &ch, 1);
+
+      // Go back one character
+      ch = 8;
+      write(1, &ch, 1);
+
       insert_pos = 0;
       return_to_position(insert_pos);
     }
