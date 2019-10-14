@@ -213,8 +213,15 @@ char *read_line() {
         continue;
       }
 
+      for (int i = 0; i < insert_pos; i++) {
+        ch = 27;
+        write(1, &ch, 1);
+        ch = 91;
+        write(1, &ch, 1);
+        ch = 67;
+        write(1, &ch, 1);
+      }
       insert_pos = g_line_length;
-      return_to_position(insert_pos);
     }
     else if (ch == 4) {
       /* <delete> */
