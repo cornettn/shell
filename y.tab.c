@@ -729,7 +729,7 @@ char *expand_tilde(char *str) {
     username = substring(str, tilde - str, slash - str);
   }
   else {
-    username = substring(str, tilde - str, strlen(str));
+    username = substring(str, tilde - str + 1, strlen(str));
   }
   char *value = getenv("HOME");
 

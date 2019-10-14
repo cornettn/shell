@@ -596,12 +596,14 @@ char *expand_tilde(char *str) {
   char *username = NULL;
 
   if (slash != NULL) {
-    username = substring(str, tilde - str, slash - str);
+    username = substring(str, tilde - str + 1, slash - str);
   }
   else {
     username = substring(str, tilde - str + 1, strlen(str));
   }
   char *value = getenv("HOME");
+  char *directory_slash = strchr(value, '/');
+  char *directory = substring(value, 0, directory_slash - value);
 
   str = replace_tilde(str, tilde - str, value);
   return str;
