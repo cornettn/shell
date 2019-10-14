@@ -132,6 +132,10 @@ char *read_line() {
       // Print newline
       write(1, &ch, 1);
 
+      if (!strcmp(g_line_buffer, "")) {
+        break;
+      }
+
       if (g_history_length == 0) {
         g_history = (char **) malloc(sizeof(char *));
       }
