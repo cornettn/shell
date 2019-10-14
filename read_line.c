@@ -173,6 +173,39 @@ char *read_line() {
 
 
     }
+    else if (ch = 1) {
+      /* <home> */
+
+      /* If the user is already at home */
+
+      if ((insert_pos == 0) || (g_line_length == 0)) {
+        continue;
+      }
+
+      insert_pos = 0;
+      return_to_position(insert_pos);
+
+    }
+    else if (ch == 4) {
+      /* <delete> */
+
+      /* Do not do anything if the user in at the end of the line */
+
+      if (insert_pos == g_line_length) {
+        continue;
+      }
+
+      ch = 32;
+      write(1, &ch, 1);
+      ch = 8;
+      write(1, &ch, 1);
+
+      shift_left(insert_pos);
+
+      g_line_length--;
+
+      return_to_position(insert_pos);
+    }
     else if (ch == 27) {
       // Escape sequence. Read two chars more
       //
