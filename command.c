@@ -156,7 +156,6 @@ void free_globals() {
   free_command(g_current_command);
   free_command(g_last_command);
   free(g_last_argument);
-
 }
 
 int execute_builtin(single_command_t *single) {
