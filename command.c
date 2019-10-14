@@ -538,10 +538,12 @@ void execute_command(command_t *command) {
 
         int builtin = execute_builtin(single_command, default_in, default_out, default_err, true);
 
-        if (!builtin) {
-          execvp(single_command->arguments[0],
-            single_command->arguments);
+        if (builtin) {
+          exit(0);
         }
+
+        execvp(single_command->arguments[0],
+          single_command->arguments);
 
         /* execvp should never return on success, so if it does, error */
 
