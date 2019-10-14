@@ -603,9 +603,9 @@ char *expand_tilde(char *str) {
   }
   char *value = getenv("HOME");
   char *directory_slash = strchr(value + 1, '/');
-  char *directory = substring(value, 0, directory_slash - value);
+  char *directory = substring(value, 0, directory_slash - value + 1);
 
-  str = replace_tilde(str, tilde - str, value);
+  str = replace_tilde(str, tilde - str, value + 1);
   return str;
 }
 
