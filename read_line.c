@@ -173,7 +173,7 @@ char *read_line() {
 
 
     }
-    else if (ch = 1) {
+    else if (ch == 1) {
       /* <home> */
 
       /* If the user is already at home */
