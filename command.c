@@ -158,41 +158,57 @@ void free_globals() {
   free(g_last_argument);
 }
 
-int execute_builtin(single_command_t *single) {
-  if (!strcmp(single->arguments[0], "exit")) {
-    free_globals();
-    exit(1);
-  }
-  else if (!strcmp(single->arguments[0], "printenv")) {
-    char **var = __environ;
-    while (*var != NULL) {
-      printf("%s\n", (*var));
-      var++;
-    }
-    return 1;
-  }
-  else if (!strcmp(single->arguments[0], "setenv")) {
-    setenv(single->arguments[1], single->arguments[2], 1);
-    return 1;
-  }
-  else if (!strcmp(single->arguments[0], "unsetenv")) {
-    unsetenv(single->arguments[1]);
-    return 1;
-  }
-  else if (!strcmp(single->arguments[0], "cd")) {
-    if (single->arguments[1]) {
-      change_directory(single->arguments[1]);
-    }
-    else {
-      chdir(getenv("HOME"));
-    }
-    return 1;
-  }
-  else if (!strcmp(single->arguments[0], "source")) {
-    printf("source command not implemented\n");
-    return 1;
-  }
+int execute_builtin(single_command_t *single, int fd_in, int fd_out,
+      int fd_err, bool forked) {
 
+  if (forked) {
+    if (!strcmp(single->arguments[0], "printenv") && (forked)) {
+      char **var = __environ;
+      while (*var != NULL) {
+        printf("%s\n", (*var));
+        var++;
+      }
+      return 1;
+    }
+  }
+  else {
+    if (!strcmp(single->arguments[0], "exit")) {
+      close(fd_in);
+      close(fd_out);
+      close(fd_err);
+      free_globals();
+      exit(1);
+    }
+    else if (!strcmp(single->arguments[0], "printenv") && (forked)) {
+      char **var = __environ;
+      while (*var != NULL) {
+        printf("%s\n", (*var));
+        var++;
+      }
+      return 1;
+    }
+    else if (!strcmp(single->arguments[0], "setenv")) {
+      setenv(single->arguments[1], single->arguments[2], 1);
+      return 1;
+    }
+    else if (!strcmp(single->arguments[0], "unsetenv")) {
+      unsetenv(single->arguments[1]);
+      return 1;
+    }
+    else if (!strcmp(single->arguments[0], "cd")) {
+      if (single->arguments[1]) {
+        change_directory(single->arguments[1]);
+      }
+      else {
+        chdir(getenv("HOME"));
+      }
+      return 1;
+    }
+    else if (!strcmp(single->arguments[0], "source")) {
+      printf("source command not implemented\n");
+      return 1;
+    }
+  }
   return 0;
 }
 
@@ -498,14 +514,7 @@ void execute_command(command_t *command) {
 
     /* Create a child process */
 
-    close(default_in);
-    close(default_out);
-    close(default_err);
-    int builtin = execute_builtin(single_command);
-    default_in = dup(default_in);
-    default_out = dup(default_out);
-    default_err = dup(default_err);
-
+    int builtin = execute_builtin(single_command, default_in, default_out, default_err, false);
 
     if (!builtin) {
 
@@ -530,8 +539,12 @@ void execute_command(command_t *command) {
         close(default_out);
         close(default_err);
 
-        execvp(single_command->arguments[0],
-          single_command->arguments);
+        int builtin = execute_builtin(single_command, default_in, default_out, default_err, true);
+
+        if (!builtin) {
+          execvp(single_command->arguments[0],
+            single_command->arguments);
+        }
 
         /* execvp should never return on success, so if it does, error */
 
