@@ -422,7 +422,6 @@ void execute_command(command_t *command) {
   int default_out = dup(1);
   int default_err = dup(2);
 
-  printf("Open %d %d %d\n", default_in, default_out, default_err);
   /* Setup Error output */
 
   int fd_err = set_fd_err(command, default_err);
@@ -438,7 +437,6 @@ void execute_command(command_t *command) {
     fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
     if (fd_in < 0) {
       perror("open");
-      printf("Close %d %d %d\n", default_in, default_out, default_err);
       close(default_in);
       close(default_out);
       close(default_err);
@@ -489,7 +487,6 @@ void execute_command(command_t *command) {
 
       int fd_pipe[2];
       if (pipe(fd_pipe) == -1) {
-        printf("Close %d %d %d\n", default_in, default_out, default_err);
         close(default_in);
         close(default_out);
         close(default_err);
