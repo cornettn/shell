@@ -504,10 +504,10 @@ void expand_wildcards(char *prefix, char *suffix) {
       if (result != REG_NOMATCH) {
         char last_char = *(prefix + strlen(prefix) - 1);
         if (last_char != '/') {
-          sprintf(new_prefix, "%s/%s", prefix, component);
+          sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
         }
         else {
-          sprintf(new_prefix, "%s%s", prefix, component);
+          sprintf(new_prefix, "%s%s", prefix, ent->d_name);
         }
 
         /* if (prefix[0] == '\0') {
