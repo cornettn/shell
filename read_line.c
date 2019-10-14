@@ -195,8 +195,6 @@ char *read_line() {
         continue;
       }
 
-      ch = 32;
-      write(1, &ch, 1);
       ch = 8;
       write(1, &ch, 1);
 
