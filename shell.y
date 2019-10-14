@@ -528,7 +528,7 @@ void old_expand_wildcards(char *str) {
     }
 
     //printf("malloc array\n");
-    char **array = (char **) malloc(sizeof(char *));
+    char **array = NULL;
     //printf("malloc count\n");
     int *count = (int *) malloc(sizeof(int));
     array = find_matching_strings(array, dir, reg, str, count);
@@ -544,8 +544,14 @@ void old_expand_wildcards(char *str) {
     }
     //printf("free array\n");
 
-    free(array);
 
+    regfree(reg);
+    free(array);
+    array = NULL:
+    free(count);
+    count = NULL;
+    free(regex);
+    regex = NULL;
   } // else
 } /* expand_wildcards() */
 
