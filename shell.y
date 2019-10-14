@@ -584,7 +584,7 @@ void old_expand_wildcards(char *str) {
 
 char *expand_tilde(char *str) {
   char *tilde = strchr(str, '~');
-  char *slash = strchr(str, '\\');
+  char *slash = strchr(str, '/');
 
   if (tilde == NULL) {
 
@@ -597,6 +597,9 @@ char *expand_tilde(char *str) {
 
   if (slash != NULL) {
     username = substring(str, tilde - str, slash - str);
+  }
+  else {
+    username = substring(str, tilde - str, strlen(str));
   }
   char *value = getenv("HOME");
 
