@@ -148,6 +148,8 @@ char *read_line() {
       g_history[g_history_length] = (char *) malloc(g_line_length * sizeof(char));
       g_history[g_history_length] = strncpy(g_history[g_history_length], g_line_buffer, g_line_length);
 
+
+      printf("length: %d\n", g_line_length);
       printf("Add \"%s\" to history\n", g_history[g_history_length]);
 
       g_history_length++;
