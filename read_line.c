@@ -86,6 +86,7 @@ char *read_line() {
   g_line_length = 0;
   int insert_pos = 0;
 
+  g_line_buffer[0] = 0;
   // Read one line until enter is typed
   while (1) {
     // Read one character in raw mode.
