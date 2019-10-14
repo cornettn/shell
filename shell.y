@@ -112,6 +112,34 @@ char *escape_characters(char *str) {
   return str;
 }
 
+
+char *replace_tilde(char *str, int tilde_index, char *tilde_value) {
+  int len = strlen(str);
+  int more_space = strlen(tilde_value) - 1;
+  str = realloc(str, (strlen(str) + more_space) * sizeof(char));
+  char * rest_of_string = substring(str, tilde_index, strlen(str))
+  int rest_count = 0;
+
+  int tilde_value_len = strlen(tilde_value);
+  int tilde_count = 0;
+  for (int i = tilde_index; i < len + more_space; i++) {
+    if (tilde_count < tilde_value_len) {
+
+      /* Writing val of tilde to string */
+
+      *(str + i) = *(tilde_value + tilde_count++);
+    }
+    else {
+
+      /* Write the raiming string to str */
+
+      *(str + i) = *(rest_of_string + rest_count++);
+    }
+  }
+  *(str + len + more_space) = 0;
+  return str;
+}
+
 /*
  * This fucntion is used to replace environement variables with their
  * respective value.
@@ -553,6 +581,25 @@ void old_expand_wildcards(char *str) {
   } // else
 } /* expand_wildcards() */
 
+
+char *expand_tilde(char *str) {
+  char *tilde = strchr("~");
+  char *slash = strchr("\\");
+
+  if (tilde == NULL) {
+
+  /* Tilde is not present in the passed string */
+
+  return str;
+  }
+
+  char * value = getenv("HOME");
+
+  str = replace_tilde(str, tilde - str, value);
+  return str;
+}
+
+
 /*
  * This function is used to expand the argument to its full meeaning.
  * char *str: The argument to expand.
@@ -580,6 +627,10 @@ void expand_argument(char * str) {
     free_single_command(g_current_single_command);
     yyparse();
     return;
+  }
+
+  if (!quoted) {
+    argument = expand_tilde(argument);
   }
 
   if (!quoted) {
