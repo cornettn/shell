@@ -713,8 +713,8 @@ void old_expand_wildcards(char *str) {
 
 
 char *expand_tilde(char *str) {
-  char *tilde = strchr(str, "~");
-  char *slash = strchr(str, "\\");
+  char *tilde = strchr(str, '~');
+  char *slash = strchr(str, '\\');
 
   if (tilde == NULL) {
 
