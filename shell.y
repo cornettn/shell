@@ -512,6 +512,7 @@ void expand_wildcards(char *prefix, char *suffix) {
           sprintf(new_prefix, "%s%s", prefix, component);
         }
 
+        printf("Old: %s\nNew: %s", prefix, new_prefix);
 
         /* if (prefix[0] == '\0') {
           sprintf(new_prefix, "%s", ent->d_name);
