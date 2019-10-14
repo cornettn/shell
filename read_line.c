@@ -11,7 +11,6 @@
 //extern void tty_raw_mode(void);
 
 int g_line_length = 0;
-char g_line_buffer[MAX_BUFFER_LINE];
 
 // Simple history array
 // This history does not change.

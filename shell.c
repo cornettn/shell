@@ -7,9 +7,10 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#include "read_line.h"
 #include "command.h"
 #include "single_command.h"
-
+i
 command_t *g_current_command = NULL;
 single_command_t *g_current_single_command = NULL;
 
@@ -26,6 +27,8 @@ void print_prompt() {
 
 
 void sig_int_handler() {
+  g_line_buffer[0] = 0;
+  g_line_length = 0;
   if (isatty(0)) {
     printf("\n");
     print_prompt();
