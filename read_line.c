@@ -213,7 +213,7 @@ char *read_line() {
         continue;
       }
 
-      for (int i = 0; i < insert_pos; i++) {
+      for (int i = insert_pos; i < g_line_length; i++) {
         ch = 27;
         write(1, &ch, 1);
         ch = 91;
