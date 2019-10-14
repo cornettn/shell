@@ -156,7 +156,7 @@ char *read_line() {
         continue;
       }
 
-      for (int i = g_line_length; i > insert_pos; i--) {
+      for (int i = insert_pos; i < g_line_length; i++) {
         g_line_buffer[i - 1] = g_line_buffer[i];
       }
 
