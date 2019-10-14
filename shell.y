@@ -503,12 +503,22 @@ void expand_wildcards(char *prefix, char *suffix) {
       int result = regexec(&reg, ent->d_name, 0, NULL, 0);
       if (result != REG_NOMATCH) {
 
-        if (prefix[0] == '\0') {
+
+        if (prefix[strlen(prefix) - 1] != '/') {
+          sprintf(new_prefix, "%s/%s", prefix, component);
+        }
+        else {
+          sprintf(new_prefix, "%s%s", prefix, component);
+        }
+
+
+        /* if (prefix[0] == '\0') {
           sprintf(new_prefix, "%s", ent->d_name);
         }
         else {
           sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
         }
+        */
         expand_wildcards(new_prefix, suffix);
       }
       else {
