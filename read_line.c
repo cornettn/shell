@@ -132,7 +132,7 @@ char *read_line() {
       // Print newline
       write(1, &ch, 1);
 
-      if (!strcmp(g_line_buffer, "")) {
+      if (!strcmp(g_line_buffer, "myshell>")) {
         break;
       }
 
