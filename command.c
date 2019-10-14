@@ -429,6 +429,10 @@ void execute_command(command_t *command) {
     fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
     if (fd_in < 0) {
       perror("open");
+      close(default_in);
+      close(default_out);
+      close(default_err);
+      close(g_debug);
       exit(1);
     }
   }
@@ -575,25 +579,6 @@ void execute_command(command_t *command) {
   int status;
   if (!command->background) {
     waitpid(ret, &status, 0);
-
-    /*
-    if (WIFEXITED(status)) {
-      printf("child exited, status=%d\n", WEXITSTATUS(status));
-    }
-    else if (WIFSIGNALED(status)) {
-      printf("child killed (signal %d)\n", WTERMSIG(status));
-    }
-    else if (WIFSTOPPED(status)) {
-      printf("child stopped (signal %d)\n", WSTOPSIG(status));
-    }
-
-    if (WIFEXITED(status)) {
-      g_status = WEXITSTATUS(status);
-    }
-    else {
-      printf("not exited\n");
-    }
-    */
   }
   else {
     append_background_process(ret);
