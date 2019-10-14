@@ -10,8 +10,6 @@
 
 //extern void tty_raw_mode(void);
 
-int g_line_length = 0;
-
 // Simple history array
 // This history does not change.
 // Yours have to be updated.
@@ -147,9 +145,6 @@ char *read_line() {
       g_history[g_history_length] = (char *) malloc((g_line_length + 1) * sizeof(char));
       g_history[g_history_length] = strncpy(g_history[g_history_length], g_line_buffer, g_line_length);
       g_history[g_history_length][g_line_length] = 0;
-
-      printf("length: %d\n", g_line_length);
-      printf("Add \"%s\" to history\n", g_history[g_history_length]);
 
       g_history_length++;
       g_history_index = g_history_length;
