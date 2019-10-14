@@ -202,6 +202,7 @@ char *read_line() {
         ch = 68;
         write(1, &ch, 1);
       }
+      insert_pos = 0;
     }
     else if (ch == 5) {
       /* <end> */
