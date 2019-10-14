@@ -154,8 +154,6 @@ void change_directory(char *dir) {
 void free_globals() {
   //printf("Free g_curr, g_last, g_last_arg\n");
   free_command(g_current_command);
-  free_command(g_last_command);
-  free(g_last_argument);
 }
 
 int execute_builtin(single_command_t *single, int fd_in, int fd_out,
@@ -176,6 +174,8 @@ int execute_builtin(single_command_t *single, int fd_in, int fd_out,
       close(fd_in);
       close(fd_out);
       close(fd_err);
+      free_command(g_last_command);
+      free(g_last_argument);
       free_globals();
       exit(1);
     }
