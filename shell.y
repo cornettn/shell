@@ -463,12 +463,6 @@ void expand_wildcards(char *prefix, char *suffix) {
         }
       }
 
-      if (strchr(ent->d_name, 'r') != NULL &&
-          strchr(ent->d_name, '-') != NULL &&
-          strchr(ent->d_name, '0') != NULL &&
-          strchr(ent->d_name, '2') != NULL)   {
-        int stop = 0;
-      }
 
       int result = regexec(&reg, ent->d_name, 0, NULL, 0);
       if (result != REG_NOMATCH) {
@@ -487,9 +481,13 @@ void expand_wildcards(char *prefix, char *suffix) {
     }
 
     //printf("Free component\n");
+
+    regfree(&reg);
     free(component);
+    component = NULL;
     //printf("Free new_prefix\n");
     free(new_prefix);
+    new_prefix = NULL;
     closedir(dir);
   }
 }
