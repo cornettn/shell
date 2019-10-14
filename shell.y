@@ -602,7 +602,7 @@ char *expand_tilde(char *str) {
     username = substring(str, tilde - str + 1, strlen(str));
   }
   char *value = getenv("HOME");
-  char *directory_slash = strchr(value, '/');
+  char *directory_slash = strchr(value + 1, '/');
   char *directory = substring(value, 0, directory_slash - value);
 
   str = replace_tilde(str, tilde - str, value);
