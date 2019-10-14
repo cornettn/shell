@@ -153,6 +153,7 @@ char *read_line() {
       printf("Add \"%s\" to history\n", g_line_buffer);
 
       g_history_length++;
+      g_history_index = g_history_length;
       break;
     }
     else if (ch == 31) {
@@ -274,7 +275,7 @@ char *read_line() {
       if ((ch1 == 91) && (ch2 == 65)) {
         // Up arrow. Print next line in history.
 
-        if (g_history_length == 0 || g_history_index == g_history_length) {
+        if (g_history_length == 0 || g_history_index == 0) {
           continue;
         }
 
@@ -300,11 +301,11 @@ char *read_line() {
 
         // Copy line from history
 
-        if (g_history_index < g_history_length) {
-          g_history_index++;
+        if (g_history_index > 0) {
+          g_history_index--;
         }
 
-        strcpy(g_line_buffer, g_history[g_history_length - g_history_index]);
+        strcpy(g_line_buffer, g_history[g_history_index]);
         g_line_length = strlen(g_line_buffer);
 
         // echo line
@@ -357,7 +358,7 @@ char *read_line() {
       else if ((ch1 == 91) && (ch2 == 66)) {
 
         /* Down Arrow Key */
-        if (g_history_length == 0 || g_history_index == 0) {
+        if (g_history_length == 0 || g_history_index == g_history_length) {
           continue;
         }
 
@@ -383,8 +384,8 @@ char *read_line() {
 
         // Copy line from history
 
-        if (g_history_index - 1 > 0) {
-          g_history_index--;
+        if (g_history_index <= g_history_length ) {
+          g_history_index++;
           strcpy(g_line_buffer, g_history[g_history_length - g_history_index]);
         }
         else {
