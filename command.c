@@ -528,6 +528,7 @@ void execute_command(command_t *command) {
         close(default_in);
         close(default_out);
         close(default_err);
+        close(g_debug);
 
         execvp(single_command->arguments[0],
           single_command->arguments);
@@ -559,6 +560,7 @@ void execute_command(command_t *command) {
   close(default_in);
   close(default_err);
   close(default_out);
+  close(g_debug);
 
   /* Set up signal handling for SIGCHLD */
 
