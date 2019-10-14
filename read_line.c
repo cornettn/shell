@@ -131,12 +131,14 @@ char *read_line() {
       // <Enter> was typed. Return line
       // Print newline
 
+      printf("g_line_buff \"%s\"\n", g_line_buffer);
+
       if (!strcmp(g_line_buffer, "")) {
+        write(1, &ch, 1);
         break;
       }
 
       write(1, &ch, 1);
-
 
       if (g_history_length == 0) {
         g_history = (char **) malloc(sizeof(char *));
