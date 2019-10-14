@@ -164,7 +164,6 @@ char *read_line() {
       g_line_length--;
       insert_pos--;
 
-
       // Go back one character
       ch = 8;
       write(1, &ch, 1);
@@ -197,7 +196,18 @@ char *read_line() {
 
       insert_pos = 0;
       return_to_position(insert_pos);
+    }
+    else if (ch == 5) {
+      /* <end> */
 
+      /* If the user is already at the end of the line */
+
+      if ((insert_pos == g_line_length) || (g_line_length == 0)) {
+        continue;
+      }
+
+      insert_pos = g_line_length;
+      return_to_position(insert_pos);
     }
     else if (ch == 4) {
       /* <delete> */
