@@ -207,8 +207,12 @@ char *read_line() {
       write(1, &ch, 1);
 
       shift_left(insert_pos);
-
       print_line(insert_pos);
+
+      ch = 32;
+      write(1, &ch, 1);
+      ch = 8;
+      write(1, &ch, 1);
 
       g_line_length--;
 
