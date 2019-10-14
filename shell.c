@@ -10,7 +10,7 @@
 #include "read_line.h"
 #include "command.h"
 #include "single_command.h"
-i
+
 command_t *g_current_command = NULL;
 single_command_t *g_current_single_command = NULL;
 
