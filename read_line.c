@@ -185,6 +185,32 @@ char *read_line() {
 
       return_to_position(insert_pos);
     }
+    else if (ch == 4) {
+      /* <delete> */
+
+      /* Do not do anything if the user in at the end of the line */
+
+      if (insert_pos == g_line_length) {
+        continue;
+      }
+
+      ch = 32;
+      write(1, &ch, 1);
+      ch = 8;
+      write(1, &ch, 1);
+
+      shift_left(insert_pos);
+      print_line(insert_pos);
+
+      ch = 32;
+      write(1, &ch, 1);
+      ch = 8;
+      write(1, &ch, 1);
+
+      g_line_length--;
+
+      return_to_position(insert_pos);
+    }
     else if (ch == 1) {
       /* <home> */
 
@@ -222,32 +248,6 @@ char *read_line() {
         write(1, &ch, 1);
       }
       insert_pos = g_line_length;
-    }
-    else if (ch == 4) {
-      /* <delete> */
-
-      /* Do not do anything if the user in at the end of the line */
-
-      if (insert_pos == g_line_length) {
-        continue;
-      }
-
-      ch = 32;
-      write(1, &ch, 1);
-      ch = 8;
-      write(1, &ch, 1);
-
-      shift_left(insert_pos);
-      print_line(insert_pos);
-
-      ch = 32;
-      write(1, &ch, 1);
-      ch = 8;
-      write(1, &ch, 1);
-
-      g_line_length--;
-
-      return_to_position(insert_pos);
     }
     else if (ch == 27) {
       // Escape sequence. Read two chars more
