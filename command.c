@@ -159,8 +159,6 @@ void free_globals() {
 }
 
 int execute_builtin(single_command_t *single) {
-  dprintf(g_debug, "arg: \"%s\"\n", single->arguments[0]);
-
   if (!strcmp(single->arguments[0], "exit")) {
     dprintf(g_debug, "Def should exit\n");
     free_globals();
