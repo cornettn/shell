@@ -569,7 +569,6 @@ void execute_command(command_t *command) {
   dup2(default_in, 0);
   dup2(default_out, 1);
   dup2(default_err, 2);
-  printf("Close %d %d %d\n", default_in, default_out, default_err);
   close(default_in);
   close(default_err);
   close(default_out);
