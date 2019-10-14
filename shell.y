@@ -545,9 +545,9 @@ void old_expand_wildcards(char *str) {
     //printf("free array\n");
 
 
-    regfree(reg);
+    regfree(&reg);
     free(array);
-    array = NULL:
+    array = NULL;
     free(count);
     count = NULL;
     free(regex);
