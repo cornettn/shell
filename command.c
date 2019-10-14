@@ -498,7 +498,14 @@ void execute_command(command_t *command) {
 
     /* Create a child process */
 
+    close(default_in);
+    close(default_out);
+    close(default_err);
     int builtin = execute_builtin(single_command);
+    default_in = dup(default_in);
+    default_out = dup(default_out);
+    default_err = dup(default_err);
+
 
     if (!builtin) {
 
