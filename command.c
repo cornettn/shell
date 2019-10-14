@@ -480,6 +480,10 @@ void execute_command(command_t *command) {
 
       int fd_pipe[2];
       if (pipe(fd_pipe) == -1) {
+        close(default_in);
+        close(default_out);
+        close(default_err);
+        close(g_debug);
         perror("pipe");
         return;
       }
