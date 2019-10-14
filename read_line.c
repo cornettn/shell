@@ -63,6 +63,12 @@ void return_to_position(int insert_pos) {
   }
 }
 
+void print_line(int insert_pos) {
+  for (int i = insert_pos; i < g_line_length; i++) {
+    write(1, &g_line_buffer[i], 1);
+  }
+}
+
 /*
  * Input a line with some basic editing.
  */
@@ -195,10 +201,14 @@ char *read_line() {
         continue;
       }
 
+      ch = 32;
+      write(1, &ch, 1);
       ch = 8;
       write(1, &ch, 1);
 
       shift_left(insert_pos);
+
+      print_line(insert_pos);
 
       g_line_length--;
 
