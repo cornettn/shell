@@ -457,7 +457,7 @@ void expand_wildcards(char *prefix, char *suffix) {
       }
       }
     else {
-      sprintf(new_prefix, "/%s", prefix, component);
+      sprintf(new_prefix, "/%s", component);
     }
     //printf("Free compo\n");
     free(component);
