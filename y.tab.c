@@ -247,7 +247,7 @@ char *replace_tilde(char *str, int tilde_index, char *tilde_value) {
   int len = strlen(str);
   int more_space = strlen(tilde_value) - 1;
   str = realloc(str, (strlen(str) + more_space) * sizeof(char));
-  char * rest_of_string = substring(str, tilde_index, strlen(str))
+  char * rest_of_string = substring(str, tilde_index, strlen(str));
   int rest_count = 0;
 
   int tilde_value_len = strlen(tilde_value);
