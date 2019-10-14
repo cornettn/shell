@@ -36,7 +36,6 @@
 //} node_t;
 
 node_t *g_background_process_head = NULL;
-int g_debug;
 
 /*
  *
@@ -404,10 +403,6 @@ void execute_command(command_t *command) {
   g_last_argument =
     strdup(last_single->arguments[last_single->num_args - 1]);
 
-  g_debug = open("debug", O_CREAT|O_RDWR|O_APPEND, 0600);
-
-
-
   /* Save default file descriptors */
 
   int default_in = dup(0);
@@ -432,7 +427,6 @@ void execute_command(command_t *command) {
       close(default_in);
       close(default_out);
       close(default_err);
-      close(g_debug);
       exit(1);
     }
   }
@@ -483,7 +477,6 @@ void execute_command(command_t *command) {
         close(default_in);
         close(default_out);
         close(default_err);
-        close(g_debug);
         perror("pipe");
         return;
       }
@@ -506,13 +499,10 @@ void execute_command(command_t *command) {
     /* Create a child process */
 
     int builtin = execute_builtin(single_command);
-    dprintf(g_debug, "Is Bultin: %d\n", builtin);
 
     if (!builtin) {
 
       /* Fork if the command is not a builtin */
-
-      dprintf(g_debug, "Fork\n");
 
       ret = fork();
       if (ret == 0) {
@@ -532,7 +522,6 @@ void execute_command(command_t *command) {
         close(default_in);
         close(default_out);
         close(default_err);
-        close(g_debug);
 
         execvp(single_command->arguments[0],
           single_command->arguments);
@@ -564,7 +553,6 @@ void execute_command(command_t *command) {
   close(default_in);
   close(default_err);
   close(default_out);
-  close(g_debug);
 
   /* Set up signal handling for SIGCHLD */
 
