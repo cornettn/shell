@@ -449,10 +449,15 @@ void expand_wildcards(char *prefix, char *suffix) {
   *new_prefix = '\0';
   if (!has_wildcards(component)) {
     if (component[0] != '\0') {
-      sprintf(new_prefix, "%s/%s", prefix, component);
-    }
+      if (prefix[strlen[prefix] - 1] != '/') {
+        sprintf(new_prefix, "%s/%s", prefix, component);
+      }
+      else {
+        sprintf(new_prefix, "%s%s", prefix, component);
+      }
+      }
     else {
-      sprintf(new_prefix, "%s/%s", prefix, component);
+      sprintf(new_prefix, "/%s", prefix, component);
     }
     //printf("Free compo\n");
     free(component);
