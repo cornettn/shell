@@ -153,7 +153,7 @@ void change_directory(char *dir) {
 }
 
 void free_globals() {
-  printf("Free g_curr, g_last, g_last_arg\n");
+  //printf("Free g_curr, g_last, g_last_arg\n");
   free_command(g_current_command);
   free_command(g_last_command);
   free(g_last_argument);
@@ -245,6 +245,7 @@ void free_command(command_t *command) {
     return;
   }
   else if (command->single_commands == NULL) {
+    free(command);
     return;
   }
 
