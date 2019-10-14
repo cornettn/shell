@@ -711,7 +711,6 @@ void expand_argument(char * str) {
   if (!quoted) {
     g_max_entries = 20;
     g_counter = 0;
-    g_array = (char **) malloc(g_max_entries * sizeof(char *));
     char *prefix = (char *) malloc(MAXFILENAME);
     *prefix = '\0';
     if (has_wildcards(argument)) {
@@ -719,6 +718,7 @@ void expand_argument(char * str) {
         old_expand_wildcards(argument);
       }
       else {
+        g_array = (char **) malloc(g_max_entries * sizeof(char *));
         expand_wildcards(prefix, argument);
 
         sort_array_strings(g_array, g_counter);

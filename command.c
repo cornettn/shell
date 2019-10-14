@@ -369,6 +369,7 @@ void execute_command(command_t *command) {
     if (isatty(0)) {
       print_prompt();
     }
+    free_globals();
     return;
   }
 
@@ -380,6 +381,7 @@ void execute_command(command_t *command) {
       print_prompt();
     }
     close(input);
+    free_globals();
     return;
   }
 
