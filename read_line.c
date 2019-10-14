@@ -156,7 +156,9 @@ char *read_line() {
         continue;
       }
 
-      shift_left(insert_pos);
+      for (int i = g_line_length; i > insert_pos; i--) {
+        g_line_buffer[i - 1] = g_line_buffer[i];
+      }
 
       // Remove one character from buffer
       g_line_length--;
