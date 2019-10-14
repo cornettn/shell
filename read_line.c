@@ -174,10 +174,14 @@ char *read_line() {
       ch = 8;
       write(1, &ch, 1);
 
+      print_line(insert_pos);
+
+      ch = 32;
+      write(1, &ch, 1);
+      ch = 8;
+      write(1, &ch, 1);
 
       return_to_position(insert_pos);
-
-
     }
     else if (ch == 1) {
       /* <home> */
