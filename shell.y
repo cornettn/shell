@@ -593,7 +593,12 @@ char *expand_tilde(char *str) {
   return str;
   }
 
-  char * value = getenv("HOME");
+  char *username = NULL;
+
+  if (slash != NULL) {
+    username = substring(str, tilde - str, slash - str);
+  }
+  char *value = getenv("HOME");
 
   str = replace_tilde(str, tilde - str, value);
   return str;
