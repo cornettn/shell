@@ -1,35 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #include <stdbool.h>
 #include <stdio.h>
 #include <malloc.h>
@@ -284,7 +253,7 @@ char *escape_env_variables(char *str) {
   } // for
 
   return str;
-} /* escape_env_varaibles() */
+} /* escape_env_variables() */
 
 /*
  * This function determines whether or not the string has any wildcards in it.
@@ -407,7 +376,7 @@ int my_compare(const void *a, const void *b) {
 
 void sort_array_strings(char **array, int num) {
   qsort(array, num, sizeof(char *), my_compare);
-} /* sort_array() */
+} /* sort_array_strings() */
 
 
 /*
@@ -543,7 +512,7 @@ void expand_wildcards(char *prefix, char *suffix) {
 
     closedir(dir);
   }
-} /* exapand_wildcards() */
+} /* expand_wildcards() */
 
 /*
  * This function is used to expand any wildcards that are in the passed
@@ -705,5 +674,4 @@ void expand_argument(char * str) {
   else {
     insert_argument(g_current_single_command, argument);
   }
-} /* exapnd_argument() */
-
+} /* expand_argument() */

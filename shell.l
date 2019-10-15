@@ -17,8 +17,8 @@
 extern char * read_line();
 
 int mygetc(FILE *f) {
-  static char *p;
-  char ch;
+  static char *p = NULL;
+  char ch = 0;
 
   if (!isatty(0)) {
 
@@ -36,14 +36,12 @@ int mygetc(FILE *f) {
   p++;
 
   return ch;
-
 }
 
 #undef getc
 #define getc(f) mygetc(f)
 
-
-static void yyunput (int c,char *buf_ptr  );
+static void yyunput (int c,char *buf_ptr);
 
 void myunputc(int c) {
   unput(c);
@@ -60,7 +58,9 @@ void myunputc(int c) {
 }
 
 [ \t] {
+
   /* Discard spaces and tabs */
+
 }
 
 "&" {
@@ -96,7 +96,6 @@ void myunputc(int c) {
 }
 
 $\(.*\) {
-  printf("Test\n");
   char *str = strdup(yytext);
   char *count = str;
   count[strlen(str) - 1] = '\0';
@@ -114,7 +113,9 @@ $\(.*\) {
 }
 
 (([^ \t\n\>\<\&\|])|(\\.))+ {
+
   /* Assume that file names have only alpha characters */
+
   yylval.string = strdup(yytext);
   return WORD;
 }
