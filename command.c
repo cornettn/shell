@@ -448,7 +448,7 @@ void execute_command(command_t *command) {
 
   /* Set intial input */
 
-  int fd_in;
+  int fd_in = default_in;
   if (command->in_file) {
     fd_in = open(command->in_file, O_CREAT | O_RDONLY, 0400);
     if (fd_in < 0) {
@@ -466,7 +466,7 @@ void execute_command(command_t *command) {
   /* Initialize variables to use inside the loop */
 
   int ret = -1;
-  int fd_out;
+  int fd_out = default_err;
 
   /* Create a new fork for each single command */
 
@@ -619,7 +619,7 @@ void execute_command(command_t *command) {
     free_command(command);
   }
 
-  if (isatty(0) && command != g_last_command) {
+  if ((isatty(0)) && (command != g_last_command)) {
     print_prompt();
   }
 } /* execute_command() */
