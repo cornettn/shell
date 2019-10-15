@@ -30,11 +30,6 @@
 
 #define UNUSED(x) (void)(x)
 
-//typedef struct node {
-//  node_t *next;
-//  size_t pid;
-//} node_t;
-
 node_t *g_background_process_head = NULL;
 
 /*
@@ -465,10 +460,11 @@ void execute_command(command_t *command) {
 
   /* Initialize variables to use inside the loop */
 
-  int ret = -1;
   int fd_out = default_err;
 
   /* Create a new fork for each single command */
+
+  int ret = -1;  // Initialized here for use outside of the for loop
 
   for (int i = 0; i < command->num_single_commands; i++) {
     single_command_t * single_command = command->single_commands[i];

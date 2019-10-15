@@ -521,8 +521,8 @@ char *yytext_ptr;
 extern char * read_line();
 
 int mygetc(FILE *f) {
-  static char *p;
-  char ch;
+  static char *p = NULL;
+  char ch = 0;
 
   if (!isatty(0)) {
 
@@ -540,21 +540,19 @@ int mygetc(FILE *f) {
   p++;
 
   return ch;
-
 }
 
 #undef getc
 #define getc(f) mygetc(f)
 
-
-static void yyunput (int c,char *buf_ptr  );
+static void yyunput (int c,char *buf_ptr);
 
 void myunputc(int c) {
   unput(c);
 }
 
-#line 557 "lex.yy.c"
-#line 558 "lex.yy.c"
+#line 555 "lex.yy.c"
+#line 556 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -771,10 +769,10 @@ YY_DECL
 		}
 
 	{
-#line 56 "shell.l"
+#line 54 "shell.l"
 
 
-#line 778 "lex.yy.c"
+#line 776 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -844,16 +842,18 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 58 "shell.l"
+#line 56 "shell.l"
 {
   return NEWLINE;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 62 "shell.l"
+#line 60 "shell.l"
 {
+
   /* Discard spaces and tabs */
+
 }
 	YY_BREAK
 case 3:
@@ -916,7 +916,6 @@ case 11:
 YY_RULE_SETUP
 #line 98 "shell.l"
 {
-  printf("Test\n");
   char *str = strdup(yytext);
   char *count = str;
   count[strlen(str) - 1] = '\0';
@@ -930,7 +929,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 111 "shell.l"
+#line 110 "shell.l"
 {
   yylval.string = strdup(yytext);
   return WORD;
@@ -938,19 +937,21 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 116 "shell.l"
+#line 115 "shell.l"
 {
+
   /* Assume that file names have only alpha characters */
+
   yylval.string = strdup(yytext);
   return WORD;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 122 "shell.l"
+#line 123 "shell.l"
 ECHO;
 	YY_BREAK
-#line 954 "lex.yy.c"
+#line 955 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1967,4 +1968,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 122 "shell.l"
+#line 123 "shell.l"
