@@ -649,7 +649,7 @@ void expand_wildcards(char *prefix, char *suffix) {
       }
 
 
-      int result = regexec(reg, ent->d_name, 0, NULL, 0);
+      int result = regexec(&reg, ent->d_name, 0, NULL, 0);
       if (result != REG_NOMATCH) {
         char last_char = *(prefix + strlen(prefix) - 1);
         if (last_char != '/') {
