@@ -26,6 +26,10 @@ void print_prompt() {
 } /* print_prompt() */
 
 
+/*
+ * This function is responsible for handling SIGCHILD.
+ */
+
 void sig_int_handler() {
   g_line_buffer[0] = 0;
   g_line_length = 0;
@@ -33,16 +37,7 @@ void sig_int_handler() {
     printf("\n");
     print_prompt();
   }
-}
-
-/*
-void sig_child_handler(int sid) {
-  if (g_current_command->background) {
-    printf("[%d] exited.\n", sid);
-    print_prompt();
-  }
-}
-*/
+} /* sig_int_handler()  */
 
 /*
  *  This main is simply an entry point for the program which sets up

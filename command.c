@@ -38,7 +38,8 @@
 node_t *g_background_process_head = NULL;
 
 /*
- *
+ * This function is responsible for appending a pid to the background process
+ * list.
  */
 
 void append_background_process(int pid) {
@@ -58,10 +59,11 @@ void append_background_process(int pid) {
     current->next->next = NULL;
     current->next->pid = pid;
   }
-}
+} /* append_background_process() */
 
 /*
- *
+ * This function determines whether or not a process is a background
+ * process.
  */
 
 int is_background_process(int sid) {
@@ -78,7 +80,7 @@ int is_background_process(int sid) {
   }
 
   return 0;
-}
+} /* is_background_process() */
 
 /*
  * This function is responsible for handling zombie processes.
@@ -94,7 +96,7 @@ void sig_child_handler(int sid, siginfo_t *info, void *ucontext) {
     printf("[%d] exited.\n", info->si_pid);
     print_prompt();
   }
-}
+} /* sig_child_handler() */
 
 /*
  * This function is responsible for changing the directory.
@@ -149,12 +151,20 @@ void change_directory(char *dir) {
     }
     free(cwd);
   }
-}
+} /* change_directory() */
+
+/*
+ * This function is used to free the global varibales.
+ */
 
 void free_globals() {
   //printf("Free g_curr, g_last, g_last_arg\n");
   free_command(g_current_command);
-}
+} /* free_globals() */
+
+/*
+ * This function is responsible for execute any builtin functions.
+ */
 
 int execute_builtin(single_command_t *single, int fd_in, int fd_out,
       int fd_err, bool forked) {
@@ -210,11 +220,11 @@ int execute_builtin(single_command_t *single, int fd_in, int fd_out,
     }
   }
   return 0;
-}
+} /* execute_builtin() */
 
 
 /*
- *  Initialize a command_t
+ * Initialize a command_t
  */
 
 void create_command(command_t *command) {
@@ -319,6 +329,11 @@ void print_command(command_t *command) {
   printf( "\n\n" );
 } /* print_command() */
 
+/*
+ * This function copies all the contents of a command to another part of
+ * memory.
+ */
+
 command_t *command_dup(command_t *command) {
   command_t *new_command = (command_t *) malloc(sizeof(command_t));
   create_command(new_command);
@@ -346,7 +361,7 @@ command_t *command_dup(command_t *command) {
     insert_single_command(new_command, single);
   }
   return new_command;
-}
+} /* command_dup() */
 
 /*
  * This function will set standard error according to the specifications.
@@ -356,10 +371,10 @@ int set_fd_err(command_t *command, int default_err) {
   int fd_err = -1;
   if (command->err_file) {
     if (command->append_err) {
-      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_APPEND, 0600);
+      fd_err = open(command->err_file, O_CREAT | O_RDWR | O_APPEND, 0600);
     }
     else {
-      fd_err = open(command->err_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
+      fd_err = open(command->err_file, O_CREAT | O_RDWR | O_TRUNC, 0600);
     }
 
     if (fd_err < 0) {
@@ -434,7 +449,7 @@ void execute_command(command_t *command) {
 
   int fd_in;
   if (command->in_file) {
-    fd_in = open(command->in_file, O_CREAT|O_RDONLY, 0400);
+    fd_in = open(command->in_file, O_CREAT | O_RDONLY, 0400);
     if (fd_in < 0) {
       perror("open");
       close(default_in);
@@ -471,10 +486,10 @@ void execute_command(command_t *command) {
       if (command->out_file) {
         if (command->append_out) {
           fd_out = open(command->out_file,
-              O_CREAT|O_APPEND|O_RDWR, 0600);
+              O_CREAT | O_APPEND | O_RDWR, 0600);
         }
         else {
-          fd_out = open(command->out_file, O_CREAT|O_RDWR|O_TRUNC, 0600);
+          fd_out = open(command->out_file, O_CREAT | O_RDWR | O_TRUNC, 0600);
         }
       }
       else {
@@ -578,7 +593,7 @@ void execute_command(command_t *command) {
   struct sigaction sa_zombies;
   sa_zombies.sa_sigaction = sig_child_handler;
   sigemptyset(&sa_zombies.sa_mask);
-  sa_zombies.sa_flags = SA_RESTART|SA_NOCLDWAIT|SA_SIGINFO;
+  sa_zombies.sa_flags = SA_RESTART | SA_NOCLDWAIT | SA_SIGINFO;
 //  sa_zombies.sa_sigaction
   int zombie = sigaction(SIGCHLD, &sa_zombies, NULL);
 
@@ -605,3 +620,4 @@ void execute_command(command_t *command) {
     print_prompt();
   }
 } /* execute_command() */
+
