@@ -352,7 +352,8 @@ command_t *command_dup(command_t *command) {
   new_command->background = command->background;
 
   for (int i = 0; i < command->num_single_commands; i++) {
-    single_command_t *single = (single_command_t *) malloc(sizeof(single_command_t));
+    single_command_t *single = (single_command_t *)
+      malloc(sizeof(single_command_t));
     create_single_command(single);
     for (int j = 0; j < command->single_commands[i]->num_args; j++) {
       char *arg = strdup(command->single_commands[i]->arguments[j]);
@@ -420,7 +421,7 @@ void execute_command(command_t *command) {
     g_last_command = command_dup(command);
   }
 
-  if (g_last_command != NULL && command != g_last_command) {
+  if ((g_last_command != NULL) && (command != g_last_command)) {
     free_command(g_last_command);
     g_last_command = command_dup(command);
   }
@@ -526,7 +527,8 @@ void execute_command(command_t *command) {
 
     /* Create a child process */
 
-    int builtin = execute_builtin(single_command, default_in, default_out, default_err, false);
+    int builtin = execute_builtin(single_command, default_in,
+        default_out, default_err, false);
 
     if (!builtin) {
 
@@ -539,7 +541,8 @@ void execute_command(command_t *command) {
         /* Ensure that the last element in the arguments list is NULL */
 
         if (single_command->arguments[single_command->num_args - 1] != NULL) {
-          single_command->arguments = (char **) realloc(single_command->arguments,
+          single_command->arguments = (char **)
+              realloc(single_command->arguments,
               (single_command->num_args + 1) * sizeof(char *));
           single_command->arguments[single_command->num_args] = NULL;
           single_command->num_args++;
@@ -551,7 +554,8 @@ void execute_command(command_t *command) {
         close(default_out);
         close(default_err);
 
-        int builtin = execute_builtin(single_command, default_in, default_out, default_err, true);
+        int builtin = execute_builtin(single_command, default_in,
+            default_out, default_err, true);
 
         if (builtin) {
           exit(0);
@@ -604,9 +608,8 @@ void execute_command(command_t *command) {
 
   /* Wait for Child */
 
-  int status;
   if (!command->background) {
-    waitpid(ret, &status, 0);
+    waitpid(ret, NULL, 0);
   }
   else {
     append_background_process(ret);
