@@ -564,8 +564,8 @@ void old_expand_wildcards(char *str) {
     /* Wild cards are present */
 
     char *regex = to_regex(str);
-    regex_t reg = 0;
-    int status = regcomp(&reg, regex, REG_EXTENDED);
+    regex_t *reg = NULL;
+    int status = regcomp(reg, regex, REG_EXTENDED);
     if (status != 0) {
       perror("compile");
       return;
@@ -579,7 +579,7 @@ void old_expand_wildcards(char *str) {
 
     char **array = NULL;
     int *count = (int *) malloc(sizeof(int));
-    array = find_matching_strings(array, dir, reg, str, count);
+    array = find_matching_strings(array, dir, *reg, str, count);
 
     closedir(dir);
 
@@ -591,7 +591,8 @@ void old_expand_wildcards(char *str) {
       array[i] = NULL;
     }
 
-    regfree(&reg);
+    regfree(reg);
+    reg = NULL;
     free(array);
     array = NULL;
     free(count);
