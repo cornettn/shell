@@ -37,7 +37,7 @@ void sig_int_handler() {
     printf("\n");
     print_prompt();
   }
-} /* sig_int_handler()  */
+} /* sig_int_handler() */
 
 /*
  *  This main is simply an entry point for the program which sets up
