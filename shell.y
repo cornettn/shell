@@ -492,8 +492,8 @@ void expand_wildcards(char *prefix, char *suffix) {
 
     char *regex = to_regex(component);
     g_curr_regex = regex;
-    regex_t *reg = NULL;
-    int status = regcomp(reg, regex, REG_EXTENDED);
+    regex_t reg;
+    int status = regcomp(&reg, regex, REG_EXTENDED);
     if (status != 0) {
       perror("compile");
       return;
@@ -534,8 +534,7 @@ void expand_wildcards(char *prefix, char *suffix) {
     }
 
 
-    regfree(reg);
-    reg = NULL;
+    regfree(&reg);
     free(component);
     component = NULL;
 
@@ -565,8 +564,8 @@ void old_expand_wildcards(char *str) {
     /* Wild cards are present */
 
     char *regex = to_regex(str);
-    regex_t *reg = NULL;
-    int status = regcomp(reg, regex, REG_EXTENDED);
+    regex_t reg;
+    int status = regcomp(&reg, regex, REG_EXTENDED);
     if (status != 0) {
       perror("compile");
       return;
@@ -580,7 +579,7 @@ void old_expand_wildcards(char *str) {
 
     char **array = NULL;
     int *count = (int *) malloc(sizeof(int));
-    array = find_matching_strings(array, dir, *reg, str, count);
+    array = find_matching_strings(array, dir, reg, str, count);
 
     closedir(dir);
 
@@ -592,8 +591,7 @@ void old_expand_wildcards(char *str) {
       array[i] = NULL;
     }
 
-    regfree(reg);
-    reg = NULL;
+    regfree(&reg);
     free(array);
     array = NULL;
     free(count);
