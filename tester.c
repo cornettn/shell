@@ -1,34 +1,34 @@
 
+/*
+ * CS-252
+ * shell.y: parser for shell
+ *
+ * This parser compiles the following grammar:
+ *
+ *	cmd [arg]* [> filename]
+ *
+ * you must extend it to understand the complete shell grammar
+ *
+ */
 
+%code requires
+{
 
+}
 
+%union
+{
+  char * string;
+}
 
+%token <string> WORD PIPE
+%token NOTOKEN NEWLINE STDOUT
+%token INPUT BACKGROUND APPEND_STDOUT
+%token STDERR APPEND_STDOUT_STDERR
+%token STDOUT_STDERR
+%token SUBSHELL
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%{
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -64,7 +64,7 @@ char *substring(char *str, int start, int end) {
   *(sub + size) = '\0';
 
   return sub;
- /* substring() */}
+} /* substring() */
 
 /*
  * This function will take a string and remove quotes from the
@@ -91,7 +91,7 @@ char *quoted_arg(char *str) {
   else {
     return str;
   }
-}
+} /* quoted_arg() */
 
 /*
  * This function will escape any characters that are preceded by a '\'
@@ -190,7 +190,7 @@ char *replace_env(char *str, int i, int env_len, char *value,
  */
 
 char *get_value(char *env) {
-  char *str;
+  char *str = NULL;
   if (!strcmp(env, "$")) {
     str = (char *) malloc(10 * sizeof(char));
     sprintf(str, "%ld", (long) getpid());
@@ -223,15 +223,16 @@ char *get_value(char *env) {
 } /* get_value() */
 
 /*
- * This function is used to escape any environment variables within the passed argument.
+ * This function is used to escape any environment variables within
+ * the passed argument.
  * char *str: The argument to escape the variables from.
  * return char *: A pointer to the new argument with escaped variables.
  */
 
 char *escape_env_variables(char *str) {
   int len = strlen(str);
-  char *env;
-  char *rest_of_string;
+  char *env = NULL;
+  char *rest_of_string = NULL;
   for (int i = 0; i < len; i++) {
     int env_len = 0;
     if ((*(str + i) == '{') && (*(str + i - 1) == '$')) {
@@ -260,8 +261,11 @@ char *escape_env_variables(char *str) {
       char *value = get_value(env);
       if (value == NULL) {
         free(value);
+        value = NULL;
         free(rest_of_string);
+        rest_of_string = NULL;
         free(env);
+        env = NULL;
         return NULL;
       }
 
@@ -271,8 +275,11 @@ char *escape_env_variables(char *str) {
 
       len = strlen(str);
       free(value);
+      value = NULL;
       free(rest_of_string);
+      rest_of_string = NULL;
       free(env);
+      env = NULL;
     } // if
   } // for
 
@@ -338,7 +345,7 @@ char *to_regex(char *str) {
 
 char **find_matching_strings(char **array, DIR *dir, regex_t reg,
                              char *str, int *count) {
-    struct dirent *ent;
+    struct dirent *ent = NULL;
     int max_entries = 20;
     int num_entries = 0;
 
@@ -473,11 +480,12 @@ void expand_wildcards(char *prefix, char *suffix) {
     else {
       sprintf(new_prefix, "/%s", component);
     }
-    //printf("Free compo\n");
+
     free(component);
+    component = NULL;
     expand_wildcards(new_prefix, suffix);
-    //printf("Free new_prefix\n");
     free(new_prefix);
+    new_prefix = NULL;
   }
   else {
 
@@ -485,7 +493,7 @@ void expand_wildcards(char *prefix, char *suffix) {
 
     char *regex = to_regex(component);
     g_curr_regex = regex;
-    regex_t reg;
+    regex_t reg = NULL;
     int status = regcomp(&reg, regex, REG_EXTENDED);
     if (status != 0) {
       perror("compile");
@@ -495,9 +503,7 @@ void expand_wildcards(char *prefix, char *suffix) {
     free(regex);
     regex = NULL;
 
-    int test = 0;
-
-    struct dirent *ent;
+    struct dirent *ent = NULL;
     char *directory = (prefix[0] == '\0') ? "." : prefix;
     DIR *dir = opendir(directory);
     if (dir == NULL) {
@@ -524,30 +530,20 @@ void expand_wildcards(char *prefix, char *suffix) {
           sprintf(new_prefix, "%s%s", prefix, ent->d_name);
         }
 
-        printf("%s matches!\n", ent->d_name);
-
-        /* if (prefix[0] == '\0') {
-          sprintf(new_prefix, "%s", ent->d_name);
-        }
-        else {
-          sprintf(new_prefix, "%s/%s", prefix, ent->d_name);
-        }
-        */
         expand_wildcards(new_prefix, suffix);
-      }
-      else {
-        test++;
       }
     }
 
-    //printf("Free component\n");
 
     regfree(&reg);
+    reg = NULL;
+
     free(component);
     component = NULL;
-    //printf("Free new_prefix\n");
+
     free(new_prefix);
     new_prefix = NULL;
+
     closedir(dir);
   }
 } /* exapand_wildcards() */
@@ -571,8 +567,7 @@ void old_expand_wildcards(char *str) {
     /* Wild cards are present */
 
     char *regex = to_regex(str);
-    //printf("regex:%s\n", regex);
-    regex_t reg;
+    regex_t reg = NULL;
     int status = regcomp(&reg, regex, REG_EXTENDED);
     if (status != 0) {
       perror("compile");
@@ -585,9 +580,7 @@ void old_expand_wildcards(char *str) {
       return;
     }
 
-    //printf("malloc array\n");
     char **array = NULL;
-    //printf("malloc count\n");
     int *count = (int *) malloc(sizeof(int));
     array = find_matching_strings(array, dir, reg, str, count);
 
@@ -597,13 +590,12 @@ void old_expand_wildcards(char *str) {
 
     for (int i = 0; i < *count; i++) {
       insert_argument(g_current_single_command, strdup(array[i]));
-      //printf("free array[i]\n");
       free(array[i]);
+      array[i] = NULL;
     }
-    //printf("free array\n");
-
 
     regfree(&reg);
+    reg = NULL;
     free(array);
     array = NULL;
     free(count);
@@ -670,7 +662,9 @@ void expand_argument(char * str) {
   argument = escape_env_variables(argument);
   if (argument == NULL) {
     free_command(g_current_command);
+    g_current_command = NULL;
     free_single_command(g_current_single_command);
+    g_current_single_command = NULL;
     yyparse();
     return;
   }
@@ -698,20 +692,163 @@ void expand_argument(char * str) {
           insert_argument(g_current_single_command, strdup(g_array[i]));
         }
 
-
         for (int i = 0; i < g_counter; i++) {
           free(g_array[i]);
+          g_array[i] = NULL;
         }
         free(g_array);
+        g_array = NULL;
       }
     }
     else {
       insert_argument(g_current_single_command, argument);
     }
     free(prefix);
+    prefix = NULL;
   }
   else {
     insert_argument(g_current_single_command, argument);
   }
 } /* exapnd_argument() */
 
+
+%}
+
+%%
+
+goal:
+  entire_command_list
+  ;
+
+entire_command_list:
+    entire_command_list entire_command {
+      execute_command(g_current_command);
+      g_current_command = malloc(sizeof(command_t));
+      create_command(g_current_command);
+    }
+  | entire_command {
+      execute_command(g_current_command);
+      g_current_command = malloc(sizeof(command_t));
+      create_command(g_current_command);
+    }
+  ;
+
+entire_command:
+    single_command_list io_modifier_list NEWLINE
+  | single_command_list io_modifier_list BACKGROUND NEWLINE {
+    g_current_command->background = true;
+  }
+  |  NEWLINE
+  ;
+
+single_command_list:
+    single_command_list PIPE single_command {
+    }
+  | single_command {
+    }
+  ;
+
+single_command:
+    executable argument_list {
+      insert_single_command(g_current_command, g_current_single_command);
+    }
+  ;
+
+argument_list:
+    argument_list argument
+  |  /* can be empty */
+  ;
+
+argument:
+     WORD {
+      expand_argument($1);
+    }
+  ;
+
+executable:
+     WORD {
+      g_current_single_command = malloc(sizeof(single_command_t));
+      create_single_command(g_current_single_command);
+
+      expand_argument($1);
+    }
+  ;
+
+io_modifier_list:
+     io_modifier_list io_modifier
+  |  io_modifier
+  |  /* can be empty */
+  ;
+
+io_modifier:
+     STDOUT WORD {
+      if (g_current_command->out_file) {
+        printf("Ambiguous output redirect.\n");
+      }
+
+      g_current_command->out_file = $2;
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_TRUNC|O_RDWR, 0600);
+      close(fd);
+    }
+  |  INPUT WORD {
+      g_current_command->in_file = $2;
+    }
+  | APPEND_STDOUT WORD {
+      if (g_current_command->out_file) {
+        printf("Ambiguous output redirect.\n");
+      }
+
+      g_current_command->append_out = true;
+      g_current_command->out_file = $2;
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_APPEND|O_RDWR, 0600);
+      close(fd);
+    }
+  | STDERR WORD {
+      g_current_command->err_file = $2;
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_TRUNC|O_RDWR, 0600);
+      close(fd);
+    }
+  | STDOUT_STDERR WORD {
+      if (g_current_command->out_file) {
+        printf("Ambiguous output redirect.\n");
+      }
+
+      g_current_command->out_file = $2;
+      g_current_command->err_file = strdup($2);
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_TRUNC|O_RDWR, 0600);
+      close(fd);
+    }
+  | APPEND_STDOUT_STDERR WORD {
+      if (g_current_command->out_file) {
+        printf("Ambiguous output redirect.\n");
+      }
+
+      g_current_command->append_out = true;
+      g_current_command->append_err = true;
+      g_current_command->err_file = $2;
+      g_current_command->out_file = strdup($2);
+      int fd = open(g_current_command->out_file,
+                    O_CREAT|O_APPEND|O_RDWR, 0600);
+      close(fd);
+    }
+  ;
+
+
+%%
+
+void
+yyerror(const char * s)
+{
+  fprintf(stderr,"%s", s);
+}
+
+#if 0
+main()
+{
+  yyparse();
+}
+#endif
