@@ -493,7 +493,7 @@ void expand_wildcards(char *prefix, char *suffix) {
 
     char *regex = to_regex(component);
     g_curr_regex = regex;
-    regex_t reg = NULL;
+    regex_t reg = 0;
     int status = regcomp(&reg, regex, REG_EXTENDED);
     if (status != 0) {
       perror("compile");
@@ -536,7 +536,7 @@ void expand_wildcards(char *prefix, char *suffix) {
 
 
     regfree(&reg);
-    reg = NULL;
+    &reg = NULL;
 
     free(component);
     component = NULL;
@@ -595,7 +595,7 @@ void old_expand_wildcards(char *str) {
     }
 
     regfree(&reg);
-    reg = NULL;
+    &reg = NULL;
     free(array);
     array = NULL;
     free(count);
