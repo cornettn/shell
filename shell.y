@@ -492,8 +492,8 @@ void expand_wildcards(char *prefix, char *suffix) {
 
     char *regex = to_regex(component);
     g_curr_regex = regex;
-    regex_t reg = 0;
-    int status = regcomp(&reg, regex, REG_EXTENDED);
+    regex_t *reg = NULL;
+    int status = regcomp(reg, regex, REG_EXTENDED);
     if (status != 0) {
       perror("compile");
       return;
@@ -519,7 +519,7 @@ void expand_wildcards(char *prefix, char *suffix) {
       }
 
 
-      int result = regexec(&reg, ent->d_name, 0, NULL, 0);
+      int result = regexec(reg, ent->d_name, 0, NULL, 0);
       if (result != REG_NOMATCH) {
         char last_char = *(prefix + strlen(prefix) - 1);
         if (last_char != '/') {
@@ -534,7 +534,8 @@ void expand_wildcards(char *prefix, char *suffix) {
     }
 
 
-    regfree(&reg);
+    regfree(reg);
+    reg = NULL;
     free(component);
     component = NULL;
 
