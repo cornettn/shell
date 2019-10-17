@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
   struct sigaction signal_action;
   signal_action.sa_handler = sig_int_handler;
   sigemptyset(&signal_action.sa_mask);
-  signal_action.sa_flags = SA_RESTART;
+  signal_action.sa_flags = 0; //SA_RESTART;
   int error = sigaction(SIGINT, &signal_action, NULL);
 
   if (error) {
